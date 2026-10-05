@@ -1,0 +1,1260 @@
+﻿@model HelpDeskCRM.Models.TicketManagementViewModel
+
+@{
+    ViewData["Title"] = "Support Ticket Management";
+}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold" style="color:#7c2d12;">
+            Support Ticket Management
+        </h1>
+
+        <p class="text-muted">
+            Create, assign and manage customer support tickets
+        </p>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+
+        <!-- ================================================= -->
+        <!-- LEFT MENU -->
+        <!-- ================================================= -->
+
+        <div class="col-md-4 col-lg-3">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header text-white"
+                     style="background:#7c2d12;">
+
+                    <h5 class="mb-1">
+                        🎫 Ticket Services
+                    </h5>
+
+                    <small>
+                        Select an operation
+                    </small>
+
+                </div>
+
+                <div class="list-group list-group-flush">
+
+                    <a asp-controller="Tickets"
+                       asp-action="Index"
+                       asp-route-section="createTicket"
+                       class="list-group-item list-group-item-action @(Model.ActiveSection == "createTicket" ? "active" : "")">
+
+                        <strong>
+                            ➕ Create Ticket
+                        </strong>
+
+                        <small class="d-block">
+                            Create support request
+                        </small>
+
+                    </a>
+
+                    <a asp-controller="Tickets"
+                       asp-action="Index"
+                       asp-route-section="ticketList"
+                       class="list-group-item list-group-item-action @(Model.ActiveSection == "ticketList" ? "active" : "")">
+
+                        <strong>
+                            🎫 Ticket List
+                        </strong>
+
+                        <small class="d-block">
+                            View all tickets
+                        </small>
+
+                    </a>
+
+                    <a asp-controller="Tickets"
+                       asp-action="Index"
+                       asp-route-section="ticketDetails"
+                       class="list-group-item list-group-item-action @(Model.ActiveSection == "ticketDetails" ? "active" : "")">
+
+                        <strong>
+                            📋 Ticket Details
+                        </strong>
+
+                        <small class="d-block">
+                            Search ticket
+                        </small>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================================================= -->
+        <!-- RIGHT CONTENT -->
+        <!-- ================================================= -->
+
+        <div class="col-md-8 col-lg-9">
+
+            <!-- ================================================= -->
+            <!-- CREATE TICKET -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "createTicket")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#7c2d12;">
+                            ➕ Create Support Ticket
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            Connect the ticket with a customer and employee.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        @if (Model.Customers.Count == 0)
+                        {
+                            <div class="alert alert-warning">
+                                No customers available. Please add a customer first.
+                            </div>
+                        }
+                        else
+                        {
+                            <form asp-controller="Tickets"
+                                  asp-action="Create"
+                                  method="post"
+                                  id="ticketForm"
+                                  novalidate>
+
+                                <div class="row">
+
+                                    <!-- CUSTOMER -->
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Customer
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select asp-for="NewTicket.CustomerId"
+                                                id="ticketCustomer"
+                                                class="form-select">
+
+                                            <option value="">Select customer</option>
+
+                                            @foreach (var customer in Model.Customers)
+                                            {
+                                                <option value="@customer.CustomerId">
+                                                    @customer.CustomerId - @customer.FirstName @customer.LastName
+                                                </option>
+                                            }
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- EMPLOYEE -->
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Assign Employee
+                                        </label>
+
+                                        <select asp-for="NewTicket.EmployeeId"
+                                                id="ticketEmployee"
+                                                class="form-select">
+
+                                            <option value="">Unassigned</option>
+
+                                            @foreach (var employee in Model.Employees)
+                                            {
+                                                <option value="@employee.EmployeeId">
+                                                    @employee.EmployeeId - @employee.FirstName @employee.LastName
+                                                </option>
+                                            }
+
+                                        </select>
+
+                                        <small class="text-muted">
+                                            Employee assignment can be done later.
+                                        </small>
+
+                                    </div>
+
+                                    <!-- SUBJECT -->
+                                    <div class="col-12 mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Subject
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <input asp-for="NewTicket.Subject"
+                                               id="ticketSubject"
+                                               class="form-control"
+                                               placeholder="Enter ticket subject"
+                                               autocomplete="off" />
+
+                                    </div>
+
+                                    <!-- DESCRIPTION -->
+                                    <div class="col-12 mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Description
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <textarea asp-for="NewTicket.Description"
+                                                  id="ticketDescription"
+                                                  class="form-control"
+                                                  rows="4"
+                                                  placeholder="Describe the customer issue"></textarea>
+
+                                    </div>
+
+                                    <!-- PRIORITY -->
+                                    <div class="col-md-6 mb-4">
+
+                                        <label class="form-label fw-semibold">
+                                            Priority
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select asp-for="NewTicket.Priority"
+                                                id="ticketPriority"
+                                                class="form-select">
+
+                                            <option value="">Select priority</option>
+                                            <option value="Low">Low</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="High">High</option>
+                                            <option value="Critical">Critical</option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- STATUS -->
+                                    <div class="col-md-6 mb-4">
+
+                                        <label class="form-label fw-semibold">
+                                            Status
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select asp-for="NewTicket.Status"
+                                                id="ticketStatus"
+                                                class="form-select">
+
+                                            <option value="">Select status</option>
+                                            <option value="Open">Open</option>
+                                            <option value="Pending">Pending</option>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- SAVE -->
+                                <button type="submit"
+                                        id="btnCreateTicket"
+                                        class="btn btn-warning">
+                                    🎫 Create Ticket
+                                </button>
+
+                                <!-- CLEAR -->
+                                <button type="reset"
+                                        id="btnClearTicket"
+                                        class="btn btn-outline-secondary ms-2">
+                                    Clear
+                                </button>
+
+                            </form>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- TICKET LIST -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "ticketList")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#7c2d12;">
+                            🎫 Ticket List
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            All customer tickets and assignments.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        @if (Model.Tickets.Count == 0)
+                        {
+                            <div class="text-center py-5">
+                                <div style="font-size:50px;">🎫</div>
+                                <h5>No tickets found</h5>
+                                <p class="text-muted">Create a ticket to see it here.</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+
+                                <table class="table table-hover align-middle">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Ticket ID</th>
+                                            <th>Customer</th>
+                                            <th>Employee</th>
+                                            <th>Subject</th>
+                                            <th>Priority</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var ticket in Model.Tickets)
+                                        {
+                                            var customer = Model.Customers.FirstOrDefault(x => x.CustomerId == ticket.CustomerId);
+                                            var employee = Model.Employees.FirstOrDefault(x => x.EmployeeId == ticket.EmployeeId);
+
+                                            <tr style="cursor:pointer;"
+                                                onclick="window.location.href='@Url.Action("Details", "Tickets", new { ticketId = ticket.TicketId })';">
+                                                <td>
+                                                    <span class="badge bg-warning text-dark">
+                                                        @ticket.TicketId
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    @if (customer != null)
+                                                    {
+                                                        <strong>@customer.FirstName @customer.LastName</strong>
+                                                        <small class="d-block text-muted">ID: @customer.CustomerId</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">Unknown</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (employee != null)
+                                                    {
+                                                        <strong>@employee.FirstName @employee.LastName</strong>
+                                                        <small class="d-block text-muted">ID: @employee.EmployeeId</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">Unassigned</span>
+                                                    }
+                                                </td>
+                                                <td>@ticket.Subject</td>
+                                                <td>@ticket.Priority</td>
+                                                <td>
+                                                    <span class="badge bg-primary">
+                                                        @ticket.Status
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- TICKET DETAILS -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "ticketDetails")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#7c2d12;">
+                            📋 Ticket Details
+                        </h3>
+
+                        <p class="text-muted">
+                            Search using Ticket ID.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <!-- SEARCH FORM -->
+                        <form asp-controller="Tickets"
+                              asp-action="Details"
+                              method="get"
+                              id="ticketSearchForm"
+                              novalidate>
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="ticketId"
+                                       id="searchTicketId"
+                                       class="form-control"
+                                       placeholder="Enter Ticket ID e.g. 1001"
+                                       min="1" />
+
+                                <button type="submit"
+                                        id="btnSearchTicket"
+                                        class="btn btn-warning">
+                                    🔍 Search
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                        <!-- SELECTED TICKET -->
+                        @if (Model.SelectedTicket != null)
+                        {
+                            var customer = Model.Customers.FirstOrDefault(x => x.CustomerId == Model.SelectedTicket.CustomerId);
+                            var employee = Model.Employees.FirstOrDefault(x => x.EmployeeId == Model.SelectedTicket.EmployeeId);
+
+                            <div class="card bg-light border-0 p-4">
+
+                                <h4 style="color:#7c2d12;">
+                                    Ticket #@Model.SelectedTicket.TicketId
+                                </h4>
+
+                                <hr />
+
+                                <p><strong>Subject:</strong> @Model.SelectedTicket.Subject</p>
+                                <p><strong>Description:</strong> @Model.SelectedTicket.Description</p>
+                                <p>
+                                    <strong>Customer:</strong>
+                                    @if (customer != null)
+                                    {
+                                        @customer.CustomerId <text> - </text> @customer.FirstName @customer.LastName
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Unknown</span>
+                                    }
+                                </p>
+                                <p>
+                                    <strong>Assigned Employee:</strong>
+                                    @if (employee != null)
+                                    {
+                                        @employee.EmployeeId <text> - </text> @employee.FirstName @employee.LastName
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Unassigned</span>
+                                    }
+                                </p>
+                                <p><strong>Priority:</strong> @Model.SelectedTicket.Priority</p>
+                                <p><strong>Status:</strong> @Model.SelectedTicket.Status</p>
+
+                                @if (Model.Employees.Count > 0)
+                                {
+                                    <hr />
+
+                                    <h5>Assign / Reassign Employee</h5>
+
+                                    <form asp-controller="Tickets"
+                                          asp-action="AssignTicket"
+                                          method="post"
+                                          id="assignEmployeeForm"
+                                          novalidate>
+
+                                        <input type="hidden"
+                                               name="ticketId"
+                                               value="@Model.SelectedTicket.TicketId" />
+
+                                        <div class="input-group">
+
+                                            <select name="employeeId"
+                                                    id="assignEmployeeId"
+                                                    class="form-select">
+
+                                                <option value="">Select employee</option>
+
+                                                @foreach (var emp in Model.Employees)
+                                                {
+                                                    <option value="@emp.EmployeeId"
+                                                            selected="@(Model.SelectedTicket.EmployeeId == emp.EmployeeId)">
+                                                        @emp.EmployeeId - @emp.FirstName @emp.LastName
+                                                    </option>
+                                                }
+
+                                            </select>
+
+                                            <button type="submit"
+                                                    id="btnAssignEmployee"
+                                                    class="btn btn-success">
+                                                Assign Employee
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+                                }
+
+                            </div>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- CLIENT-SIDE VALIDATION -->
+<!-- ========================================================= -->
+
+<style>
+    /* =========================================================
+       PREMIUM DYNAMIC TICKET MANAGEMENT UI
+    ========================================================= */
+
+    .ticket-management-page {
+        position: relative;
+        min-height: calc(100vh - 110px);
+        isolation: isolate;
+        overflow: hidden;
+        border-radius: 30px;
+        background: radial-gradient(circle at 5% 8%, rgba(124,58,237,.10), transparent 26%), radial-gradient(circle at 96% 18%, rgba(6,182,212,.10), transparent 25%), radial-gradient(circle at 58% 100%, rgba(236,72,153,.08), transparent 28%);
+    }
+
+    .ticket-fx {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .ticket-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(68px);
+        opacity: .14;
+        transition: transform 1.3s ease;
+    }
+
+    .ticket-glow-1 {
+        width: 390px;
+        height: 390px;
+        left: -190px;
+        top: 18%;
+        background: #7c3aed;
+    }
+
+    .ticket-glow-2 {
+        width: 430px;
+        height: 430px;
+        right: -210px;
+        top: 28%;
+        background: #06b6d4;
+    }
+
+    .ticket-glow-3 {
+        width: 340px;
+        height: 340px;
+        left: 42%;
+        bottom: -210px;
+        background: #ec4899;
+    }
+
+    .ticket-orbit {
+        position: absolute;
+        border: 1px solid rgba(124,58,237,.08);
+        border-radius: 50%;
+        transition: transform 1.7s ease;
+    }
+
+    .ticket-orbit-1 {
+        width: 470px;
+        height: 470px;
+        right: -260px;
+        top: 12%;
+    }
+
+    .ticket-orbit-2 {
+        width: 280px;
+        height: 280px;
+        left: -160px;
+        bottom: 3%;
+    }
+
+    .ticket-particle {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        opacity: .36;
+        box-shadow: 0 0 19px rgba(124,58,237,.8);
+        transition: transform 1.4s ease;
+    }
+
+    .ticket-particle-1 {
+        left: 9%;
+        top: 19%;
+    }
+
+    .ticket-particle-2 {
+        left: 25%;
+        top: 75%;
+    }
+
+    .ticket-particle-3 {
+        right: 13%;
+        top: 25%;
+    }
+
+    .ticket-particle-4 {
+        right: 28%;
+        top: 78%;
+    }
+
+    .ticket-particle-5 {
+        left: 57%;
+        top: 11%;
+    }
+
+    .ticket-hero {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin: 0 0 24px;
+        padding: 28px 30px;
+        border: 1px solid rgba(255,255,255,.90);
+        border-radius: 27px;
+        background: linear-gradient(135deg,rgba(255,255,255,.94),rgba(247,246,255,.79));
+        box-shadow: 0 23px 68px rgba(39,31,99,.10);
+        backdrop-filter: blur(21px);
+        overflow: hidden;
+    }
+
+        .ticket-hero:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 7px;
+            height: 100%;
+            background: linear-gradient(180deg,#7c3aed,#2563eb,#06b6d4);
+        }
+
+        .ticket-hero:after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -120px;
+            top: -145px;
+            border-radius: 50%;
+            border: 1px solid rgba(124,58,237,.10);
+            box-shadow: inset 0 0 0 35px rgba(124,58,237,.025);
+        }
+
+    .ticket-hero-copy {
+        position: relative;
+        z-index: 1;
+    }
+
+    .ticket-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #7c3aed;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 2px;
+    }
+
+    .ticket-live-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 15px rgba(34,197,94,.85);
+    }
+
+    .ticket-hero h1 {
+        margin: 5px 0 4px;
+        color: #17172b;
+        font-size: 31px;
+        line-height: 1.1;
+        font-weight: 950;
+        letter-spacing: -.9px;
+    }
+
+    .ticket-hero p {
+        margin: 0;
+        color: #77778b;
+        font-size: 13px;
+    }
+
+    .ticket-hero-status {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 11px 15px 11px 11px;
+        border: 1px solid rgba(124,58,237,.12);
+        border-radius: 18px;
+        background: rgba(255,255,255,.74);
+        box-shadow: 0 13px 32px rgba(39,31,99,.07);
+        transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+        .ticket-hero-status:hover {
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 19px 38px rgba(39,31,99,.12);
+        }
+
+    .ticket-status-icon {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        color: white;
+        font-size: 12px;
+        font-weight: 950;
+        background: linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4);
+        box-shadow: 0 9px 23px rgba(79,70,229,.25);
+    }
+
+    .ticket-hero-status strong,
+    .ticket-hero-status span {
+        display: block;
+    }
+
+    .ticket-hero-status strong {
+        color: #343448;
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    .ticket-hero-status span {
+        margin-top: 3px;
+        color: #89889a;
+        font-size: 10px;
+    }
+
+    .ticket-pulse {
+        width: 8px;
+        height: 8px;
+        margin-left: 5px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 0 5px rgba(34,197,94,.08), 0 0 17px rgba(34,197,94,.75);
+    }
+
+    /* Keep original content above decorative elements. */
+    .ticket-management-page > .row,
+    .ticket-management-page > .alert {
+        position: relative;
+        z-index: 2;
+    }
+
+        /* Navigation / operation panel */
+        .ticket-management-page > .row > .col-md-4 > .card {
+            border: 1px solid rgba(255,255,255,.9) !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            background: rgba(255,255,255,.91) !important;
+            box-shadow: 0 23px 62px rgba(39,31,99,.10) !important;
+            backdrop-filter: blur(19px);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+            .ticket-management-page > .row > .col-md-4 > .card:hover {
+                transform: translateY(-7px);
+                box-shadow: 0 31px 76px rgba(39,31,99,.15) !important;
+            }
+
+        .ticket-management-page > .row > .col-md-4 .card-header {
+            position: relative;
+            padding: 21px !important;
+            border: 0 !important;
+            background: linear-gradient(135deg,#24105d,#5b21b6,#2563eb) !important;
+            overflow: hidden;
+        }
+
+            .ticket-management-page > .row > .col-md-4 .card-header:after {
+                content: "";
+                position: absolute;
+                width: 170px;
+                height: 170px;
+                right: -80px;
+                top: -95px;
+                border: 1px solid rgba(255,255,255,.18);
+                border-radius: 50%;
+            }
+
+        .ticket-management-page > .row > .col-md-4 .list-group-item {
+            position: relative;
+            padding: 17px 18px;
+            border-color: #efeff5;
+            color: #36364a;
+            background: rgba(255,255,255,.76);
+            overflow: hidden;
+            transition: transform .28s ease, background .28s ease, color .28s ease, padding-left .28s ease;
+        }
+
+            .ticket-management-page > .row > .col-md-4 .list-group-item:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background: linear-gradient(180deg,#7c3aed,#2563eb,#06b6d4);
+                transform: scaleY(0);
+                transform-origin: bottom;
+                transition: transform .28s ease;
+            }
+
+            .ticket-management-page > .row > .col-md-4 .list-group-item:hover {
+                transform: translateX(7px);
+                padding-left: 23px;
+                color: #4c1d95;
+                background: linear-gradient(90deg,rgba(124,58,237,.075),rgba(6,182,212,.035));
+            }
+
+                .ticket-management-page > .row > .col-md-4 .list-group-item:hover:before {
+                    transform: scaleY(1);
+                }
+
+            .ticket-management-page > .row > .col-md-4 .list-group-item strong {
+                font-size: 13px;
+            }
+
+            .ticket-management-page > .row > .col-md-4 .list-group-item small {
+                margin-top: 4px;
+                font-size: 10px;
+            }
+
+        /* Main ticket content */
+        .ticket-management-page > .row > .col-md-8 > .card {
+            border: 1px solid rgba(255,255,255,.92) !important;
+            border-radius: 25px !important;
+            overflow: hidden;
+            background: rgba(255,255,255,.93) !important;
+            box-shadow: 0 25px 70px rgba(39,31,99,.10) !important;
+            backdrop-filter: blur(19px);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+            .ticket-management-page > .row > .col-md-8 > .card:hover {
+                box-shadow: 0 33px 80px rgba(39,31,99,.14) !important;
+            }
+
+        .ticket-management-page > .row > .col-md-8 .card-header {
+            border-bottom: 1px solid rgba(124,58,237,.08) !important;
+        }
+
+    /* Form controls */
+    .ticket-management-page input.form-control,
+    .ticket-management-page textarea.form-control,
+    .ticket-management-page select.form-select {
+        min-height: 47px;
+        border: 1px solid #dedee9;
+        border-radius: 12px;
+        background: #fbfbfe;
+        color: #29293c;
+        font-size: 13px;
+        transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+    .ticket-management-page textarea.form-control {
+        min-height: 105px;
+    }
+
+        .ticket-management-page input.form-control:hover,
+        .ticket-management-page textarea.form-control:hover,
+        .ticket-management-page select.form-select:hover {
+            transform: translateY(-1px);
+            border-color: #c9c5dc;
+        }
+
+        .ticket-management-page input.form-control:focus,
+        .ticket-management-page textarea.form-control:focus,
+        .ticket-management-page select.form-select:focus {
+            transform: translateY(-2px);
+            border-color: #7c3aed;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(124,58,237,.08), 0 10px 25px rgba(39,31,99,.06);
+        }
+
+    .ticket-management-page label.form-label {
+        color: #3b3b50;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    /* Buttons */
+    .ticket-management-page .btn {
+        border-radius: 11px;
+        font-weight: 800;
+        transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+
+        .ticket-management-page .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.03);
+            box-shadow: 0 11px 27px rgba(39,31,99,.15);
+        }
+
+        .ticket-management-page .btn:active {
+            transform: scale(.97);
+        }
+
+    /* Tables */
+    .ticket-management-page .table {
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+
+        .ticket-management-page .table thead th {
+            padding: 14px 12px;
+            border-bottom: 1px solid #e5e3ee;
+            background: linear-gradient(90deg,#f8f7fc,#f3faff);
+            color: #66667a;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+        }
+
+        .ticket-management-page .table tbody td {
+            padding: 14px 12px;
+            border-color: #f0eff5;
+            color: #46465a;
+        }
+
+        .ticket-management-page .table tbody tr {
+            transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+        }
+
+            .ticket-management-page .table tbody tr:hover {
+                transform: translateX(5px);
+                background: linear-gradient(90deg,rgba(124,58,237,.045),rgba(6,182,212,.035));
+                box-shadow: 0 8px 25px rgba(39,31,99,.05);
+            }
+
+    .ticket-management-page .badge {
+        padding: 7px 10px;
+        border-radius: 30px;
+        font-weight: 800;
+    }
+
+    .ticket-management-page .bg-light {
+        border: 1px solid #e9e7f2 !important;
+        background: linear-gradient(135deg,#faf9ff,#f5fbff) !important;
+        border-radius: 15px !important;
+    }
+
+    .ticket-management-page > .alert {
+        border: 0;
+        border-radius: 15px;
+        box-shadow: 0 12px 30px rgba(39,31,99,.08);
+    }
+
+    /* JS-controlled responsive classes */
+    .ticket-management-page.ticket-mobile .ticket-hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ticket-management-page.ticket-mobile .ticket-hero-status {
+        align-self: flex-start;
+    }
+
+    .ticket-management-page.ticket-small .ticket-hero {
+        padding: 22px 19px;
+    }
+
+        .ticket-management-page.ticket-small .ticket-hero h1 {
+            font-size: 25px;
+        }
+
+        .ticket-management-page.ticket-small .ticket-hero p {
+            font-size: 11px;
+        }
+
+    .ticket-management-page.ticket-small .ticket-hero-status {
+        width: 100%;
+    }
+</style>
+
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            // PREMIUM FLOATING TICKET PORTAL INTERACTIONS
+            function updateTicketLayout() {
+                var page = $(".ticket-management-page");
+                var width = window.innerWidth;
+
+                page.removeClass("ticket-mobile ticket-small");
+
+                if (width <= 900) {
+                    page.addClass("ticket-mobile");
+                }
+
+                if (width <= 600) {
+                    page.addClass("ticket-small");
+                }
+            }
+
+            updateTicketLayout();
+            $(window).on("resize", updateTicketLayout);
+
+            // Cursor-responsive ambient motion.
+            $(document).on("mousemove", function(event) {
+                var x = (event.clientX / window.innerWidth) - 0.5;
+                var y = (event.clientY / window.innerHeight) - 0.5;
+
+                $(".ticket-glow-1").css(
+                    "transform",
+                    "translate(" + (x * 22) + "px," + (y * 18) + "px)"
+                );
+
+                $(".ticket-glow-2").css(
+                    "transform",
+                    "translate(" + (x * -18) + "px," + (y * -15) + "px)"
+                );
+
+                $(".ticket-glow-3").css(
+                    "transform",
+                    "translate(" + (x * 12) + "px," + (y * -10) + "px)"
+                );
+
+                $(".ticket-orbit-1").css(
+                    "transform",
+                    "translate(" + (x * -13) + "px," + (y * 9) + "px)"
+                );
+
+                $(".ticket-orbit-2").css(
+                    "transform",
+                    "translate(" + (x * 10) + "px," + (y * -8) + "px)"
+                );
+            });
+
+            var ticketFloatStep = 0;
+
+            setInterval(function() {
+                ticketFloatStep++;
+
+                $(".ticket-particle-1").css("transform",
+                    "translate(" + Math.sin(ticketFloatStep / 11) * 18 + "px," +
+                    Math.cos(ticketFloatStep / 15) * 13 + "px)");
+
+                $(".ticket-particle-2").css("transform",
+                    "translate(" + Math.cos(ticketFloatStep / 13) * 15 + "px," +
+                    Math.sin(ticketFloatStep / 10) * 18 + "px)");
+
+                $(".ticket-particle-3").css("transform",
+                    "translate(" + Math.sin(ticketFloatStep / 9) * 14 + "px," +
+                    Math.cos(ticketFloatStep / 12) * 17 + "px)");
+
+                $(".ticket-particle-4").css("transform",
+                    "translate(" + Math.cos(ticketFloatStep / 16) * 18 + "px," +
+                    Math.sin(ticketFloatStep / 12) * 12 + "px)");
+
+                $(".ticket-particle-5").css("transform",
+                    "translate(" + Math.sin(ticketFloatStep / 14) * 12 + "px," +
+                    Math.cos(ticketFloatStep / 17) * 15 + "px)");
+            }, 120);
+
+
+            function showValidation(message) {
+                alert(message);
+            }
+
+            function validateTicketForm() {
+
+                var customer = $("#ticketCustomer").val();
+                var subject = $("#ticketSubject").val().trim();
+                var description = $("#ticketDescription").val().trim();
+                var priority = $("#ticketPriority").val();
+                var status = $("#ticketStatus").val();
+
+                // CUSTOMER
+                if (customer === "" || customer === null) {
+                    showValidation("Customer is required.");
+                    $("#ticketCustomer").focus();
+                    return false;
+                }
+
+                // SUBJECT
+                if (subject === "") {
+                    showValidation("Ticket Subject is required.");
+                    $("#ticketSubject").focus();
+                    return false;
+                }
+
+                if (subject.length < 5) {
+                    showValidation("Ticket Subject must be at least 5 characters.");
+                    $("#ticketSubject").focus();
+                    return false;
+                }
+
+                // DESCRIPTION
+                if (description === "") {
+                    showValidation("Ticket Description is required.");
+                    $("#ticketDescription").focus();
+                    return false;
+                }
+
+                if (description.length < 10) {
+                    showValidation("Ticket Description must be at least 10 characters.");
+                    $("#ticketDescription").focus();
+                    return false;
+                }
+
+                // PRIORITY
+                if (priority === "" || priority === null) {
+                    showValidation("Priority is required.");
+                    $("#ticketPriority").focus();
+                    return false;
+                }
+
+                // STATUS
+                if (status === "" || status === null) {
+                    showValidation("Status is required.");
+                    $("#ticketStatus").focus();
+                    return false;
+                }
+
+                return true;
+            }
+
+            // CREATE TICKET SUBMIT
+            $("#ticketForm").on("submit", function(event) {
+                if (!validateTicketForm()) {
+                    event.preventDefault();
+                    return false;
+                }
+                return true;
+            });
+
+            // RUNTIME BLUR VALIDATIONS (WITHOUT FOCUS LOOP)
+            $("#ticketSubject").on("blur", function() {
+                var subject = $(this).val().trim();
+                if (subject !== "" && subject.length < 5) {
+                    showValidation("Ticket Subject must be at least 5 characters.");
+                }
+            });
+
+            $("#ticketDescription").on("blur", function() {
+                var description = $(this).val().trim();
+                if (description !== "" && description.length < 10) {
+                    showValidation("Ticket Description must be at least 10 characters.");
+                }
+            });
+
+            // CLEAR FORM
+            $("#btnClearTicket").on("click", function() {
+                $("#ticketForm")[0].reset();
+            });
+
+            // SEARCH FORM VALIDATION
+            $("#ticketSearchForm").on("submit", function(event) {
+                var ticketId = $("#searchTicketId").val().trim();
+
+                if (ticketId === "") {
+                    event.preventDefault();
+                    showValidation("Ticket ID is required.");
+                    $("#searchTicketId").focus();
+                    return false;
+                }
+
+                if (!/^[0-9]+$/.test(ticketId) || Number(ticketId) <= 0) {
+                    event.preventDefault();
+                    showValidation("Please enter a valid Ticket ID.");
+                    $("#searchTicketId").focus();
+                    return false;
+                }
+
+                return true;
+            });
+
+            // ASSIGN EMPLOYEE VALIDATION
+            $("#assignEmployeeForm").on("submit", function(event) {
+                var employeeId = $("#assignEmployeeId").val();
+
+                if (employeeId === "" || employeeId === null) {
+                    event.preventDefault();
+                    showValidation("Please select an employee before assigning the ticket.");
+                    $("#assignEmployeeId").focus();
+                    return false;
+                }
+
+                return true;
+            });
+
+        });
+    </script>
+}

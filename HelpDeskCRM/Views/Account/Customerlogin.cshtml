@@ -1,0 +1,1703 @@
+﻿@model HelpDeskCRM.Models.CustomerLoginViewModel
+
+@{
+    ViewData["Title"] = "Customer Login";
+}
+
+<div class="customer-login-page">
+
+    <!-- BACKGROUND -->
+
+    <div class="customer-bg">
+
+        <div class="customer-orb customer-orb-one"></div>
+        <div class="customer-orb customer-orb-two"></div>
+        <div class="customer-orb customer-orb-three"></div>
+
+        <div class="customer-grid"></div>
+
+        <div class="customer-floating-dot dot-one"></div>
+        <div class="customer-floating-dot dot-two"></div>
+        <div class="customer-floating-dot dot-three"></div>
+        <div class="customer-floating-dot dot-four"></div>
+        <div class="customer-floating-dot dot-five"></div>
+
+    </div>
+
+
+    <!-- MAIN SHELL -->
+
+    <div class="customer-shell">
+
+
+        <!-- =================================================
+             LEFT BRAND PANEL
+        ================================================== -->
+
+        <section class="customer-showcase">
+
+            <div class="customer-showcase-content">
+
+
+                <!-- LOGO -->
+
+                <div class="customer-logo-area">
+
+                    <div class="customer-logo">
+                        ◆
+                    </div>
+
+                    <div class="customer-logo-ring ring-one"></div>
+                    <div class="customer-logo-ring ring-two"></div>
+                    <div class="customer-logo-ring ring-three"></div>
+
+                </div>
+
+
+                <div class="customer-mini-title">
+                    HELPDESK CRM
+                </div>
+
+
+                <h1>
+                    Support made
+                    <span>smarter.</span>
+                </h1>
+
+
+                <p class="customer-description">
+                    Access your personal support workspace,
+                    track tickets, communicate with your team
+                    and stay updated.
+                </p>
+
+
+                <!-- FEATURES -->
+
+                <div class="customer-features">
+
+
+                    <div class="customer-feature">
+
+                        <div class="customer-feature-icon blue">
+                            ◇
+                        </div>
+
+                        <div class="customer-feature-text">
+
+                            <strong>
+                                Smart Ticketing
+                            </strong>
+
+                            <small>
+                                Track and manage support requests
+                            </small>
+
+                        </div>
+
+                        <span class="customer-feature-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="customer-feature">
+
+                        <div class="customer-feature-icon purple">
+                            ✓
+                        </div>
+
+                        <div class="customer-feature-text">
+
+                            <strong>
+                                Faster Support
+                            </strong>
+
+                            <small>
+                                Stay connected with your support team
+                            </small>
+
+                        </div>
+
+                        <span class="customer-feature-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="customer-feature">
+
+                        <div class="customer-feature-icon pink">
+                            ◆
+                        </div>
+
+                        <div class="customer-feature-text">
+
+                            <strong>
+                                Personal Workspace
+                            </strong>
+
+                            <small>
+                                Keep your support activity organized
+                            </small>
+
+                        </div>
+
+                        <span class="customer-feature-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="customer-status">
+
+                    <span></span>
+
+                    CUSTOMER PORTAL OPERATIONAL
+
+                    <i></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORBITS -->
+
+            <div class="customer-orbits">
+
+                <div class="customer-orbit orbit-large"></div>
+                <div class="customer-orbit orbit-medium"></div>
+                <div class="customer-orbit orbit-small"></div>
+
+                <div class="customer-orbit-center">
+                    ◆
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RIGHT LOGIN PANEL
+        ================================================== -->
+
+        <section class="customer-form-panel">
+
+
+            <!-- HEADER -->
+
+            <div class="customer-heading">
+
+                <div class="customer-badge">
+
+                    <span>◆</span>
+
+                    CUSTOMER ACCESS
+
+                </div>
+
+
+                <h2>
+                    Customer Login
+                </h2>
+
+
+                <p>
+                    Welcome back. Sign in to your support workspace.
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <form asp-controller="Account"
+                  asp-action="CustomerLogin"
+                  method="post"
+                  id="customerLoginForm">
+
+                @Html.AntiForgeryToken()
+
+
+                <!-- VALIDATION -->
+
+                <div asp-validation-summary="ModelOnly"
+                     class="customer-validation">
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="customer-field">
+
+                    <label asp-for="Email">
+                        Email Address
+                    </label>
+
+
+                    <div class="customer-input-box">
+
+                        <span class="customer-input-icon">
+                            &#64;
+                        </span>
+
+
+                        <input asp-for="Email"
+                               type="email"
+                               class="customer-input"
+                               placeholder="Enter your email address"
+                               autocomplete="username" />
+
+                    </div>
+
+
+                    <span asp-validation-for="Email"
+                          class="customer-field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="customer-field">
+
+                    <div class="customer-password-label">
+
+                        <label asp-for="Password">
+                            Password
+                        </label>
+
+                        <span>
+                            SECURED
+                        </span>
+
+                    </div>
+
+
+                    <div class="customer-input-box">
+
+                        <span class="customer-input-icon password-icon">
+                            ◆
+                        </span>
+
+
+                        <input asp-for="Password"
+                               type="password"
+                               class="customer-input"
+                               id="customerPassword"
+                               placeholder="Enter your password"
+                               autocomplete="current-password" />
+
+
+                        <button type="button"
+                                class="customer-password-toggle"
+                                id="customerPasswordToggle">
+
+                            ◉
+
+                        </button>
+
+                    </div>
+
+
+                    <span asp-validation-for="Password"
+                          class="customer-field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- REMEMBER -->
+
+                <div class="customer-options">
+
+                    <label class="customer-remember">
+
+                        <input asp-for="RememberMe" />
+
+                        <span class="customer-checkbox">
+                            ✓
+                        </span>
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+
+                    <span class="customer-session">
+                        Session protected
+                    </span>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <button type="submit"
+                        class="customer-login-button"
+                        id="customerLoginButton">
+
+                    <span class="customer-button-shine"></span>
+
+                    <span class="customer-button-icon">
+                        ↪
+                    </span>
+
+                    <strong>
+                        Customer Login
+                    </strong>
+
+                    <span class="customer-button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="customer-divider">
+
+                <span></span>
+
+                <small>
+                    OR
+                </small>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- ADMIN LOGIN -->
+
+            <a asp-controller="Account"
+               asp-action="Login"
+               class="customer-switch-card">
+
+                <div class="customer-switch-icon">
+                    ◆
+                </div>
+
+
+                <div class="customer-switch-content">
+
+                    <small>
+                        ARE YOU AN ADMINISTRATOR?
+                    </small>
+
+                    <strong>
+                        Admin Login
+                    </strong>
+
+                </div>
+
+
+                <span class="customer-switch-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <!-- SECURITY -->
+
+            <div class="customer-security">
+
+                <span></span>
+
+                Protected customer environment
+
+                <b>
+                    ◆
+                </b>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="customer-footer">
+
+        HELPDESK CRM
+
+        <span>•</span>
+
+        CUSTOMER PORTAL
+
+        <span>•</span>
+
+        SECURE ACCESS
+
+    </div>
+
+</div>
+
+
+<style>
+
+    /* =========================================================
+       PAGE
+    ========================================================= */
+
+    .customer-login-page {
+        position: relative;
+        min-height: calc(100vh - 20px);
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 34px 20px 55px;
+        overflow: hidden;
+        background: radial-gradient( circle at 0% 15%, rgba(37,99,235,.13), transparent 32% ), radial-gradient( circle at 100% 18%, rgba(6,182,212,.13), transparent 32% ), radial-gradient( circle at 50% 100%, rgba(124,58,237,.12), transparent 35% ), #f7f8fc;
+    }
+
+
+    .customer-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+    }
+
+
+    .customer-grid {
+        position: absolute;
+        inset: 0;
+        opacity: .55;
+        background-image: linear-gradient( rgba(70,70,120,.035) 1px, transparent 1px ), linear-gradient( 90deg, rgba(70,70,120,.035) 1px, transparent 1px );
+        background-size: 42px 42px;
+    }
+
+
+    .customer-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: .18;
+        transition: transform 1.5s ease;
+    }
+
+
+    .customer-orb-one {
+        width: 380px;
+        height: 380px;
+        left: -180px;
+        top: 8%;
+        background: #2563eb;
+    }
+
+
+    .customer-orb-two {
+        width: 400px;
+        height: 400px;
+        right: -190px;
+        top: 8%;
+        background: #06b6d4;
+    }
+
+
+    .customer-orb-three {
+        width: 330px;
+        height: 330px;
+        left: 45%;
+        bottom: -220px;
+        background: #a855f7;
+    }
+
+
+    .customer-floating-dot {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        opacity: .35;
+        box-shadow: 0 0 14px rgba(124,58,237,.7);
+    }
+
+
+    .dot-one {
+        left: 8%;
+        top: 24%;
+    }
+
+    .dot-two {
+        left: 19%;
+        bottom: 18%;
+    }
+
+    .dot-three {
+        right: 14%;
+        top: 30%;
+    }
+
+    .dot-four {
+        right: 25%;
+        bottom: 19%;
+    }
+
+    .dot-five {
+        left: 52%;
+        top: 11%;
+    }
+
+
+    /* =========================================================
+       MAIN SHELL
+    ========================================================= */
+
+    .customer-shell {
+        position: relative;
+        z-index: 5;
+        width: min(1080px, 100%);
+        display: grid;
+        grid-template-columns: minmax(400px,.96fr) minmax(460px,1.04fr);
+        overflow: hidden;
+        border-radius: 30px;
+        background: rgba(255,255,255,.95);
+        border: 1px solid white;
+        box-shadow: 0 35px 90px rgba(28,20,75,.15);
+        backdrop-filter: blur(25px);
+    }
+
+
+    /* =========================================================
+       LEFT
+    ========================================================= */
+
+    .customer-showcase {
+        position: relative;
+        min-height: 650px;
+        overflow: hidden;
+        color: white;
+        background: linear-gradient( 135deg, #24105a, #4c1d95 38%, #6d28d9 70%, #2563eb );
+        background-size: 180% 180%;
+        transition: background-position 1s ease;
+    }
+
+
+        .customer-showcase:hover {
+            background-position: 100% 0%;
+        }
+
+
+    .customer-showcase-content {
+        position: relative;
+        z-index: 3;
+        padding: 48px 44px;
+    }
+
+
+    /* =========================================================
+       LOGO
+    ========================================================= */
+
+    .customer-logo-area {
+        position: relative;
+        width: 76px;
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 27px;
+    }
+
+
+    .customer-logo {
+        width: 58px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: rgba(255,255,255,.13);
+        border: 1px solid rgba(255,255,255,.32);
+        box-shadow: 0 15px 35px rgba(0,0,0,.20);
+        font-size: 22px;
+        transition: transform .4s ease;
+    }
+
+
+        .customer-logo:hover {
+            transform: rotate(-8deg) scale(1.08);
+        }
+
+
+    .customer-logo-ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.20);
+        transition: transform .7s ease;
+    }
+
+
+    .customer-logo-area:hover
+    .ring-one {
+        transform: scale(1.16) rotate(30deg);
+    }
+
+
+    .customer-logo-area:hover
+    .ring-two {
+        transform: scale(.86) rotate(-30deg);
+    }
+
+
+    .ring-one {
+        inset: 0;
+    }
+
+    .ring-two {
+        inset: 9px;
+        border-style: dashed;
+    }
+
+    .ring-three {
+        inset: 18px;
+    }
+
+
+    /* =========================================================
+       TEXT
+    ========================================================= */
+
+    .customer-mini-title {
+        margin-bottom: 9px;
+        color: rgba(255,255,255,.55);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 3px;
+    }
+
+
+    .customer-showcase h1 {
+        max-width: 390px;
+        margin: 0;
+        color: white;
+        font-size: 43px;
+        line-height: 1.05;
+        font-weight: 900;
+        letter-spacing: -1.7px;
+    }
+
+
+        .customer-showcase h1 span {
+            color: #67e8f9;
+        }
+
+
+    .customer-description {
+        max-width: 390px;
+        margin: 18px 0 0;
+        color: rgba(255,255,255,.68);
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+
+    /* =========================================================
+       FEATURES
+    ========================================================= */
+
+    .customer-features {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 27px;
+    }
+
+
+    .customer-feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.075);
+        transition: transform .3s ease, background .3s ease;
+    }
+
+
+        .customer-feature:hover {
+            transform: translateX(8px);
+            background: rgba(255,255,255,.15);
+        }
+
+
+    .customer-feature-icon {
+        width: 39px;
+        height: 39px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: white;
+        font-size: 12px;
+    }
+
+
+        .customer-feature-icon.blue {
+            background: linear-gradient( 135deg, #0ea5e9, #06b6d4 );
+        }
+
+
+        .customer-feature-icon.purple {
+            background: linear-gradient( 135deg, #7c3aed, #a855f7 );
+        }
+
+
+        .customer-feature-icon.pink {
+            background: linear-gradient( 135deg, #ec4899, #f43f5e );
+        }
+
+
+    .customer-feature-text strong {
+        display: block;
+        color: white;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+
+    .customer-feature-text small {
+        display: block;
+        margin-top: 3px;
+        color: rgba(255,255,255,.48);
+        font-size: 10px;
+    }
+
+
+    .customer-feature-arrow {
+        margin-left: auto;
+        color: rgba(255,255,255,.4);
+        transition: transform .3s ease;
+    }
+
+
+    .customer-feature:hover
+    .customer-feature-arrow {
+        color: white;
+        transform: translateX(5px);
+    }
+
+
+    /* =========================================================
+       STATUS
+    ========================================================= */
+
+    .customer-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 25px;
+        color: rgba(255,255,255,.45);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+    }
+
+
+        .customer-status span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 12px rgba(74,222,128,.8);
+        }
+
+
+        .customer-status i {
+            width: 32px;
+            height: 1px;
+            background: rgba(255,255,255,.16);
+        }
+
+
+    /* =========================================================
+       ORBITS
+    ========================================================= */
+
+    .customer-orbits {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        right: -120px;
+        bottom: -125px;
+    }
+
+
+    .customer-orbit {
+        position: absolute;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 50%;
+        transition: transform 1s ease;
+    }
+
+
+        .customer-orbit.orbit-large {
+            inset: 0;
+        }
+
+        .customer-orbit.orbit-medium {
+            inset: 38px;
+        }
+
+        .customer-orbit.orbit-small {
+            inset: 76px;
+        }
+
+
+    .customer-orbit-center {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 55px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255,255,255,.10);
+        border: 1px solid rgba(255,255,255,.18);
+    }
+
+
+    .customer-showcase:hover
+    .orbit-large {
+        transform: scale(1.08) rotate(15deg);
+    }
+
+
+    .customer-showcase:hover
+    .orbit-medium {
+        transform: scale(.92) rotate(-20deg);
+    }
+
+
+    /* =========================================================
+       RIGHT
+    ========================================================= */
+
+    .customer-form-panel {
+        padding: 43px 50px 27px;
+        background: rgba(255,255,255,.97);
+    }
+
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .customer-heading {
+        text-align: center;
+    }
+
+
+    .customer-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 13px;
+        border-radius: 30px;
+        color: #2563eb;
+        background: rgba(37,99,235,.07);
+        border: 1px solid rgba(37,99,235,.13);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+    }
+
+
+    .customer-heading h2 {
+        margin: 17px 0 6px;
+        color: #17172b;
+        font-size: 38px;
+        line-height: 1.1;
+        font-weight: 900;
+        letter-spacing: -1px;
+    }
+
+
+    .customer-heading p {
+        margin: 0;
+        color: #77778b;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+
+    /* =========================================================
+       FORM
+    ========================================================= */
+
+    #customerLoginForm {
+        margin-top: 28px;
+    }
+
+
+    .customer-validation {
+        margin-bottom: 13px;
+        color: #be123c;
+        font-size: 10px;
+    }
+
+
+        .customer-validation:empty {
+            display: none;
+        }
+
+
+    .customer-field {
+        margin-bottom: 20px;
+    }
+
+
+        .customer-field label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333347;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+
+    /* =========================================================
+       PASSWORD LABEL
+    ========================================================= */
+
+    .customer-password-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+
+        .customer-password-label label {
+            margin-bottom: 7px;
+        }
+
+
+        .customer-password-label span {
+            color: #aaaaba;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+
+    /* =========================================================
+       INPUT
+    ========================================================= */
+
+    .customer-input-box {
+        position: relative;
+    }
+
+
+    .customer-input-icon {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 31px;
+        height: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #2563eb;
+        background: rgba(37,99,235,.08);
+        font-size: 11px;
+        pointer-events: none;
+        transition: all .3s ease;
+    }
+
+
+        .customer-input-icon.password-icon {
+            color: #7c3aed;
+            background: rgba(124,58,237,.08);
+        }
+
+
+    .customer-input {
+        width: 100%;
+        height: 49px;
+        box-sizing: border-box;
+        padding: 0 49px 0 51px;
+        border: 1px solid #dedee9;
+        border-radius: 12px;
+        outline: none;
+        color: #252538;
+        background: #fafaff;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all .3s ease;
+    }
+
+
+        .customer-input::placeholder {
+            color: #9999aa;
+            font-size: 14px;
+        }
+
+
+        .customer-input:hover {
+            border-color: #c9c9d8;
+        }
+
+
+        .customer-input:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37,99,235,.065);
+        }
+
+
+    .customer-input-box:focus-within
+    .customer-input-icon {
+        color: white;
+        background: linear-gradient( 135deg, #2563eb, #7c3aed );
+        transform: translateY(-50%) scale(1.06);
+    }
+
+
+    /* =========================================================
+       PASSWORD TOGGLE
+    ========================================================= */
+
+    .customer-password-toggle {
+        position: absolute;
+        right: 7px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 8px;
+        color: #9999aa;
+        background: transparent;
+        cursor: pointer;
+        transition: all .25s ease;
+    }
+
+
+        .customer-password-toggle:hover {
+            color: #2563eb;
+            background: rgba(37,99,235,.07);
+        }
+
+
+    /* =========================================================
+       VALIDATION
+    ========================================================= */
+
+    .customer-field-error {
+        display: block;
+        margin-top: 5px;
+        color: #e11d48;
+        font-size: 9px;
+    }
+
+
+    /* =========================================================
+       OPTIONS
+    ========================================================= */
+
+    .customer-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: -1px 0 20px;
+    }
+
+
+    .customer-remember {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #5d5d70;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+
+        .customer-remember input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+    .customer-checkbox {
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #d5d5e1;
+        border-radius: 5px;
+        color: transparent;
+        background: white;
+        font-size: 9px;
+        transition: all .25s ease;
+    }
+
+
+    .customer-remember input:checked + .customer-checkbox {
+        color: white;
+        border-color: #2563eb;
+        background: linear-gradient( 135deg, #2563eb, #7c3aed );
+        box-shadow: 0 5px 12px rgba(37,99,235,.18);
+    }
+
+
+    .customer-session {
+        color: #9999aa;
+        font-size: 9px;
+    }
+
+
+    /* =========================================================
+       LOGIN BUTTON
+    ========================================================= */
+
+    .customer-login-button {
+        position: relative;
+        width: 100%;
+        height: 51px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        overflow: hidden;
+        border: none;
+        border-radius: 13px;
+        color: white;
+        background: linear-gradient( 100deg, #312e81, #4c1d95, #2563eb, #0891b2 );
+        background-size: 250% 250%;
+        box-shadow: 0 13px 30px rgba(37,99,235,.23);
+        font-size: 15px;
+        cursor: pointer;
+        transition: all .35s ease, background-position .7s ease;
+    }
+
+
+        .customer-login-button:hover {
+            transform: translateY(-2px);
+            background-position: 100% 0%;
+            box-shadow: 0 18px 38px rgba(37,99,235,.30);
+        }
+
+
+        .customer-login-button:active {
+            transform: scale(.99);
+        }
+
+
+    .customer-button-icon {
+        font-size: 14px;
+    }
+
+
+    .customer-button-arrow {
+        transition: transform .3s ease;
+    }
+
+
+    .customer-login-button:hover
+    .customer-button-arrow {
+        transform: translateX(5px);
+    }
+
+
+    /* =========================================================
+       BUTTON SHINE
+    ========================================================= */
+
+    .customer-button-shine {
+        position: absolute;
+        top: -80%;
+        left: -90px;
+        width: 55px;
+        height: 260%;
+        transform: rotate(25deg);
+        background: rgba(255,255,255,.22);
+        transition: left .7s ease;
+    }
+
+
+    .customer-login-button:hover
+    .customer-button-shine {
+        left: 115%;
+    }
+
+
+    /* =========================================================
+       DIVIDER
+    ========================================================= */
+
+    .customer-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 21px 0 12px;
+    }
+
+
+        .customer-divider span {
+            flex: 1;
+            height: 1px;
+            background: #e7e7ef;
+        }
+
+
+        .customer-divider small {
+            color: #aaaaba;
+            font-size: 8px;
+            font-weight: 900;
+        }
+
+
+    /* =========================================================
+       ADMIN SWITCH
+    ========================================================= */
+
+    .customer-switch-card {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        min-height: 52px;
+        padding: 7px 11px;
+        box-sizing: border-box;
+        border: 1px solid #e2e2ec;
+        border-radius: 12px;
+        color: inherit;
+        text-decoration: none;
+        background: #fbfbfe;
+        transition: all .3s ease;
+    }
+
+
+        .customer-switch-card:hover {
+            color: inherit;
+            text-decoration: none;
+            transform: translateX(5px);
+            border-color: rgba(124,58,237,.25);
+            box-shadow: 0 10px 25px rgba(30,20,80,.07);
+        }
+
+
+    .customer-switch-icon {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #7c3aed;
+        background: rgba(124,58,237,.08);
+        font-size: 10px;
+        transition: transform .3s ease;
+    }
+
+
+    .customer-switch-card:hover
+    .customer-switch-icon {
+        transform: rotate(-8deg) scale(1.05);
+    }
+
+
+    .customer-switch-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+        .customer-switch-content small {
+            color: #aaaaba;
+            font-size: 7px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+
+        .customer-switch-content strong {
+            margin-top: 3px;
+            color: #38384c;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+
+    .customer-switch-arrow {
+        margin-left: auto;
+        color: #aaaaba;
+        font-size: 15px;
+        transition: all .3s ease;
+    }
+
+
+    .customer-switch-card:hover
+    .customer-switch-arrow {
+        color: #7c3aed;
+        transform: translateX(5px);
+    }
+
+
+    /* =========================================================
+       SECURITY
+    ========================================================= */
+
+    .customer-security {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        margin-top: 17px;
+        color: #9999aa;
+        font-size: 10px;
+    }
+
+
+        .customer-security > span {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px rgba(34,197,94,.7);
+        }
+
+
+        .customer-security b {
+            color: #aaaaba;
+            font-size: 5px;
+        }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .customer-footer {
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #aaaaba;
+        font-size: 7px;
+        font-weight: 900;
+        letter-spacing: 1.3px;
+        white-space: nowrap;
+    }
+
+
+        .customer-footer span {
+            margin: 0 5px;
+        }
+
+
+    /* =========================================================
+       RESPONSIVE CLASSES
+    ========================================================= */
+
+    .customer-shell.mobile-customer {
+        display: block;
+        width: min(600px, calc(100vw - 28px));
+    }
+
+
+        .customer-shell.mobile-customer
+        .customer-showcase {
+            display: none;
+        }
+
+
+        .customer-shell.mobile-customer
+        .customer-form-panel {
+            padding: 36px 26px 27px;
+        }
+
+
+    .customer-shell.small-customer {
+        width: min(600px, calc(100vw - 24px));
+    }
+
+
+        .customer-shell.small-customer
+        .customer-form-panel {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+
+        .customer-shell.small-customer
+        .customer-session {
+            display: none;
+        }
+
+</style>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+
+                /* =================================================
+                   RESPONSIVE
+                ================================================== */
+
+                const shell =
+                    document.querySelector(
+                        ".customer-shell"
+                    );
+
+
+                function updateCustomerLayout() {
+
+                    if (!shell) {
+                        return;
+                    }
+
+
+                    const width =
+                        window.innerWidth;
+
+
+                    shell.classList.remove(
+                        "mobile-customer",
+                        "small-customer"
+                    );
+
+
+                    if (width <= 900) {
+
+                        shell.classList.add(
+                            "mobile-customer"
+                        );
+
+                    }
+
+
+                    if (width <= 600) {
+
+                        shell.classList.add(
+                            "small-customer"
+                        );
+
+                    }
+
+                }
+
+
+                updateCustomerLayout();
+
+
+                window.addEventListener(
+                    "resize",
+                    updateCustomerLayout
+                );
+
+
+                /* =================================================
+                   PASSWORD SHOW / HIDE
+                ================================================== */
+
+                const password =
+                    document.getElementById(
+                        "customerPassword"
+                    );
+
+
+                const toggle =
+                    document.getElementById(
+                        "customerPasswordToggle"
+                    );
+
+
+                if (
+                    password &&
+                    toggle
+                ) {
+
+                    toggle.addEventListener(
+                        "click",
+                        function() {
+
+                            if (
+                                password.type ===
+                                "password"
+                            ) {
+
+                                password.type =
+                                    "text";
+
+                                toggle.textContent =
+                                    "◌";
+
+                            }
+                            else {
+
+                                password.type =
+                                    "password";
+
+                                toggle.textContent =
+                                    "◉";
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* =================================================
+                   LOGIN BUTTON
+                ================================================== */
+
+                const form =
+                    document.getElementById(
+                        "customerLoginForm"
+                    );
+
+
+                const button =
+                    document.getElementById(
+                        "customerLoginButton"
+                    );
+
+
+                if (
+                    form &&
+                    button
+                ) {
+
+                    form.addEventListener(
+                        "submit",
+                        function() {
+
+                            if (
+                                form.checkValidity()
+                            ) {
+
+                                button.style.transform =
+                                    "scale(.985)";
+
+                                button.style.opacity =
+                                    ".88";
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* =================================================
+                   BACKGROUND MOUSE MOVEMENT
+                ================================================== */
+
+                const page =
+                    document.querySelector(
+                        ".customer-login-page"
+                    );
+
+
+                const orbOne =
+                    document.querySelector(
+                        ".customer-orb-one"
+                    );
+
+
+                const orbTwo =
+                    document.querySelector(
+                        ".customer-orb-two"
+                    );
+
+
+                if (
+                    page &&
+                    orbOne &&
+                    orbTwo
+                ) {
+
+                    page.addEventListener(
+                        "mousemove",
+                        function(event) {
+
+                            const x =
+                                (
+                                    event.clientX /
+                                    window.innerWidth
+                                ) - .5;
+
+
+                            const y =
+                                (
+                                    event.clientY /
+                                    window.innerHeight
+                                ) - .5;
+
+
+                            orbOne.style.transform =
+                                "translate(" +
+                                (x * 16) +
+                                "px," +
+                                (y * 16) +
+                                "px)";
+
+
+                            orbTwo.style.transform =
+                                "translate(" +
+                                (x * -14) +
+                                "px," +
+                                (y * -14) +
+                                "px)";
+
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+}

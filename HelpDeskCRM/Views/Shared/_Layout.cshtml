@@ -1,0 +1,961 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - HelpDeskCRM
+    </title>
+
+    <script type="importmap"></script>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/HelpDeskCRM.styles.css"
+          asp-append-version="true" />
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         PREMIUM HEADER
+    ====================================================== -->
+
+    <header class="premium-header">
+
+        <nav class="premium-navbar">
+
+            <div class="navbar-inner">
+
+
+                <!-- ================= BRAND ================= -->
+
+                <a class="premium-brand"
+                   asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <div class="brand-logo">
+
+                        <div class="brand-logo-inner">
+                            ◆
+                        </div>
+
+                        <span class="logo-pulse"></span>
+
+                    </div>
+
+
+                    <div class="brand-text">
+
+                        <strong>
+                            HelpDesk
+                            <span>CRM</span>
+                        </strong>
+
+                        <small>
+                            SUPPORT MANAGEMENT
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <!-- ================= MOBILE BUTTON ================= -->
+
+                <button class="premium-toggler"
+                        type="button"
+                        id="premiumMenuButton"
+                        aria-label="Toggle navigation">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+
+                <!-- ================= NAVIGATION ================= -->
+
+                <div class="premium-collapse"
+                     id="premiumNavbar">
+
+
+                    <div class="premium-nav-links">
+
+
+                        <!-- HOME -->
+
+                        <a class="premium-nav-link"
+                           asp-area=""
+                           asp-controller="Home"
+                           asp-action="Index">
+
+                            <span class="nav-icon">
+                                ⌂
+                            </span>
+
+                            <span>
+                                Home
+                            </span>
+
+                            <i></i>
+
+                        </a>
+
+
+                        <!-- PRIVACY -->
+
+                        <a class="premium-nav-link"
+                           asp-area=""
+                           asp-controller="Home"
+                           asp-action="Privacy">
+
+                            <span class="nav-icon">
+                                ◇
+                            </span>
+
+                            <span>
+                                Privacy
+                            </span>
+
+                            <i></i>
+
+                        </a>
+
+
+                    </div>
+
+
+                    <!-- ================= USER ================= -->
+                    @if (User.Identity != null &&
+                                             User.Identity.IsAuthenticated)
+                    {
+
+                        <div class="premium-user-area">
+
+
+                            <div class="premium-user">
+
+                                <div class="user-avatar">
+
+                                    @(
+                                        !string.IsNullOrWhiteSpace(
+                                            User.Identity.Name
+                                        )
+                                        ? User.Identity.Name
+                                            .Substring(0, 1)
+                                            .ToUpper()
+                                        : "A"
+                                    )
+
+                                </div>
+
+
+                                <div class="user-details">
+
+                                    <small>
+                                        LOGGED IN AS
+                                    </small>
+
+                                    <strong>
+                                        @User.Identity.Name
+                                    </strong>
+
+                                </div>
+
+
+                                <span class="user-status"></span>
+
+                            </div>
+
+
+                            <div class="nav-divider"></div>
+
+
+                            <form asp-controller="Account"
+                                  asp-action="Logout"
+                                  method="post"
+                                  class="logout-form">
+
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="premium-logout">
+
+                                    <span class="logout-icon">
+                                        ↪
+                                    </span>
+
+                                    <span>
+                                        Logout
+                                    </span>
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <div class="main-wrapper">
+
+        <main role="main">
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         SCRIPTS
+    ====================================================== -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+    @await RenderSectionAsync(
+        "Scripts",
+        required: false
+    )
+
+
+    <!-- =====================================================
+         PREMIUM NAVBAR CSS
+    ====================================================== -->
+
+    <style>
+
+            /* =====================================================
+                       GLOBAL
+                    ===================================================== */
+
+            body {
+                margin: 0;
+                background: radial-gradient( circle at 5% 5%, rgba(124,58,237,.07), transparent 25% ), radial-gradient( circle at 95% 10%, rgba(6,182,212,.07), transparent 25% ), #f7f8fc;
+                color: #17172b;
+            }
+
+
+            /* =====================================================
+                       HEADER
+                    ===================================================== */
+
+            .premium-header {
+                position: relative;
+                z-index: 10000;
+                width: 100%;
+                padding: 12px 18px 8px;
+            }
+
+
+            /* =====================================================
+                       NAVBAR
+                    ===================================================== */
+
+            .premium-navbar {
+                position: relative;
+                width: 100%;
+                border-radius: 20px;
+                background: rgba(255,255,255,.82);
+                border: 1px solid rgba(255,255,255,.95);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                box-shadow: 0 12px 40px rgba(30,20,80,.09);
+            }
+
+
+                /* animated light */
+
+                .premium-navbar::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 5%;
+                    width: 90%;
+                    height: 2px;
+                    border-radius: 20px;
+                    background: linear-gradient( 90deg, transparent, #7c3aed, #2563eb, #06b6d4, #ec4899, transparent );
+                    background-size: 200%;
+                    animation: navLight 5s linear infinite;
+                }
+
+
+            /* =====================================================
+                       INNER
+                    ===================================================== */
+
+            .navbar-inner {
+                min-height: 68px;
+                display: flex;
+                align-items: center;
+                padding: 0 16px 0 20px;
+            }
+
+
+            /* =====================================================
+                       BRAND
+                    ===================================================== */
+
+            .premium-brand {
+                display: flex;
+                align-items: center;
+                gap: 11px;
+                min-width: 220px;
+                text-decoration: none;
+                color: #17172b;
+            }
+
+
+                .premium-brand:hover {
+                    color: #17172b;
+                    text-decoration: none;
+                }
+
+
+            /* =====================================================
+                       LOGO
+                    ===================================================== */
+
+            .brand-logo {
+                position: relative;
+                width: 43px;
+                height: 43px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 13px;
+                background: linear-gradient( 135deg, #4c1d95, #7c3aed, #2563eb, #06b6d4 );
+                background-size: 250% 250%;
+                box-shadow: 0 8px 23px rgba(124,58,237,.30);
+                animation: logoGradient 6s ease infinite;
+            }
+
+
+            .brand-logo-inner {
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 9px;
+                color: white;
+                background: rgba(255,255,255,.16);
+                border: 1px solid rgba(255,255,255,.28);
+                font-size: 14px;
+                transition: transform .4s ease;
+            }
+
+
+            .premium-brand:hover
+            .brand-logo-inner {
+                transform: rotate(45deg) scale(1.08);
+            }
+
+
+            .logo-pulse {
+                position: absolute;
+                inset: -5px;
+                border-radius: 16px;
+                border: 1px solid rgba(124,58,237,.25);
+                animation: logoPulse 2.5s ease-out infinite;
+            }
+
+
+            /* =====================================================
+                       BRAND TEXT
+                    ===================================================== */
+
+            .brand-text {
+                display: flex;
+                flex-direction: column;
+                line-height: 1;
+            }
+
+
+                .brand-text strong {
+                    font-size: 16px;
+                    font-weight: 900;
+                    letter-spacing: -.4px;
+                }
+
+
+                    .brand-text strong span {
+                        background: linear-gradient( 90deg, #7c3aed, #2563eb, #06b6d4 );
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+
+
+                .brand-text small {
+                    margin-top: 5px;
+                    color: #a0a0b1;
+                    font-size: 7px;
+                    font-weight: 900;
+                    letter-spacing: 1.4px;
+                }
+
+
+            /* =====================================================
+                       NAVIGATION CONTAINER
+                    ===================================================== */
+
+            .premium-collapse {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+
+            /* =====================================================
+                       NAV LINKS
+                    ===================================================== */
+
+            .premium-nav-links {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                margin-left: 15px;
+            }
+
+
+            .premium-nav-link {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 14px;
+                border-radius: 12px;
+                color: #77778b;
+                text-decoration: none;
+                font-size: 11px;
+                font-weight: 800;
+                transition: all .3s ease;
+            }
+
+
+                .premium-nav-link:hover {
+                    color: #6d28d9;
+                    background: rgba(124,58,237,.07);
+                    text-decoration: none;
+                    transform: translateY(-1px);
+                }
+
+
+            .nav-icon {
+                width: 23px;
+                height: 23px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 7px;
+                color: #7c3aed;
+                background: rgba(124,58,237,.08);
+                transition: all .3s ease;
+            }
+
+
+            .premium-nav-link:hover
+            .nav-icon {
+                color: white;
+                background: linear-gradient( 135deg, #7c3aed, #2563eb );
+                transform: rotate(-8deg);
+            }
+
+
+            .premium-nav-link i {
+                position: absolute;
+                left: 50%;
+                bottom: 4px;
+                width: 0;
+                height: 2px;
+                border-radius: 10px;
+                background: linear-gradient( 90deg, #7c3aed, #06b6d4 );
+                transform: translateX(-50%);
+                transition: width .3s ease;
+            }
+
+
+            .premium-nav-link:hover i {
+                width: 45%;
+            }
+
+
+            /* =====================================================
+                       USER AREA
+                    ===================================================== */
+
+            .premium-user-area {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+
+            .premium-user {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                padding: 6px 13px 6px 6px;
+                border-radius: 14px;
+                background: rgba(124,58,237,.045);
+                border: 1px solid rgba(124,58,237,.09);
+                transition: all .3s ease;
+            }
+
+
+                .premium-user:hover {
+                    transform: translateY(-2px);
+                    background: rgba(124,58,237,.08);
+                    box-shadow: 0 8px 20px rgba(124,58,237,.09);
+                }
+
+
+            /* =====================================================
+                       AVATAR
+                    ===================================================== */
+
+            .user-avatar {
+                width: 35px;
+                height: 35px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 10px;
+                color: white;
+                font-size: 13px;
+                font-weight: 900;
+                background: linear-gradient( 135deg, #7c3aed, #2563eb, #06b6d4 );
+                background-size: 200% 200%;
+                box-shadow: 0 5px 15px rgba(124,58,237,.25);
+                animation: avatarGradient 5s ease infinite;
+            }
+
+
+            /* =====================================================
+                       USER DETAILS
+                    ===================================================== */
+
+            .user-details {
+                display: flex;
+                flex-direction: column;
+                line-height: 1;
+            }
+
+
+                .user-details small {
+                    margin-bottom: 5px;
+                    color: #a0a0b0;
+                    font-size: 7px;
+                    font-weight: 900;
+                    letter-spacing: 1px;
+                }
+
+
+                .user-details strong {
+                    color: #29293d;
+                    font-size: 11px;
+                    font-weight: 900;
+                    white-space: nowrap;
+                }
+
+
+            /* =====================================================
+                       ONLINE STATUS
+                    ===================================================== */
+
+            .user-status {
+                position: absolute;
+                top: 7px;
+                left: 29px;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #22c55e;
+                border: 2px solid white;
+                animation: onlinePulse 1.7s infinite;
+            }
+
+
+            /* =====================================================
+                       DIVIDER
+                    ===================================================== */
+
+            .nav-divider {
+                width: 1px;
+                height: 31px;
+                background: linear-gradient( to bottom, transparent, #ddddE8, transparent );
+            }
+
+
+            /* =====================================================
+                       LOGOUT
+                    ===================================================== */
+
+            .logout-form {
+                margin: 0;
+            }
+
+
+            .premium-logout {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 11px;
+                color: #e11d48;
+                background: rgba(244,63,94,.07);
+                border: 1px solid rgba(244,63,94,.10);
+                font-size: 10px;
+                font-weight: 900;
+                cursor: pointer;
+                overflow: hidden;
+                transition: all .3s ease;
+            }
+
+
+                .premium-logout::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    width: 0;
+                    background: linear-gradient( 90deg, #f43f5e, #ec4899 );
+                    transition: width .35s ease;
+                }
+
+
+                .premium-logout span {
+                    position: relative;
+                    z-index: 1;
+                }
+
+
+                .premium-logout:hover {
+                    color: white;
+                    transform: translateY(-2px);
+                    border-color: transparent;
+                    box-shadow: 0 8px 22px rgba(244,63,94,.22);
+                }
+
+
+                    .premium-logout:hover::before {
+                        width: 100%;
+                    }
+
+
+            .logout-icon {
+                font-size: 15px;
+                transition: transform .3s ease;
+            }
+
+
+            .premium-logout:hover
+            .logout-icon {
+                transform: translateX(3px);
+            }
+
+
+            /* =====================================================
+                       MOBILE TOGGLE
+                    ===================================================== */
+
+            .premium-toggler {
+                display: none;
+                width: 42px;
+                height: 40px;
+                margin-left: auto;
+                padding: 8px;
+                border: none;
+                border-radius: 11px;
+                background: rgba(124,58,237,.08);
+                cursor: pointer;
+            }
+
+
+                .premium-toggler span {
+                    display: block;
+                    width: 22px;
+                    height: 2px;
+                    margin: 4px auto;
+                    border-radius: 10px;
+                    background: #7c3aed;
+                    transition: all .3s ease;
+                }
+
+
+            /* =====================================================
+                       MAIN
+                    ===================================================== */
+
+            .main-wrapper {
+                position: relative;
+                width: 100%;
+            }
+
+
+            /* =====================================================
+                       ANIMATIONS
+                    ===================================================== */
+
+            @@keyframes navLight {
+
+                0% {
+                    background-position: 200% 0;
+                }
+
+                100% {
+                    background-position: -200% 0;
+                }
+            }
+
+
+            @@keyframes logoGradient {
+
+                0% {
+                    background-position: 0% 50%;
+                }
+
+                50% {
+                    background-position: 100% 50%;
+                }
+
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+
+            @@keyframes logoPulse {
+
+                0% {
+                    transform: scale(.9);
+                    opacity: .8;
+                }
+
+                70% {
+                    transform: scale(1.2);
+                    opacity: 0;
+                }
+
+                100% {
+                    transform: scale(1.2);
+                    opacity: 0;
+                }
+            }
+
+
+            @@keyframes avatarGradient {
+
+                0% {
+                    background-position: 0% 50%;
+                }
+
+                50% {
+                    background-position: 100% 50%;
+                }
+
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+
+            @@keyframes onlinePulse {
+
+                0%, 100% {
+                    box-shadow: 0 0 0 0 rgba(34,197,94,.45);
+                }
+
+                50% {
+                    box-shadow: 0 0 0 5px rgba(34,197,94,0);
+                }
+            }
+
+
+            /* =====================================================
+                       DESKTOP
+                    ===================================================== */
+
+            @@media(min-width:901px) {
+
+                .premium-collapse {
+                    display: flex !important;
+                }
+            }
+
+
+            /* =====================================================
+                       TABLET / MOBILE
+                    ===================================================== */
+
+            @@media(max-width:900px) {
+
+                .premium-toggler {
+                    display: block;
+                }
+
+
+                .premium-collapse {
+                    display: none;
+                    width: 100%;
+                    flex-direction: column;
+                    align-items: stretch;
+                    padding: 10px 5px 12px;
+                }
+
+
+                    .premium-collapse.open {
+                        display: flex;
+                    }
+
+
+                .premium-nav-links {
+                    margin: 0;
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+
+                .premium-nav-link {
+                    justify-content: flex-start;
+                }
+
+
+                .premium-user-area {
+                    width: 100%;
+                    margin-top: 10px;
+                    padding-top: 10px;
+                    border-top: 1px solid #eeeeF5;
+                    justify-content: space-between;
+                }
+
+
+                .nav-divider {
+                    display: none;
+                }
+            }
+
+
+            /* =====================================================
+                       SMALL MOBILE
+                    ===================================================== */
+
+            @@media(max-width:550px) {
+
+                .premium-header {
+                    padding: 8px 8px 5px;
+                }
+
+
+                .navbar-inner {
+                    padding: 0 10px;
+                }
+
+
+                .premium-brand {
+                    min-width: 0;
+                }
+
+
+                .brand-text small {
+                    display: none;
+                }
+
+
+                .brand-text strong {
+                    font-size: 14px;
+                }
+
+
+                .user-details strong {
+                    font-size: 10px;
+                }
+            }
+
+    </style>
+
+
+    <!-- =====================================================
+         MOBILE NAV SCRIPT
+    ====================================================== -->
+
+    <script>
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                function() {
+
+                    const button =
+                        document.getElementById(
+                            "premiumMenuButton"
+                        );
+
+                    const menu =
+                        document.getElementById(
+                            "premiumNavbar"
+                        );
+
+
+                    if (!button || !menu) {
+                        return;
+                    }
+
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            menu.classList.toggle(
+                                "open"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    </script>
+
+</body>
+
+</html>

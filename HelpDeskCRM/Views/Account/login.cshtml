@@ -1,0 +1,2183 @@
+﻿@model HelpDeskCRM.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login Portal";
+}
+
+<div class="login-page">
+
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
+
+    <div class="login-background">
+
+        <div class="login-orb orb-purple"></div>
+        <div class="login-orb orb-blue"></div>
+        <div class="login-orb orb-pink"></div>
+
+        <div class="login-grid"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FLOATING PARTICLES
+    ====================================================== -->
+
+    <div class="login-particles">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN LOGIN CONTAINER
+    ====================================================== -->
+
+    <div class="login-wrapper">
+
+
+        <!-- =================================================
+             LEFT BRAND PANEL
+        ================================================== -->
+
+        <section class="login-brand-panel">
+
+            <div class="brand-content">
+
+
+                <!-- Logo -->
+
+                <div class="login-logo">
+
+                    <div class="login-logo-inner">
+                        ◆
+                    </div>
+
+                    <div class="logo-ring ring-one"></div>
+
+                    <div class="logo-ring ring-two"></div>
+
+                </div>
+
+
+                <!-- Heading -->
+
+                <div class="welcome-label">
+                    WELCOME TO
+                </div>
+
+                <h1 class="brand-title">
+                    HelpDesk
+                    <span>CRM</span>
+                </h1>
+
+                <p class="brand-tagline">
+                    Support management, simplified.
+                </p>
+
+
+                <p class="brand-description">
+                    Manage customers, employees and support
+                    operations from one intelligent workspace.
+                </p>
+
+
+                <!-- =================================================
+                     FEATURES
+                ================================================== -->
+
+                <div class="feature-list">
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon purple">
+                            ◉
+                        </div>
+
+                        <div class="feature-content">
+
+                            <strong>
+                                Customer Management
+                            </strong>
+
+                            <span>
+                                Organized customer records
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon blue">
+                            ◇
+                        </div>
+
+                        <div class="feature-content">
+
+                            <strong>
+                                Smart Ticketing
+                            </strong>
+
+                            <span>
+                                Track and resolve issues
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon pink">
+                            ✓
+                        </div>
+
+                        <div class="feature-content">
+
+                            <strong>
+                                Secure Workspace
+                            </strong>
+
+                            <span>
+                                Protected administration
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- System status -->
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    <span>
+                        CRM SYSTEM OPERATIONAL
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Decorative circles -->
+
+            <div class="decorative-orbits">
+
+                <div></div>
+                <div></div>
+                <div></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RIGHT LOGIN PANEL
+        ================================================== -->
+
+        <section class="login-panel">
+
+
+            <!-- =================================================
+                 HEADER
+            ================================================== -->
+
+            <div class="login-header">
+
+                <div class="admin-badge">
+
+                    <span>
+                        ◆
+                    </span>
+
+                    ADMINISTRATOR ACCESS
+
+                </div>
+
+
+                <h2>
+                    Login Portal
+                </h2>
+
+
+                <p>
+                    Sign in to your administration workspace
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 TEMP DATA SUCCESS MESSAGE
+            ================================================== -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+
+                <div class="success-message">
+
+                    <div class="success-icon">
+                        ✓
+                    </div>
+
+                    <div class="success-content">
+
+                        <strong>
+                            Success
+                        </strong>
+
+                        <span>
+                            @TempData["SuccessMessage"]
+                        </span>
+
+                    </div>
+
+                </div>
+
+            }
+
+
+            <!-- =================================================
+                 SUCCESSFUL LOGIN STATE
+            ================================================== -->
+            @if (ViewBag.LoginSuccess == true)
+            {
+
+                <div class="login-success-state">
+
+
+                    <div class="success-large-icon">
+                        ✓
+                    </div>
+
+
+                    <h3>
+                        Login Successful!
+                    </h3>
+
+
+                    <p>
+                        Welcome back,
+                        <strong>
+                            @ViewBag.LoggedInUser
+                        </strong>
+                    </p>
+
+
+                    <!-- Dashboard -->
+
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="dashboard-button">
+
+                        <span>
+                            ◈
+                        </span>
+
+                        <strong>
+                            Go to Management Dashboard
+                        </strong>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <!-- Create + View Admin -->
+
+                    <div class="success-actions">
+
+
+                        <a asp-controller="Account"
+                           asp-action="Register"
+                           class="success-action create-action">
+
+                            <div class="success-action-icon">
+                                ＋
+                            </div>
+
+                            <div>
+
+                                <small>
+                                    ADMINISTRATION
+                                </small>
+
+                                <strong>
+                                    Create Admin
+                                </strong>
+
+                            </div>
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <a asp-controller="Admin"
+                           asp-action="Index"
+                           class="success-action view-action">
+
+                            <div class="success-action-icon">
+                                ◉
+                            </div>
+
+                            <div>
+
+                                <small>
+                                    ADMINISTRATION
+                                </small>
+
+                                <strong>
+                                    View Admin
+                                </strong>
+
+                            </div>
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+
+                    <div class="secure-message">
+
+                        <span class="secure-dot"></span>
+
+                        Your administrator session is active
+
+                    </div>
+
+                </div>
+
+            }
+
+            else
+            {
+
+
+                <!-- =================================================
+                     ADMIN LOGIN FORM
+                ================================================== -->
+
+                <form asp-controller="Account"
+                      asp-action="Login"
+                      method="post"
+                      class="login-form">
+
+                    @Html.AntiForgeryToken()
+
+
+                    <!-- Return URL -->
+
+                    <input type="hidden"
+                           name="returnUrl"
+                           value="@ViewBag.ReturnUrl" />
+
+
+                    <!-- =================================================
+                         VALIDATION SUMMARY
+                    ================================================== -->
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="validation-summary">
+                    </div>
+
+
+                    <!-- =================================================
+                         USER ID
+                    ================================================== -->
+
+                    <div class="form-field">
+
+                        <label asp-for="Username">
+                            User ID
+                        </label>
+
+
+                        <div class="input-box">
+
+                            <div class="input-icon">
+                                ◉
+                            </div>
+
+
+                            <input asp-for="Username"
+                                   class="login-input"
+                                   placeholder="Enter your User ID"
+                                   autocomplete="username" />
+
+
+                        </div>
+
+
+                        <span asp-validation-for="Username"
+                              class="field-validation">
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PASSWORD
+                    ================================================== -->
+
+                    <div class="form-field">
+
+                        <div class="password-label-row">
+
+                            <label asp-for="Password">
+                                Password
+                            </label>
+
+                            <span>
+                                SECURED
+                            </span>
+
+                        </div>
+
+
+                        <div class="input-box">
+
+                            <div class="input-icon">
+                                ◆
+                            </div>
+
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   class="login-input password-input"
+                                   id="passwordInput"
+                                   placeholder="Enter your password"
+                                   autocomplete="current-password" />
+
+
+                            <button type="button"
+                                    class="password-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Show password">
+
+                                ◉
+
+                            </button>
+
+                        </div>
+
+
+                        <span asp-validation-for="Password"
+                              class="field-validation">
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         REMEMBER ME
+                    ================================================== -->
+
+                    <div class="login-options">
+
+                        <label class="remember-me">
+
+                            <input asp-for="RememberMe" />
+
+                            <span class="custom-check">
+                                ✓
+                            </span>
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+
+                        <span class="session-info">
+                            Session: 8 hours
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         LOGIN BUTTON
+                    ================================================== -->
+
+                    <button type="submit"
+                            class="login-button">
+
+                        <span class="button-shine"></span>
+
+                        <span class="login-button-icon">
+                            ↪
+                        </span>
+
+                        <strong>
+                            Admin Login
+                        </strong>
+
+                        <span class="login-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- =================================================
+                     DIVIDER
+                ================================================== -->
+
+                <div class="divider">
+
+                    <span></span>
+
+                    <small>
+                        OR
+                    </small>
+
+                    <span></span>
+
+                </div>
+
+
+                <!-- =================================================
+                     CREATE ADMIN
+                ================================================== -->
+
+                <a asp-controller="Account"
+                   asp-action="Register"
+                   class="alternative-action admin-action">
+
+                    <div class="alternative-icon">
+                        ＋
+                    </div>
+
+
+                    <div class="alternative-content">
+
+                        <small>
+                            NEW ADMINISTRATOR?
+                        </small>
+
+                        <strong>
+                            Create Admin
+                        </strong>
+
+                    </div>
+
+
+                    <span class="alternative-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+                <!-- =================================================
+                     CUSTOMER LOGIN
+                ================================================== -->
+
+                <a asp-controller="Account"
+                   asp-action="CustomerLogin"
+                   class="alternative-action customer-action">
+
+                    <div class="alternative-icon">
+                        ◉
+                    </div>
+
+
+                    <div class="alternative-content">
+
+                        <small>
+                            ARE YOU A CUSTOMER?
+                        </small>
+
+                        <strong>
+                            Customer Login
+                        </strong>
+
+                    </div>
+
+
+                    <span class="alternative-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+            }
+
+
+            <!-- =================================================
+                 SECURITY FOOTER
+            ================================================== -->
+
+            <div class="login-security">
+
+                <span class="security-indicator"></span>
+
+                <span>
+                    Protected administrator environment
+                </span>
+
+                <span>
+                    ◆
+                </span>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAGE FOOTER
+    ====================================================== -->
+
+    <div class="login-footer">
+
+        <span>
+            HELPDESK CRM
+        </span>
+
+        <span>•</span>
+
+        <span>
+            ADMIN PORTAL
+        </span>
+
+        <span>•</span>
+
+        <span>
+            SECURE ACCESS
+        </span>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    /* =========================================================
+       PAGE
+    ========================================================= */
+
+    .login-page {
+        position: relative;
+        min-height: calc(100vh - 20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 45px 30px 70px;
+        overflow: hidden;
+        background: radial-gradient( circle at 8% 20%, rgba(124,58,237,.13), transparent 30% ), radial-gradient( circle at 92% 20%, rgba(6,182,212,.11), transparent 30% ), radial-gradient( circle at 65% 100%, rgba(236,72,153,.11), transparent 35% ), #f7f8fc;
+    }
+
+
+    /* =========================================================
+       BACKGROUND
+    ========================================================= */
+
+    .login-background {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+
+    .login-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(85px);
+        opacity: .23;
+        animation: orbMovement 12s ease-in-out infinite;
+    }
+
+
+    .orb-purple {
+        width: 360px;
+        height: 360px;
+        left: -140px;
+        top: 10%;
+        background: #7c3aed;
+    }
+
+
+    .orb-blue {
+        width: 400px;
+        height: 400px;
+        right: -150px;
+        top: 15%;
+        background: #06b6d4;
+        animation-delay: -4s;
+    }
+
+
+    .orb-pink {
+        width: 330px;
+        height: 330px;
+        left: 40%;
+        bottom: -180px;
+        background: #ec4899;
+        animation-delay: -8s;
+    }
+
+
+    .login-grid {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient( rgba(80,80,130,.035) 1px, transparent 1px ), linear-gradient( 90deg, rgba(80,80,130,.035) 1px, transparent 1px );
+        background-size: 42px 42px;
+    }
+
+
+    /* =========================================================
+       PARTICLES
+    ========================================================= */
+
+    .login-particles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+
+        .login-particles span {
+            position: absolute;
+            bottom: -20px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #8b5cf6;
+            opacity: .3;
+            animation: particleRise 13s linear infinite;
+        }
+
+
+            .login-particles span:nth-child(1) {
+                left: 7%;
+                animation-duration: 15s;
+            }
+
+            .login-particles span:nth-child(2) {
+                left: 17%;
+                animation-duration: 18s;
+            }
+
+            .login-particles span:nth-child(3) {
+                left: 29%;
+                animation-duration: 12s;
+            }
+
+            .login-particles span:nth-child(4) {
+                left: 41%;
+                animation-duration: 17s;
+            }
+
+            .login-particles span:nth-child(5) {
+                left: 52%;
+                animation-duration: 14s;
+            }
+
+            .login-particles span:nth-child(6) {
+                left: 63%;
+                animation-duration: 19s;
+            }
+
+            .login-particles span:nth-child(7) {
+                left: 73%;
+                animation-duration: 13s;
+            }
+
+            .login-particles span:nth-child(8) {
+                left: 82%;
+                animation-duration: 16s;
+            }
+
+            .login-particles span:nth-child(9) {
+                left: 91%;
+                animation-duration: 20s;
+            }
+
+            .login-particles span:nth-child(10) {
+                left: 47%;
+                animation-duration: 11s;
+            }
+
+
+    /* =========================================================
+       MAIN WRAPPER
+    ========================================================= */
+
+    .login-wrapper {
+        position: relative;
+        z-index: 5;
+        width: min(1120px, 100%);
+        min-height: 650px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+        border-radius: 30px;
+        background: rgba(255,255,255,.84);
+        border: 1px solid rgba(255,255,255,.95);
+        box-shadow: 0 35px 90px rgba(30,20,80,.14);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        animation: pageEnter .8s ease forwards;
+    }
+
+
+    /* =========================================================
+       LEFT BRAND PANEL
+    ========================================================= */
+
+    .login-brand-panel {
+        position: relative;
+        overflow: hidden;
+        padding: 58px;
+        color: white;
+        background: linear-gradient( 135deg, #26134f, #4c1d95, #6d28d9, #2563eb );
+        background-size: 250% 250%;
+        animation: brandGradient 12s ease infinite;
+    }
+
+
+    .brand-content {
+        position: relative;
+        z-index: 5;
+    }
+
+
+    /* =========================================================
+       LOGO
+    ========================================================= */
+
+    .login-logo {
+        position: relative;
+        width: 84px;
+        height: 84px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 38px;
+    }
+
+
+    .login-logo-inner {
+        width: 66px;
+        height: 66px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        color: white;
+        font-size: 27px;
+        background: rgba(255,255,255,.13);
+        border: 1px solid rgba(255,255,255,.30);
+        box-shadow: 0 15px 40px rgba(0,0,0,.20);
+        backdrop-filter: blur(15px);
+        animation: logoFloat 4s ease-in-out infinite;
+    }
+
+
+    .logo-ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.20);
+    }
+
+
+    .ring-one {
+        inset: 0;
+        animation: rotateRing 9s linear infinite;
+    }
+
+
+    .ring-two {
+        inset: 9px;
+        border-style: dashed;
+        animation: rotateRing 13s linear infinite reverse;
+    }
+
+
+    /* =========================================================
+       BRAND TEXT
+    ========================================================= */
+
+    .welcome-label {
+        margin-bottom: 10px;
+        color: rgba(255,255,255,.60);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 3px;
+    }
+
+
+    .brand-title {
+        margin: 0;
+        color: white;
+        font-size: 48px;
+        line-height: 1.05;
+        font-weight: 900;
+        letter-spacing: -2px;
+    }
+
+
+        .brand-title span {
+            background: linear-gradient( 90deg, #c4b5fd, #67e8f9, white );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200%;
+            animation: textGradient 5s linear infinite;
+        }
+
+
+    .brand-tagline {
+        margin: 13px 0 0;
+        color: rgba(255,255,255,.88);
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+
+    .brand-description {
+        max-width: 420px;
+        margin: 27px 0 0;
+        color: rgba(255,255,255,.65);
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+
+    /* =========================================================
+       FEATURES
+    ========================================================= */
+
+    .feature-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 31px;
+    }
+
+
+    .feature-card {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 12px 14px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 15px;
+        background: rgba(255,255,255,.075);
+        transition: all .35s ease;
+    }
+
+
+        .feature-card:hover {
+            transform: translateX(8px);
+            background: rgba(255,255,255,.14);
+            box-shadow: 0 10px 30px rgba(0,0,0,.10);
+        }
+
+
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        color: white;
+        font-size: 15px;
+    }
+
+
+        .feature-icon.purple {
+            background: linear-gradient( 135deg, #8b5cf6, #a855f7 );
+        }
+
+
+        .feature-icon.blue {
+            background: linear-gradient( 135deg, #2563eb, #06b6d4 );
+        }
+
+
+        .feature-icon.pink {
+            background: linear-gradient( 135deg, #ec4899, #f43f5e );
+        }
+
+
+    .feature-content strong {
+        display: block;
+        color: white;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+
+    .feature-content span {
+        display: block;
+        margin-top: 4px;
+        color: rgba(255,255,255,.50);
+        font-size: 10px;
+    }
+
+
+    /* =========================================================
+       STATUS
+    ========================================================= */
+
+    .system-status {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-top: 34px;
+        color: rgba(255,255,255,.48);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+    }
+
+
+    .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #4ade80;
+        box-shadow: 0 0 12px #4ade80;
+        animation: statusPulse 1.6s infinite;
+    }
+
+
+    /* =========================================================
+       DECORATIVE ORBITS
+    ========================================================= */
+
+    .decorative-orbits {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        right: -100px;
+        bottom: -100px;
+    }
+
+
+        .decorative-orbits div {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255,255,255,.11);
+            border-radius: 50%;
+        }
+
+
+            .decorative-orbits div:nth-child(2) {
+                inset: 35px;
+            }
+
+
+            .decorative-orbits div:nth-child(3) {
+                inset: 70px;
+            }
+
+
+    /* =========================================================
+       LOGIN PANEL
+    ========================================================= */
+
+    .login-panel {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 45px 52px 30px;
+        background: rgba(255,255,255,.92);
+    }
+
+
+    /* =========================================================
+       LOGIN HEADER
+    ========================================================= */
+
+    .login-header {
+        text-align: center;
+    }
+
+
+    .admin-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 13px;
+        border-radius: 30px;
+        color: #6d28d9;
+        background: rgba(124,58,237,.07);
+        border: 1px solid rgba(124,58,237,.12);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+    }
+
+
+    .login-header h2 {
+        margin: 22px 0 8px;
+        color: #17172b;
+        font-size: 36px;
+        line-height: 1.1;
+        font-weight: 900;
+        letter-spacing: -1px;
+    }
+
+
+    .login-header p {
+        margin: 0;
+        color: #77778a;
+        font-size: 14px;
+    }
+
+
+    /* =========================================================
+       SUCCESS MESSAGE
+    ========================================================= */
+
+    .success-message {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 22px;
+        padding: 13px;
+        border: 1px solid #bbf7d0;
+        border-radius: 13px;
+        background: #f0fdf4;
+    }
+
+
+    .success-icon {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: white;
+        background: #22c55e;
+        font-size: 15px;
+    }
+
+
+    .success-content strong {
+        display: block;
+        color: #15803d;
+        font-size: 11px;
+    }
+
+
+    .success-content span {
+        display: block;
+        margin-top: 3px;
+        color: #4b7d5b;
+        font-size: 10px;
+    }
+
+
+    /* =========================================================
+       LOGIN FORM
+    ========================================================= */
+
+    .login-form {
+        margin-top: 31px;
+    }
+
+
+    .form-field {
+        margin-bottom: 22px;
+    }
+
+
+        .form-field label {
+            display: block;
+            margin-bottom: 9px;
+            color: #3f3f54;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+    .input-box {
+        position: relative;
+    }
+
+
+    .input-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 31px;
+        height: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #7c3aed;
+        background: rgba(124,58,237,.08);
+        font-size: 12px;
+        z-index: 2;
+        transition: all .3s ease;
+    }
+
+
+    .login-input {
+        width: 100%;
+        height: 54px;
+        box-sizing: border-box;
+        padding: 0 50px 0 56px;
+        border: 1px solid #ddddE9;
+        border-radius: 14px;
+        outline: none;
+        color: #29293c;
+        background: #fafaff;
+        font-size: 14px;
+        transition: all .3s ease;
+    }
+
+
+        .login-input::placeholder {
+            color: #a7a7b7;
+        }
+
+
+        .login-input:focus {
+            border-color: #7c3aed;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(124,58,237,.08);
+        }
+
+
+    .input-box:focus-within
+    .input-icon {
+        color: white;
+        background: linear-gradient( 135deg, #7c3aed, #2563eb );
+        transform: translateY(-50%) scale(1.05);
+    }
+
+
+    /* =========================================================
+       PASSWORD
+    ========================================================= */
+
+    .password-label-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+        .password-label-row span {
+            color: #a4a4b3;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 34px;
+        height: 34px;
+        border: none;
+        border-radius: 9px;
+        color: #9292a4;
+        background: transparent;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all .25s ease;
+    }
+
+
+        .password-toggle:hover {
+            color: #7c3aed;
+            background: rgba(124,58,237,.07);
+        }
+
+
+    /* =========================================================
+       VALIDATION
+    ========================================================= */
+
+    .validation-summary {
+        margin-bottom: 15px;
+        padding: 10px 13px;
+        border-radius: 10px;
+        color: #be123c;
+        background: #fff1f2;
+        border: 1px solid #fecdd3;
+        font-size: 11px;
+    }
+
+
+        .validation-summary:empty {
+            display: none;
+        }
+
+
+    .field-validation {
+        display: block;
+        margin-top: 6px;
+        color: #e11d48;
+        font-size: 10px;
+    }
+
+
+    /* =========================================================
+       OPTIONS
+    ========================================================= */
+
+    .login-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 3px 0 22px;
+    }
+
+
+    .remember-me {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        cursor: pointer;
+        color: #626277;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+        .remember-me input {
+            position: absolute;
+            opacity: 0;
+        }
+
+
+    .custom-check {
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #d6d6e2;
+        border-radius: 5px;
+        color: transparent;
+        background: white;
+        font-size: 10px;
+        transition: all .25s ease;
+    }
+
+
+    .remember-me input:checked + .custom-check {
+        color: white;
+        border-color: #7c3aed;
+        background: linear-gradient( 135deg, #7c3aed, #2563eb );
+    }
+
+
+    .session-info {
+        color: #a3a3b2;
+        font-size: 9px;
+    }
+
+
+    /* =========================================================
+       LOGIN BUTTON
+    ========================================================= */
+
+    .login-button {
+        position: relative;
+        width: 100%;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        overflow: hidden;
+        border: none;
+        border-radius: 14px;
+        color: white;
+        background: linear-gradient( 100deg, #4c1d95, #7c3aed, #2563eb, #06b6d4 );
+        background-size: 250% 250%;
+        box-shadow: 0 13px 30px rgba(124,58,237,.24);
+        font-size: 14px;
+        cursor: pointer;
+        transition: all .35s ease;
+        animation: buttonGradient 7s ease infinite;
+    }
+
+
+        .login-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 38px rgba(124,58,237,.32);
+        }
+
+
+    .login-button-icon {
+        font-size: 17px;
+    }
+
+
+    .login-arrow {
+        transition: transform .3s ease;
+    }
+
+
+    .login-button:hover
+    .login-arrow {
+        transform: translateX(5px);
+    }
+
+
+    .button-shine {
+        position: absolute;
+        top: -100%;
+        left: -120px;
+        width: 65px;
+        height: 300%;
+        transform: rotate(25deg);
+        background: rgba(255,255,255,.23);
+        transition: left .7s ease;
+    }
+
+
+    .login-button:hover
+    .button-shine {
+        left: 110%;
+    }
+
+
+    /* =========================================================
+       DIVIDER
+    ========================================================= */
+
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 23px 0 15px;
+    }
+
+
+        .divider span {
+            flex: 1;
+            height: 1px;
+            background: #e8e8f0;
+        }
+
+
+        .divider small {
+            color: #a5a5b4;
+            font-size: 9px;
+            font-weight: 900;
+        }
+
+
+    /* =========================================================
+       ALTERNATIVE ACTIONS
+    ========================================================= */
+
+    .alternative-action {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 57px;
+        margin-bottom: 9px;
+        padding: 8px 13px;
+        border: 1px solid #e3e3ec;
+        border-radius: 14px;
+        color: inherit;
+        text-decoration: none;
+        background: #fbfbfe;
+        transition: all .3s ease;
+    }
+
+
+        .alternative-action:hover {
+            transform: translateX(5px);
+            color: inherit;
+            text-decoration: none;
+            box-shadow: 0 8px 22px rgba(30,20,80,.07);
+        }
+
+
+    .admin-action:hover {
+        border-color: rgba(124,58,237,.25);
+        background: rgba(124,58,237,.035);
+    }
+
+
+    .customer-action:hover {
+        border-color: rgba(37,99,235,.25);
+        background: rgba(37,99,235,.035);
+    }
+
+
+    .alternative-icon {
+        width: 37px;
+        height: 37px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 10px;
+        color: #7c3aed;
+        background: rgba(124,58,237,.08);
+        font-size: 15px;
+        transition: all .3s ease;
+    }
+
+
+    .customer-action
+    .alternative-icon {
+        color: #2563eb;
+        background: rgba(37,99,235,.08);
+    }
+
+
+    .alternative-action:hover
+    .alternative-icon {
+        color: white;
+        background: linear-gradient( 135deg, #7c3aed, #2563eb );
+        transform: scale(1.08);
+    }
+
+
+    .alternative-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+        .alternative-content small {
+            color: #a4a4b3;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+
+        .alternative-content strong {
+            margin-top: 4px;
+            color: #36364a;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+    .alternative-arrow {
+        margin-left: auto;
+        color: #aaaaba;
+        font-size: 17px;
+        transition: all .3s ease;
+    }
+
+
+    .alternative-action:hover
+    .alternative-arrow {
+        color: #7c3aed;
+        transform: translateX(5px);
+    }
+
+
+    /* =========================================================
+       SUCCESS STATE
+    ========================================================= */
+
+    .login-success-state {
+        margin-top: 35px;
+        text-align: center;
+        animation: successEnter .5s ease;
+    }
+
+
+    .success-large-icon {
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 22px;
+        color: white;
+        background: linear-gradient( 135deg, #16a34a, #22c55e );
+        box-shadow: 0 14px 30px rgba(34,197,94,.20);
+        font-size: 32px;
+        animation: successPop .6s ease;
+    }
+
+
+    .login-success-state h3 {
+        margin: 0;
+        color: #17172b;
+        font-size: 25px;
+        font-weight: 900;
+    }
+
+
+    .login-success-state > p {
+        margin: 8px 0 25px;
+        color: #77778a;
+        font-size: 13px;
+    }
+
+
+        .login-success-state > p strong {
+            color: #7c3aed;
+        }
+
+
+    /* Dashboard button */
+
+    .dashboard-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 54px;
+        border-radius: 13px;
+        color: white;
+        background: linear-gradient( 100deg, #4c1d95, #7c3aed, #2563eb );
+        background-size: 200%;
+        text-decoration: none;
+        box-shadow: 0 12px 28px rgba(124,58,237,.22);
+        transition: all .3s ease;
+        animation: buttonGradient 7s ease infinite;
+    }
+
+
+        .dashboard-button:hover {
+            color: white;
+            text-decoration: none;
+            transform: translateY(-3px);
+            box-shadow: 0 17px 35px rgba(124,58,237,.30);
+        }
+
+
+        .dashboard-button strong {
+            font-size: 13px;
+        }
+
+
+        .dashboard-button .arrow {
+            transition: transform .3s ease;
+        }
+
+
+        .dashboard-button:hover .arrow {
+            transform: translateX(5px);
+        }
+
+
+    /* Success actions */
+
+    .success-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+
+    .success-action {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 10px;
+        border: 1px solid #e4e4ed;
+        border-radius: 12px;
+        color: inherit;
+        text-decoration: none;
+        text-align: left;
+        background: #fbfbfe;
+        transition: all .3s ease;
+    }
+
+
+        .success-action:hover {
+            color: inherit;
+            text-decoration: none;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(30,20,80,.07);
+        }
+
+
+    .success-action-icon {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #7c3aed;
+        background: rgba(124,58,237,.08);
+    }
+
+
+    .success-action small {
+        display: block;
+        color: #aaaaba;
+        font-size: 7px;
+        font-weight: 900;
+    }
+
+
+    .success-action strong {
+        display: block;
+        margin-top: 3px;
+        color: #38384b;
+        font-size: 10px;
+    }
+
+
+    .success-action > span {
+        margin-left: auto;
+        color: #aaaaba;
+    }
+
+
+    .secure-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        margin-top: 24px;
+        color: #9999aa;
+        font-size: 9px;
+    }
+
+
+    .secure-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 9px rgba(34,197,94,.7);
+        animation: statusPulse 1.7s infinite;
+    }
+
+
+    /* =========================================================
+       SECURITY FOOTER
+    ========================================================= */
+
+    .login-security {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        margin-top: auto;
+        padding-top: 20px;
+        color: #a2a2b1;
+        font-size: 9px;
+    }
+
+
+    .security-indicator {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 8px rgba(34,197,94,.7);
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .login-footer {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        z-index: 5;
+        display: flex;
+        gap: 9px;
+        transform: translateX(-50%);
+        color: #a4a4b3;
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 1.3px;
+        white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       ANIMATIONS
+    ========================================================= */
+
+    @@keyframes pageEnter {
+
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+
+    @@keyframes orbMovement {
+
+        0%, 100% {
+            transform: translate(0,0) scale(1);
+        }
+
+        50% {
+            transform: translate(45px,-35px) scale(1.12);
+        }
+    }
+
+
+    @@keyframes particleRise {
+
+        0% {
+            transform: translateY(0) scale(.5);
+            opacity: 0;
+        }
+
+        15% {
+            opacity: .35;
+        }
+
+        85% {
+            opacity: .25;
+        }
+
+        100% {
+            transform: translateY(-110vh) scale(1);
+            opacity: 0;
+        }
+    }
+
+
+    @@keyframes brandGradient {
+
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+
+    @@keyframes logoFloat {
+
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-7px);
+        }
+    }
+
+
+    @@keyframes rotateRing {
+
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+    @@keyframes textGradient {
+
+        0% {
+            background-position: 0% 50%;
+        }
+
+        100% {
+            background-position: 200% 50%;
+        }
+    }
+
+
+    @@keyframes statusPulse {
+
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(34,197,94,.45);
+        }
+
+        50% {
+            box-shadow: 0 0 0 6px rgba(34,197,94,0);
+        }
+    }
+
+
+    @@keyframes buttonGradient {
+
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+
+    @@keyframes successPop {
+
+        0% {
+            transform: scale(.5);
+            opacity: 0;
+        }
+
+        70% {
+            transform: scale(1.08);
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+
+    @@keyframes successEnter {
+
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @@media(max-width:900px) {
+
+        .login-wrapper {
+            grid-template-columns: 1fr;
+            max-width: 600px;
+        }
+
+
+        .login-brand-panel {
+            display: none;
+        }
+
+
+        .login-panel {
+            min-height: 620px;
+            padding: 45px 45px 30px;
+        }
+    }
+
+
+    @@media(max-width:600px) {
+
+        .login-page {
+            padding: 25px 12px 60px;
+        }
+
+
+        .login-wrapper {
+            border-radius: 22px;
+        }
+
+
+        .login-panel {
+            padding: 35px 24px 25px;
+        }
+
+
+        .login-header h2 {
+            font-size: 30px;
+        }
+
+
+        .login-header p {
+            font-size: 12px;
+        }
+
+
+        .success-actions {
+            grid-template-columns: 1fr;
+        }
+
+
+        .login-footer {
+            font-size: 6px;
+        }
+    }
+
+</style>
+
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+
+            /* =================================================
+               PASSWORD SHOW / HIDE
+            ================================================= */
+
+            const passwordInput =
+                document.getElementById(
+                    "passwordInput"
+                );
+
+            const passwordToggle =
+                document.getElementById(
+                    "passwordToggle"
+                );
+
+
+            if (
+                passwordInput &&
+                passwordToggle
+            ) {
+
+                passwordToggle.addEventListener(
+                    "click",
+                    function() {
+
+                        if (
+                            passwordInput.type ===
+                            "password"
+                        ) {
+
+                            passwordInput.type =
+                                "text";
+
+                            passwordToggle.textContent =
+                                "◌";
+
+                        }
+                        else {
+
+                            passwordInput.type =
+                                "password";
+
+                            passwordToggle.textContent =
+                                "◉";
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               LOGIN BUTTON LOADING EFFECT
+            ================================================= */
+
+            const loginForm =
+                document.querySelector(
+                    ".login-form"
+                );
+
+            const loginButton =
+                document.querySelector(
+                    ".login-button"
+                );
+
+
+            if (
+                loginForm &&
+                loginButton
+            ) {
+
+                loginForm.addEventListener(
+                    "submit",
+                    function() {
+
+                        if (
+                            loginForm.checkValidity()
+                        ) {
+
+                            loginButton.style.opacity =
+                                "0.85";
+
+                            loginButton.style.pointerEvents =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+</script>

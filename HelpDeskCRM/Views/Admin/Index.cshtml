@@ -1,0 +1,293 @@
+﻿@model HelpDeskCRM.Models.AdminManagementViewModel
+
+@{
+    ViewData["Title"] = "Admin Management";
+}
+
+<div class="container py-5">
+
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold"
+                style="color:#37318b;">
+
+                👑 Admin Management
+
+            </h1>
+
+            <p class="text-muted mb-0">
+
+                Welcome,
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+
+            </p>
+
+        </div>
+
+
+        <a asp-controller="Account"
+           asp-action="Login"
+           class="btn btn-outline-secondary">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUCCESS MESSAGE
+         ===================================================== -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            ✅ @TempData["SuccessMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
+
+    <!-- =====================================================
+         ERROR MESSAGE
+         ===================================================== -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+
+            ⚠️ @TempData["ErrorMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
+
+    <!-- =====================================================
+         ADMIN LIST CARD
+         ===================================================== -->
+
+    <div class="card border-0 shadow-sm">
+
+        <!-- HEADER -->
+
+        <div class="card-header text-white"
+             style="background:#37318b;">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h4 class="mb-1">
+                        👥 Admin List
+                    </h4>
+
+                    <small>
+                        Manage administrators
+                    </small>
+
+                </div>
+
+                <span class="badge bg-light text-dark fs-6">
+
+                    @(Model.Admins?.Count ?? 0)
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- BODY -->
+
+        <div class="card-body p-0">
+
+            @if (Model.Admins == null ||
+                 Model.Admins.Count == 0)
+            {
+                <!-- =========================================
+                     NO ADMINS
+                     ========================================= -->
+
+                <div class="text-center py-5">
+
+                    <div style="font-size:50px;">
+                        👑
+                    </div>
+
+                    <h5>
+                        No admins found
+                    </h5>
+
+                </div>
+            }
+            else
+            {
+                <!-- =========================================
+                     ADMIN TABLE
+                     ========================================= -->
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <!-- TABLE HEADER -->
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>
+                                    Admin ID
+                                </th>
+
+                                <th>
+                                    Admin Name
+                                </th>
+
+                                <th>
+                                    User ID
+                                </th>
+
+                                <th>
+                                    Created
+                                </th>
+
+                                <th class="text-center">
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <!-- TABLE BODY -->
+
+                        <tbody>
+
+                            @foreach (var admin in Model.Admins)
+                            {
+                                <tr>
+
+                                    <!-- ADMIN ID -->
+
+                                    <td>
+
+                                        <span class="badge bg-primary">
+
+                                            @admin.AdminId
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- ADMIN NAME -->
+
+                                    <td>
+
+                                        <strong>
+                                            @admin.AdminName
+                                        </strong>
+
+                                    </td>
+
+
+                                    <!-- USER ID -->
+
+                                    <td>
+
+                                        @admin.UserId
+
+                                    </td>
+
+
+                                    <!-- CREATED DATE -->
+
+                                    <td>
+
+                                        @admin.CreatedAt.ToString(
+                                            "dd MMM yyyy"
+                                        )
+
+                                    </td>
+
+
+                                    <!-- ACTIONS -->
+
+                                    <td>
+
+                                        <div class="d-flex justify-content-center gap-2">
+
+                                            <!-- UPDATE -->
+
+                                            <a asp-controller="Admin"
+                                               asp-action="Edit"
+                                               asp-route-adminId="@admin.AdminId"
+                                               class="btn btn-sm btn-primary">
+
+                                                ✏️ Update
+
+                                            </a>
+
+
+                                            <!-- DELETE / DEACTIVATE -->
+
+                                            <form asp-controller="Admin"
+                                                  asp-action="Delete"
+                                                  method="post"
+                                                  onsubmit="return confirm('Are you sure you want to deactivate this admin?');">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <input type="hidden"
+                                                       name="adminId"
+                                                       value="@admin.AdminId" />
+
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-danger">
+
+                                                    🗑️ Delete
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

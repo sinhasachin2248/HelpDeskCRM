@@ -1,0 +1,2115 @@
+﻿@model HelpDeskCRM.Models.AdminRegisterViewModel
+
+@{
+    ViewData["Title"] = "Create Admin Account";
+}
+
+<div class="admin-register-page">
+
+    <!-- BACKGROUND -->
+
+    <div class="register-background">
+
+        <div class="register-orb register-orb-one"></div>
+        <div class="register-orb register-orb-two"></div>
+        <div class="register-orb register-orb-three"></div>
+
+        <div class="register-grid"></div>
+
+        <div class="register-dot dot-one"></div>
+        <div class="register-dot dot-two"></div>
+        <div class="register-dot dot-three"></div>
+        <div class="register-dot dot-four"></div>
+
+    </div>
+
+
+    <!-- MAIN CARD -->
+
+    <div class="register-shell">
+
+
+        <!-- =================================================
+             LEFT BRAND PANEL
+        ================================================== -->
+
+        <section class="register-showcase">
+
+            <div class="register-showcase-content">
+
+
+                <!-- LOGO -->
+
+                <div class="register-logo-area">
+
+                    <div class="register-logo">
+                        ◆
+                    </div>
+
+                    <div class="register-logo-ring ring-one"></div>
+                    <div class="register-logo-ring ring-two"></div>
+                    <div class="register-logo-ring ring-three"></div>
+
+                </div>
+
+
+                <div class="register-mini-title">
+                    HELPDESK CRM
+                </div>
+
+
+                <h1>
+                    Build your
+                    <span>workspace.</span>
+                </h1>
+
+
+                <p class="register-description">
+                    Create your administrator account and gain
+                    secure access to the HelpDesk CRM management
+                    workspace.
+                </p>
+
+
+                <!-- FEATURES -->
+
+                <div class="register-features">
+
+
+                    <div class="register-feature">
+
+                        <div class="register-feature-icon blue">
+                            ✓
+                        </div>
+
+                        <div class="register-feature-text">
+
+                            <strong>
+                                Secure Administration
+                            </strong>
+
+                            <small>
+                                Protected administrator access
+                            </small>
+
+                        </div>
+
+                        <span class="register-feature-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="register-feature">
+
+                        <div class="register-feature-icon purple">
+                            ◆
+                        </div>
+
+                        <div class="register-feature-text">
+
+                            <strong>
+                                Complete Control
+                            </strong>
+
+                            <small>
+                                Manage your CRM from one workspace
+                            </small>
+
+                        </div>
+
+                        <span class="register-feature-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="register-feature">
+
+                        <div class="register-feature-icon pink">
+                            +
+                        </div>
+
+                        <div class="register-feature-text">
+
+                            <strong>
+                                Ready to Get Started
+                            </strong>
+
+                            <small>
+                                Create your credentials in seconds
+                            </small>
+
+                        </div>
+
+                        <span class="register-feature-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="register-status">
+
+                    <span></span>
+
+                    ADMINISTRATION SYSTEM READY
+
+                    <i></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- DECORATIVE ORBITS -->
+
+            <div class="register-orbits">
+
+                <div class="register-orbit orbit-large"></div>
+                <div class="register-orbit orbit-medium"></div>
+                <div class="register-orbit orbit-small"></div>
+
+                <div class="register-orbit-center">
+                    ◆
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RIGHT REGISTER PANEL
+        ================================================== -->
+
+        <section class="register-form-panel">
+
+
+            <!-- HEADER -->
+
+            <div class="register-heading">
+
+                <div class="register-badge">
+
+                    <span>◆</span>
+
+                    ADMINISTRATOR ACCESS
+
+                </div>
+
+
+                <h2>
+                    Create Admin Account
+                </h2>
+
+
+                <p>
+                    Create your administrator credentials
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM
+            ================================================== -->
+
+            <form asp-controller="Account"
+                  asp-action="Register"
+                  method="post"
+                  id="adminRegisterForm"
+                  novalidate>
+
+                @Html.AntiForgeryToken()
+
+
+                <!-- MODEL VALIDATION -->
+
+                <div asp-validation-summary="ModelOnly"
+                     class="register-validation">
+                </div>
+
+
+                <!-- ADMIN NAME -->
+
+                <div class="register-field">
+
+                    <label asp-for="AdminName">
+                        Admin Name
+                    </label>
+
+                    <div class="register-input-box">
+
+                        <span class="register-input-icon">
+                            ◉
+                        </span>
+
+                        <input asp-for="AdminName"
+                               id="adminName"
+                               class="register-input"
+                               placeholder="Enter admin name"
+                               autocomplete="name" />
+
+                    </div>
+
+                    <span asp-validation-for="AdminName"
+                          class="register-field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- USER ID -->
+
+                <div class="register-field">
+
+                    <label asp-for="UserId">
+                        User ID
+                    </label>
+
+                    <div class="register-input-box">
+
+                        <span class="register-input-icon purple">
+                            ◆
+                        </span>
+
+                        <input asp-for="UserId"
+                               id="adminUserId"
+                               class="register-input"
+                               placeholder="Enter User ID"
+                               autocomplete="username" />
+
+                    </div>
+
+                    <span asp-validation-for="UserId"
+                          class="register-field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="register-field">
+
+                    <div class="register-label-row">
+
+                        <label asp-for="Password">
+                            New Password
+                        </label>
+
+                        <span>
+                            8–16 CHARACTERS
+                        </span>
+
+                    </div>
+
+
+                    <div class="register-input-box">
+
+                        <span class="register-input-icon pink">
+                            ◆
+                        </span>
+
+                        <input asp-for="Password"
+                               id="adminPassword"
+                               type="password"
+                               class="register-input"
+                               placeholder="Enter password"
+                               maxlength="16"
+                               autocomplete="new-password" />
+
+                        <button type="button"
+                                class="register-password-toggle"
+                                id="adminPasswordToggle">
+
+                            ◉
+
+                        </button>
+
+                    </div>
+
+
+                    <span asp-validation-for="Password"
+                          class="register-field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- PASSWORD REQUIREMENTS -->
+
+                <div class="password-requirements">
+
+                    <div class="requirements-heading">
+
+                        <span class="requirements-icon">
+                            ✓
+                        </span>
+
+                        <strong>
+                            Password requirements
+                        </strong>
+
+                    </div>
+
+
+                    <div class="requirement-list">
+
+                        <div id="lengthRule"
+                             class="password-rule">
+
+                            <span>○</span>
+
+                            8–16 characters
+
+                        </div>
+
+
+                        <div id="upperRule"
+                             class="password-rule">
+
+                            <span>○</span>
+
+                            At least 1 uppercase letter
+
+                        </div>
+
+
+                        <div id="lowerRule"
+                             class="password-rule">
+
+                            <span>○</span>
+
+                            At least 1 lowercase letter
+
+                        </div>
+
+
+                        <div id="numberRule"
+                             class="password-rule">
+
+                            <span>○</span>
+
+                            At least 1 number
+
+                        </div>
+
+
+                        <div id="symbolRule"
+                             class="password-rule">
+
+                            <span>○</span>
+
+                            At least 1 special symbol
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="register-field confirm-field">
+
+                    <label asp-for="ConfirmPassword">
+                        Confirm Password
+                    </label>
+
+
+                    <div class="register-input-box">
+
+                        <span class="register-input-icon green">
+                            ✓
+                        </span>
+
+                        <input asp-for="ConfirmPassword"
+                               id="adminConfirmPassword"
+                               type="password"
+                               class="register-input"
+                               placeholder="Re-enter password"
+                               maxlength="16"
+                               autocomplete="new-password" />
+
+                        <button type="button"
+                                class="register-password-toggle"
+                                id="confirmPasswordToggle">
+
+                            ◉
+
+                        </button>
+
+                    </div>
+
+
+                    <span id="confirmPasswordMessage"
+                          class="confirm-message">
+                    </span>
+
+
+                    <span asp-validation-for="ConfirmPassword"
+                          class="register-field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- CREATE BUTTON -->
+
+                <button type="submit"
+                        class="create-admin-button"
+                        id="createAdminButton">
+
+                    <span class="admin-button-shine"></span>
+
+                    <span>
+                        +
+                    </span>
+
+                    <strong>
+                        Create Admin Account
+                    </strong>
+
+                    <span class="admin-button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="register-divider">
+
+                <span></span>
+
+                <small>
+                    OR
+                </small>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- ADMIN LOGIN -->
+
+            <a asp-controller="Account"
+               asp-action="Login"
+               class="register-switch-card">
+
+                <div class="register-switch-icon">
+                    ◆
+                </div>
+
+                <div class="register-switch-content">
+
+                    <small>
+                        ALREADY HAVE AN ACCOUNT?
+                    </small>
+
+                    <strong>
+                        Admin Login
+                    </strong>
+
+                </div>
+
+                <span class="register-switch-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <!-- CUSTOMER LOGIN -->
+
+            <a asp-controller="Account"
+               asp-action="CustomerLogin"
+               class="register-switch-card customer-switch">
+
+                <div class="register-switch-icon customer-icon">
+                    ◉
+                </div>
+
+                <div class="register-switch-content">
+
+                    <small>
+                        ARE YOU A CUSTOMER?
+                    </small>
+
+                    <strong>
+                        Customer Login
+                    </strong>
+
+                </div>
+
+                <span class="register-switch-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <!-- SECURITY -->
+
+            <div class="register-security">
+
+                <span></span>
+
+                Protected administrator environment
+
+                <b>
+                    ◆
+                </b>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="register-footer">
+
+        HELPDESK CRM
+
+        <span>•</span>
+
+        ADMINISTRATION
+
+        <span>•</span>
+
+        SECURE ACCESS
+
+    </div>
+
+</div>
+
+
+<style>
+
+    /* =========================================================
+       PAGE
+    ========================================================= */
+
+    .admin-register-page {
+        position: relative;
+        min-height: calc(100vh - 20px);
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px 55px;
+        overflow: hidden;
+        background: radial-gradient( circle at 5% 20%, rgba(124,58,237,.13), transparent 32% ), radial-gradient( circle at 96% 20%, rgba(6,182,212,.13), transparent 32% ), radial-gradient( circle at 50% 100%, rgba(236,72,153,.12), transparent 35% ), #f7f8fc;
+    }
+
+
+    /* =========================================================
+       BACKGROUND
+    ========================================================= */
+
+    .register-background {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+    }
+
+
+    .register-grid {
+        position: absolute;
+        inset: 0;
+        opacity: .55;
+        background-image: linear-gradient( rgba(70,70,120,.035) 1px, transparent 1px ), linear-gradient( 90deg, rgba(70,70,120,.035) 1px, transparent 1px );
+        background-size: 42px 42px;
+    }
+
+
+    .register-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: .18;
+        transition: transform 1.5s ease;
+    }
+
+
+    .register-orb-one {
+        width: 380px;
+        height: 380px;
+        left: -180px;
+        top: 8%;
+        background: #7c3aed;
+    }
+
+
+    .register-orb-two {
+        width: 400px;
+        height: 400px;
+        right: -190px;
+        top: 8%;
+        background: #06b6d4;
+    }
+
+
+    .register-orb-three {
+        width: 330px;
+        height: 330px;
+        left: 45%;
+        bottom: -220px;
+        background: #ec4899;
+    }
+
+
+    .register-dot {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        opacity: .35;
+        box-shadow: 0 0 14px rgba(124,58,237,.7);
+    }
+
+
+    .dot-one {
+        left: 9%;
+        top: 25%;
+    }
+
+    .dot-two {
+        left: 18%;
+        bottom: 18%;
+    }
+
+    .dot-three {
+        right: 14%;
+        top: 30%;
+    }
+
+    .dot-four {
+        right: 26%;
+        bottom: 20%;
+    }
+
+
+    /* =========================================================
+       MAIN
+    ========================================================= */
+
+    .register-shell {
+        position: relative;
+        z-index: 5;
+        width: min(1100px, 100%);
+        display: grid;
+        grid-template-columns: minmax(400px,.92fr) minmax(470px,1.08fr);
+        overflow: hidden;
+        border-radius: 30px;
+        background: rgba(255,255,255,.95);
+        border: 1px solid white;
+        box-shadow: 0 35px 90px rgba(30,20,80,.15);
+        backdrop-filter: blur(25px);
+    }
+
+
+    /* =========================================================
+       LEFT
+    ========================================================= */
+
+    .register-showcase {
+        position: relative;
+        min-height: 720px;
+        overflow: hidden;
+        color: white;
+        background: linear-gradient( 135deg, #24105a, #4c1d95 38%, #6d28d9 70%, #2563eb );
+        background-size: 180% 180%;
+        transition: background-position 1s ease;
+    }
+
+
+        .register-showcase:hover {
+            background-position: 100% 0%;
+        }
+
+
+    .register-showcase-content {
+        position: relative;
+        z-index: 3;
+        padding: 48px 44px;
+    }
+
+
+    /* =========================================================
+       LOGO
+    ========================================================= */
+
+    .register-logo-area {
+        position: relative;
+        width: 76px;
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 26px;
+    }
+
+
+    .register-logo {
+        width: 58px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: rgba(255,255,255,.13);
+        border: 1px solid rgba(255,255,255,.32);
+        box-shadow: 0 15px 35px rgba(0,0,0,.20);
+        font-size: 22px;
+        transition: transform .4s ease;
+    }
+
+
+        .register-logo:hover {
+            transform: rotate(-8deg) scale(1.08);
+        }
+
+
+    .register-logo-ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.20);
+        transition: transform .7s ease;
+    }
+
+
+    .register-logo-area:hover
+    .ring-one {
+        transform: scale(1.16) rotate(30deg);
+    }
+
+
+    .register-logo-area:hover
+    .ring-two {
+        transform: scale(.86) rotate(-30deg);
+    }
+
+
+    .ring-one {
+        inset: 0;
+    }
+
+    .ring-two {
+        inset: 9px;
+        border-style: dashed;
+    }
+
+    .ring-three {
+        inset: 18px;
+    }
+
+
+    /* =========================================================
+       TEXT
+    ========================================================= */
+
+    .register-mini-title {
+        margin-bottom: 9px;
+        color: rgba(255,255,255,.55);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 3px;
+    }
+
+
+    .register-showcase h1 {
+        max-width: 390px;
+        margin: 0;
+        color: white;
+        font-size: 43px;
+        line-height: 1.05;
+        font-weight: 900;
+        letter-spacing: -1.7px;
+    }
+
+
+        .register-showcase h1 span {
+            color: #67e8f9;
+        }
+
+
+    .register-description {
+        max-width: 390px;
+        margin: 18px 0 0;
+        color: rgba(255,255,255,.68);
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+
+    /* =========================================================
+       FEATURES
+    ========================================================= */
+
+    .register-features {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 27px;
+    }
+
+
+    .register-feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.075);
+        transition: transform .3s ease, background .3s ease;
+    }
+
+
+        .register-feature:hover {
+            transform: translateX(8px);
+            background: rgba(255,255,255,.15);
+        }
+
+
+    .register-feature-icon {
+        width: 39px;
+        height: 39px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: white;
+        font-size: 12px;
+    }
+
+
+        .register-feature-icon.blue {
+            background: linear-gradient( 135deg, #0ea5e9, #06b6d4 );
+        }
+
+
+        .register-feature-icon.purple {
+            background: linear-gradient( 135deg, #7c3aed, #a855f7 );
+        }
+
+
+        .register-feature-icon.pink {
+            background: linear-gradient( 135deg, #ec4899, #f43f5e );
+        }
+
+
+    .register-feature-text strong {
+        display: block;
+        color: white;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+
+    .register-feature-text small {
+        display: block;
+        margin-top: 3px;
+        color: rgba(255,255,255,.48);
+        font-size: 10px;
+    }
+
+
+    .register-feature-arrow {
+        margin-left: auto;
+        color: rgba(255,255,255,.4);
+        transition: transform .3s ease;
+    }
+
+
+    .register-feature:hover
+    .register-feature-arrow {
+        transform: translateX(5px);
+        color: white;
+    }
+
+
+    /* =========================================================
+       STATUS
+    ========================================================= */
+
+    .register-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 26px;
+        color: rgba(255,255,255,.45);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+    }
+
+
+        .register-status span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 12px rgba(74,222,128,.8);
+        }
+
+
+        .register-status i {
+            width: 32px;
+            height: 1px;
+            background: rgba(255,255,255,.16);
+        }
+
+
+    /* =========================================================
+       ORBITS
+    ========================================================= */
+
+    .register-orbits {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        right: -120px;
+        bottom: -125px;
+    }
+
+
+    .register-orbit {
+        position: absolute;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 50%;
+        transition: transform 1s ease;
+    }
+
+
+    .orbit-large {
+        inset: 0;
+    }
+
+    .orbit-medium {
+        inset: 38px;
+    }
+
+    .orbit-small {
+        inset: 76px;
+    }
+
+
+    .register-orbit-center {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 55px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255,255,255,.10);
+        border: 1px solid rgba(255,255,255,.18);
+    }
+
+
+    .register-showcase:hover
+    .orbit-large {
+        transform: scale(1.08) rotate(15deg);
+    }
+
+
+    .register-showcase:hover
+    .orbit-medium {
+        transform: scale(.92) rotate(-20deg);
+    }
+
+
+    /* =========================================================
+       RIGHT
+    ========================================================= */
+
+    .register-form-panel {
+        padding: 40px 48px 25px;
+        background: rgba(255,255,255,.97);
+    }
+
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .register-heading {
+        text-align: center;
+    }
+
+
+    .register-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 13px;
+        border-radius: 30px;
+        color: #7c3aed;
+        background: rgba(124,58,237,.07);
+        border: 1px solid rgba(124,58,237,.13);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+    }
+
+
+    .register-heading h2 {
+        margin: 16px 0 5px;
+        color: #17172b;
+        font-size: 34px;
+        line-height: 1.1;
+        font-weight: 900;
+        letter-spacing: -1px;
+    }
+
+
+    .register-heading p {
+        margin: 0;
+        color: #77778b;
+        font-size: 13px;
+    }
+
+
+    /* =========================================================
+       FORM
+    ========================================================= */
+
+    #adminRegisterForm {
+        margin-top: 24px;
+    }
+
+
+    .register-validation {
+        margin-bottom: 12px;
+        color: #be123c;
+        font-size: 10px;
+    }
+
+
+        .register-validation:empty {
+            display: none;
+        }
+
+
+    .register-field {
+        margin-bottom: 15px;
+    }
+
+
+        .register-field label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333347;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+
+    .register-label-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+
+        .register-label-row label {
+            margin-bottom: 7px;
+        }
+
+
+        .register-label-row span {
+            color: #aaaaba;
+            font-size: 7px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+
+    /* =========================================================
+       INPUTS
+    ========================================================= */
+
+    .register-input-box {
+        position: relative;
+    }
+
+
+    .register-input-icon {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 31px;
+        height: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #2563eb;
+        background: rgba(37,99,235,.08);
+        font-size: 10px;
+        pointer-events: none;
+        transition: all .3s ease;
+    }
+
+
+        .register-input-icon.purple {
+            color: #7c3aed;
+            background: rgba(124,58,237,.08);
+        }
+
+
+        .register-input-icon.pink {
+            color: #ec4899;
+            background: rgba(236,72,153,.08);
+        }
+
+
+        .register-input-icon.green {
+            color: #16a34a;
+            background: rgba(22,163,74,.08);
+        }
+
+
+    .register-input {
+        width: 100%;
+        height: 46px;
+        box-sizing: border-box;
+        padding: 0 48px 0 51px;
+        border: 1px solid #dedee9;
+        border-radius: 12px;
+        outline: none;
+        color: #252538;
+        background: #fafaff;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all .3s ease;
+    }
+
+
+        .register-input::placeholder {
+            color: #9999aa;
+            font-size: 13px;
+        }
+
+
+        .register-input:hover {
+            border-color: #c9c9d8;
+        }
+
+
+        .register-input:focus {
+            border-color: #7c3aed;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(124,58,237,.06);
+        }
+
+
+    .register-input-box:focus-within
+    .register-input-icon {
+        color: white;
+        background: linear-gradient( 135deg, #7c3aed, #2563eb );
+        transform: translateY(-50%) scale(1.06);
+    }
+
+
+    /* =========================================================
+       PASSWORD TOGGLE
+    ========================================================= */
+
+    .register-password-toggle {
+        position: absolute;
+        right: 7px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 31px;
+        height: 31px;
+        border: none;
+        border-radius: 8px;
+        color: #9999aa;
+        background: transparent;
+        cursor: pointer;
+        transition: all .25s ease;
+    }
+
+
+        .register-password-toggle:hover {
+            color: #7c3aed;
+            background: rgba(124,58,237,.07);
+        }
+
+
+    /* =========================================================
+       VALIDATION
+    ========================================================= */
+
+    .register-field-error {
+        display: block;
+        margin-top: 4px;
+        color: #e11d48;
+        font-size: 9px;
+    }
+
+
+    /* =========================================================
+       PASSWORD REQUIREMENTS
+    ========================================================= */
+
+    .password-requirements {
+        margin: -2px 0 16px;
+        padding: 12px 14px;
+        border: 1px solid #e7e2f5;
+        border-radius: 13px;
+        background: linear-gradient( 135deg, #faf9ff, #f8fbff );
+    }
+
+
+    .requirements-heading {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #45455b;
+        font-size: 11px;
+    }
+
+
+    .requirements-icon {
+        width: 23px;
+        height: 23px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        color: #7c3aed;
+        background: rgba(124,58,237,.09);
+    }
+
+
+    .requirement-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 14px;
+        margin-top: 10px;
+    }
+
+
+    .password-rule {
+        color: #8a8a9b;
+        font-size: 10px;
+        transition: color .25s ease, transform .25s ease;
+    }
+
+
+        .password-rule span {
+            margin-right: 4px;
+        }
+
+
+        .password-rule.valid {
+            color: #16a34a;
+            font-weight: 700;
+            transform: translateX(2px);
+        }
+
+
+    /* =========================================================
+       CONFIRM PASSWORD
+    ========================================================= */
+
+    .confirm-field {
+        margin-bottom: 16px;
+    }
+
+
+    .confirm-message {
+        display: block;
+        margin-top: 5px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       CREATE BUTTON
+    ========================================================= */
+
+    .create-admin-button {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        overflow: hidden;
+        border: none;
+        border-radius: 13px;
+        color: white;
+        background: linear-gradient( 100deg, #312e81, #7c3aed, #2563eb, #0891b2 );
+        background-size: 250% 250%;
+        box-shadow: 0 13px 30px rgba(124,58,237,.22);
+        font-size: 15px;
+        cursor: pointer;
+        transition: all .35s ease, background-position .7s ease;
+    }
+
+
+        .create-admin-button:hover {
+            transform: translateY(-2px);
+            background-position: 100% 0%;
+            box-shadow: 0 18px 38px rgba(124,58,237,.30);
+        }
+
+
+        .create-admin-button:active {
+            transform: scale(.99);
+        }
+
+
+    .admin-button-arrow {
+        transition: transform .3s ease;
+    }
+
+
+    .create-admin-button:hover
+    .admin-button-arrow {
+        transform: translateX(5px);
+    }
+
+
+    .admin-button-shine {
+        position: absolute;
+        top: -80%;
+        left: -90px;
+        width: 55px;
+        height: 260%;
+        transform: rotate(25deg);
+        background: rgba(255,255,255,.22);
+        transition: left .7s ease;
+    }
+
+
+    .create-admin-button:hover
+    .admin-button-shine {
+        left: 115%;
+    }
+
+
+    /* =========================================================
+       DIVIDER
+    ========================================================= */
+
+    .register-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 18px 0 11px;
+    }
+
+
+        .register-divider span {
+            flex: 1;
+            height: 1px;
+            background: #e7e7ef;
+        }
+
+
+        .register-divider small {
+            color: #aaaaba;
+            font-size: 7px;
+            font-weight: 900;
+        }
+
+
+    /* =========================================================
+       SWITCH CARDS
+    ========================================================= */
+
+    .register-switch-card {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 48px;
+        margin-bottom: 8px;
+        padding: 7px 10px;
+        box-sizing: border-box;
+        border: 1px solid #e2e2ec;
+        border-radius: 12px;
+        color: inherit;
+        text-decoration: none;
+        background: #fbfbfe;
+        transition: all .3s ease;
+    }
+
+
+        .register-switch-card:hover {
+            color: inherit;
+            text-decoration: none;
+            transform: translateX(5px);
+            border-color: rgba(124,58,237,.25);
+            box-shadow: 0 9px 23px rgba(30,20,80,.07);
+        }
+
+
+    .register-switch-icon {
+        width: 33px;
+        height: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #7c3aed;
+        background: rgba(124,58,237,.08);
+        font-size: 10px;
+    }
+
+
+    .customer-icon {
+        color: #2563eb;
+        background: rgba(37,99,235,.08);
+    }
+
+
+    .register-switch-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+        .register-switch-content small {
+            color: #aaaaba;
+            font-size: 7px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+
+        .register-switch-content strong {
+            margin-top: 3px;
+            color: #38384c;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+
+    .register-switch-arrow {
+        margin-left: auto;
+        color: #aaaaba;
+        font-size: 15px;
+        transition: all .3s ease;
+    }
+
+
+    .register-switch-card:hover
+    .register-switch-arrow {
+        color: #7c3aed;
+        transform: translateX(5px);
+    }
+
+
+    /* =========================================================
+       SECURITY
+    ========================================================= */
+
+    .register-security {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding-top: 10px;
+        color: #aaaaba;
+        font-size: 9px;
+    }
+
+
+        .register-security > span {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px rgba(34,197,94,.7);
+        }
+
+
+        .register-security b {
+            color: #aaaaba;
+            font-size: 5px;
+        }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .register-footer {
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #aaaaba;
+        font-size: 7px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+        white-space: nowrap;
+    }
+
+
+        .register-footer span {
+            margin: 0 5px;
+        }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    .register-shell.mobile-register {
+        display: block;
+        width: min(600px, calc(100vw - 28px));
+    }
+
+
+        .register-shell.mobile-register
+        .register-showcase {
+            display: none;
+        }
+
+
+        .register-shell.mobile-register
+        .register-form-panel {
+            padding: 35px 25px 25px;
+        }
+
+
+    .register-shell.small-register {
+        width: min(600px, calc(100vw - 24px));
+    }
+
+
+        .register-shell.small-register
+        .register-form-panel {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+
+        .register-shell.small-register
+        .requirement-list {
+            grid-template-columns: 1fr;
+        }
+
+
+    /* =========================================================
+       JAVASCRIPT RESPONSIVE SUPPORT
+    ========================================================= */
+
+</style>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+
+                const shell =
+                    document.querySelector(
+                        ".register-shell"
+                    );
+
+
+                function updateRegisterLayout() {
+
+                    if (!shell) {
+                        return;
+                    }
+
+
+                    const width =
+                        window.innerWidth;
+
+
+                    shell.classList.remove(
+                        "mobile-register",
+                        "small-register"
+                    );
+
+
+                    if (width <= 900) {
+
+                        shell.classList.add(
+                            "mobile-register"
+                        );
+
+                    }
+
+
+                    if (width <= 600) {
+
+                        shell.classList.add(
+                            "small-register"
+                        );
+
+                    }
+
+                }
+
+
+                updateRegisterLayout();
+
+
+                window.addEventListener(
+                    "resize",
+                    updateRegisterLayout
+                );
+
+
+                /* =================================================
+                   PASSWORD ELEMENTS
+                ================================================== */
+
+                const password =
+                    document.getElementById(
+                        "adminPassword"
+                    );
+
+
+                const confirmPassword =
+                    document.getElementById(
+                        "adminConfirmPassword"
+                    );
+
+
+                const passwordToggle =
+                    document.getElementById(
+                        "adminPasswordToggle"
+                    );
+
+
+                const confirmToggle =
+                    document.getElementById(
+                        "confirmPasswordToggle"
+                    );
+
+
+                /* =================================================
+                   PASSWORD SHOW / HIDE
+                ================================================== */
+
+                function setupPasswordToggle(
+                    input,
+                    button
+                ) {
+
+                    if (!input || !button) {
+                        return;
+                    }
+
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            if (
+                                input.type ===
+                                "password"
+                            ) {
+
+                                input.type =
+                                    "text";
+
+                                button.textContent =
+                                    "◌";
+
+                            }
+                            else {
+
+                                input.type =
+                                    "password";
+
+                                button.textContent =
+                                    "◉";
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                setupPasswordToggle(
+                    password,
+                    passwordToggle
+                );
+
+
+                setupPasswordToggle(
+                    confirmPassword,
+                    confirmToggle
+                );
+
+
+                /* =================================================
+                   PASSWORD REQUIREMENTS
+                ================================================== */
+
+                function updateRule(
+                    id,
+                    valid
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (!element) {
+                        return;
+                    }
+
+
+                    const icon =
+                        element.querySelector(
+                            "span"
+                        );
+
+
+                    if (valid) {
+
+                        element.classList.add(
+                            "valid"
+                        );
+
+
+                        if (icon) {
+                            icon.textContent =
+                                "✓";
+                        }
+
+                    }
+                    else {
+
+                        element.classList.remove(
+                            "valid"
+                        );
+
+
+                        if (icon) {
+                            icon.textContent =
+                                "○";
+                        }
+
+                    }
+
+                }
+
+
+                function validatePassword() {
+
+                    if (!password) {
+                        return false;
+                    }
+
+
+                    const value =
+                        password.value;
+
+
+                    const lengthValid =
+                        value.length >= 8 &&
+                        value.length <= 16;
+
+
+                    const upperValid =
+                        /[A-Z]/.test(value);
+
+
+                    const lowerValid =
+                        /[a-z]/.test(value);
+
+
+                    const numberValid =
+                        /[0-9]/.test(value);
+
+
+                    const symbolValid =
+                        /[^a-zA-Z0-9]/.test(value);
+
+
+                    updateRule(
+                        "lengthRule",
+                        lengthValid
+                    );
+
+
+                    updateRule(
+                        "upperRule",
+                        upperValid
+                    );
+
+
+                    updateRule(
+                        "lowerRule",
+                        lowerValid
+                    );
+
+
+                    updateRule(
+                        "numberRule",
+                        numberValid
+                    );
+
+
+                    updateRule(
+                        "symbolRule",
+                        symbolValid
+                    );
+
+
+                    return (
+                        lengthValid &&
+                        upperValid &&
+                        lowerValid &&
+                        numberValid &&
+                        symbolValid
+                    );
+
+                }
+
+
+                /* =================================================
+                   CONFIRM PASSWORD
+                ================================================== */
+
+                function validateConfirmPassword() {
+
+                    if (
+                        !password ||
+                        !confirmPassword
+                    ) {
+                        return false;
+                    }
+
+
+                    const message =
+                        document.getElementById(
+                            "confirmPasswordMessage"
+                        );
+
+
+                    if (
+                        confirmPassword.value ===
+                        ""
+                    ) {
+
+                        message.textContent =
+                            "";
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        password.value ===
+                        confirmPassword.value
+                    ) {
+
+                        message.textContent =
+                            "✓ Passwords match";
+
+                        message.style.color =
+                            "#16a34a";
+
+                        return true;
+
+                    }
+
+
+                    message.textContent =
+                        "✗ Passwords do not match";
+
+                    message.style.color =
+                        "#e11d48";
+
+                    return false;
+
+                }
+
+
+                if (password) {
+
+                    password.addEventListener(
+                        "input",
+                        function() {
+
+                            validatePassword();
+
+                            validateConfirmPassword();
+
+                        }
+                    );
+
+                }
+
+
+                if (confirmPassword) {
+
+                    confirmPassword.addEventListener(
+                        "input",
+                        function() {
+
+                            validateConfirmPassword();
+
+                        }
+                    );
+
+                }
+
+
+                /* =================================================
+                   FORM BUTTON INTERACTION
+                ================================================== */
+
+                const form =
+                    document.getElementById(
+                        "adminRegisterForm"
+                    );
+
+
+                const button =
+                    document.getElementById(
+                        "createAdminButton"
+                    );
+
+
+                if (
+                    form &&
+                    button
+                ) {
+
+                    form.addEventListener(
+                        "submit",
+                        function() {
+
+                            if (
+                                form.checkValidity()
+                            ) {
+
+                                button.style.transform =
+                                    "scale(.985)";
+
+                                button.style.opacity =
+                                    ".88";
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* =================================================
+                   BACKGROUND MOUSE MOVEMENT
+                ================================================== */
+
+                const page =
+                    document.querySelector(
+                        ".admin-register-page"
+                    );
+
+
+                const orbOne =
+                    document.querySelector(
+                        ".register-orb-one"
+                    );
+
+
+                const orbTwo =
+                    document.querySelector(
+                        ".register-orb-two"
+                    );
+
+
+                if (
+                    page &&
+                    orbOne &&
+                    orbTwo
+                ) {
+
+                    page.addEventListener(
+                        "mousemove",
+                        function(event) {
+
+                            const x =
+                                (
+                                    event.clientX /
+                                    window.innerWidth
+                                ) - .5;
+
+
+                            const y =
+                                (
+                                    event.clientY /
+                                    window.innerHeight
+                                ) - .5;
+
+
+                            orbOne.style.transform =
+                                "translate(" +
+                                (x * 16) +
+                                "px," +
+                                (y * 16) +
+                                "px)";
+
+
+                            orbTwo.style.transform =
+                                "translate(" +
+                                (x * -14) +
+                                "px," +
+                                (y * -14) +
+                                "px)";
+
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+}

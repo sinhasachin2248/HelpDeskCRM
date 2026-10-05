@@ -1,0 +1,547 @@
+﻿@model HelpDeskCRM.Models.CustomerPortalViewModel
+
+@{
+    ViewData["Title"] = "Customer Portal";
+}
+
+<div style="
+    max-width:1200px;
+    margin:40px auto;
+    padding:20px;
+    ">
+
+    <!-- HEADER -->
+
+    <div style="
+        background:white;
+        padding:30px;
+        border-radius:16px;
+        box-shadow:0 5px 20px rgba(0,0,0,.08);
+        margin-bottom:25px;
+        ">
+
+        <h1 style="margin:0;">
+            👋 Welcome,
+            @Model.Customer?.FirstName
+            @Model.Customer?.LastName
+        </h1>
+
+        <p style="color:#64748b;">
+            Customer Portal
+        </p>
+
+    </div>
+
+
+    <!-- SUCCESS -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div style="
+            background:#ecfdf5;
+            color:#166534;
+            padding:15px;
+            border-radius:10px;
+            margin-bottom:20px;
+            ">
+
+            ✅ @TempData["SuccessMessage"]
+
+        </div>
+    }
+
+
+    <!-- ERROR -->
+    @if (!string.IsNullOrWhiteSpace(Model.Message))
+    {
+        <div style="
+            background:#fef2f2;
+            color:#b91c1c;
+            padding:15px;
+            border-radius:10px;
+            margin-bottom:20px;
+            ">
+
+            @Model.Message
+
+        </div>
+    }
+
+
+    <!-- NAVIGATION -->
+
+    <div style="
+        display:flex;
+        gap:15px;
+        margin-bottom:25px;
+        flex-wrap:wrap;
+        ">
+
+        <a asp-action="Index"
+           asp-route-section="myTickets"
+           style="
+            padding:12px 20px;
+            background:#4f46e5;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            ">
+
+            🎫 My Tickets
+
+        </a>
+
+
+        <a asp-action="Index"
+           asp-route-section="createTicket"
+           style="
+            padding:12px 20px;
+            background:#059669;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            ">
+
+            ➕ New Ticket
+
+        </a>
+
+
+        <a asp-action="Details"
+           style="
+            padding:12px 20px;
+            background:#475569;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            ">
+
+            👤 My Details
+
+        </a>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- MY TICKETS -->
+    <!-- ================================================= -->
+    @if (Model.ActiveSection == "myTickets")
+    {
+        <div style="
+            background:white;
+            padding:25px;
+            border-radius:16px;
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
+            ">
+
+            <h2>
+                🎫 My Tickets
+            </h2>
+
+            @if (Model.Tickets.Count == 0)
+            {
+                <p style="color:#64748b;">
+                    You have not created any tickets yet.
+                </p>
+            }
+            else
+            {
+                <table style="
+                    width:100%;
+                    border-collapse:collapse;
+                    ">
+
+                    <thead>
+
+                        <tr style="
+                            background:#f8fafc;
+                            text-align:left;
+                            ">
+
+                            <th style="padding:14px;">
+                                ID
+                            </th>
+
+                            <th style="padding:14px;">
+                                Subject
+                            </th>
+
+                            <th style="padding:14px;">
+                                Priority
+                            </th>
+
+                            <th style="padding:14px;">
+                                Status
+                            </th>
+
+                            <th style="padding:14px;">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var ticket in Model.Tickets)
+                        {
+                            <tr style="
+                                border-top:1px solid #e5e7eb;
+                                ">
+
+                                <td style="padding:14px;">
+                                    @ticket.TicketId
+                                </td>
+
+                                <td style="padding:14px;">
+                                    @ticket.Subject
+                                </td>
+
+                                <td style="padding:14px;">
+                                    @ticket.Priority
+                                </td>
+
+                                <td style="padding:14px;">
+                                    @ticket.Status
+                                </td>
+
+                                <td style="padding:14px;">
+
+                                    <a asp-action="TicketDetails"
+                                       asp-route-ticketId="@ticket.TicketId"
+                                       style="
+                                        color:#4f46e5;
+                                        text-decoration:none;
+                                        font-weight:600;
+                                        ">
+
+                                        View
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            }
+
+        </div>
+    }
+
+
+    <!-- ================================================= -->
+    <!-- CREATE TICKET -->
+    <!-- ================================================= -->
+    @if (Model.ActiveSection == "createTicket")
+    {
+        <div style="
+            background:white;
+            padding:30px;
+            border-radius:16px;
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
+            ">
+
+            <h2>
+                ➕ Create New Ticket
+            </h2>
+
+
+            <form asp-action="CreateTicket"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+
+                <div style="margin-bottom:18px;">
+
+                    <label>
+                        Subject
+                    </label>
+
+                    <input asp-for="NewTicket.Subject"
+                           style="
+                    width:100%;
+                    padding:12px;
+                    margin-top:6px;
+                    border:1px solid #d1d5db;
+                    border-radius:8px;
+                    box-sizing:border-box;
+                    " />
+
+                    <span asp-validation-for="NewTicket.Subject"
+                          style="color:red;">
+                    </span>
+
+                </div>
+
+
+                <div style="margin-bottom:18px;">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea asp-for="NewTicket.Description"
+                              rows="5"
+                              style="
+                    width:100%;
+                    padding:12px;
+                    margin-top:6px;
+                    border:1px solid #d1d5db;
+                    border-radius:8px;
+                    box-sizing:border-box;
+                    ">
+                </textarea>
+
+                <span asp-validation-for="NewTicket.Description"
+                      style="color:red;">
+                </span>
+
+            </div>
+
+
+            <div style="margin-bottom:18px;">
+
+                <label>
+                    Category
+                </label>
+
+                <select asp-for="NewTicket.Category"
+                        style="
+                    width:100%;
+                    padding:12px;
+                    margin-top:6px;
+                    border:1px solid #d1d5db;
+                    border-radius:8px;
+                    ">
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Technical">
+                        Technical
+                    </option>
+
+                    <option value="Login">
+                        Login Issue
+                    </option>
+
+                    <option value="Billing">
+                        Billing
+                    </option>
+
+                    <option value="General">
+                        General
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div style="margin-bottom:25px;">
+
+                <label>
+                    Priority
+                </label>
+
+                <select asp-for="NewTicket.Priority"
+                        style="
+                    width:100%;
+                    padding:12px;
+                    margin-top:6px;
+                    border:1px solid #d1d5db;
+                    border-radius:8px;
+                    ">
+
+                    <option value="">
+                        Select Priority
+                    </option>
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                    <option value="Critical">
+                        Critical
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit"
+                    style="
+                width:100%;
+                padding:13px;
+                border:none;
+                border-radius:8px;
+                background:#4f46e5;
+                color:white;
+                font-size:16px;
+                font-weight:600;
+                cursor:pointer;
+                ">
+
+                Create Ticket
+
+            </button>
+
+        </form>
+
+    </div>
+}
+
+
+<!-- ================================================= -->
+<!-- TICKET DETAILS -->
+<!-- ================================================= -->
+@if (Model.ActiveSection == "ticketDetails" &&
+         Model.SelectedTicket != null)
+{
+    <div style="
+        background:white;
+        padding:30px;
+        border-radius:16px;
+        box-shadow:0 5px 20px rgba(0,0,0,.08);
+        ">
+
+        <h2>
+            🎫 Ticket #@Model.SelectedTicket.TicketId
+        </h2>
+
+        <hr />
+
+        <p>
+            <strong>Subject:</strong>
+            @Model.SelectedTicket.Subject
+        </p>
+
+        <p>
+            <strong>Description:</strong>
+            @Model.SelectedTicket.Description
+        </p>
+
+        <p>
+            <strong>Category:</strong>
+            @Model.SelectedTicket.Category
+        </p>
+
+        <p>
+            <strong>Priority:</strong>
+            @Model.SelectedTicket.Priority
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            @Model.SelectedTicket.Status
+        </p>
+
+        <p>
+            <strong>Assigned Employee:</strong>
+
+            @(string.IsNullOrWhiteSpace(
+                Model.SelectedTicket.AssignedEmployee)
+                ? "Not Assigned"
+                : Model.SelectedTicket.AssignedEmployee)
+        </p>
+
+        <p>
+            <strong>Last Updated:</strong>
+            @Model.SelectedTicket.LastUpdated
+        </p>
+
+        <a asp-action="Index"
+           asp-route-section="myTickets"
+           style="
+            display:inline-block;
+            margin-top:15px;
+            padding:10px 18px;
+            background:#4f46e5;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            ">
+
+            ← Back to My Tickets
+
+        </a>
+
+    </div>
+}
+
+
+<!-- ================================================= -->
+<!-- CUSTOMER DETAILS -->
+<!-- ================================================= -->
+@if (Model.ActiveSection == "customerDetails")
+{
+    <div style="
+        background:white;
+        padding:30px;
+        border-radius:16px;
+        box-shadow:0 5px 20px rgba(0,0,0,.08);
+        ">
+
+        <h2>
+            👤 My Details
+        </h2>
+
+        <hr />
+
+        <p>
+            <strong>Customer ID:</strong>
+            @Model.Customer?.CustomerId
+        </p>
+
+        <p>
+            <strong>Name:</strong>
+            @Model.Customer?.FirstName
+            @Model.Customer?.LastName
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            @Model.Customer?.Email
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            @Model.Customer?.Phone
+        </p>
+
+        <p>
+            <strong>Company:</strong>
+            @Model.Customer?.CompanyName
+        </p>
+
+        <p>
+            <strong>City:</strong>
+            @Model.Customer?.City
+        </p>
+
+    </div>
+}
+
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

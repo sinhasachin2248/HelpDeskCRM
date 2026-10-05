@@ -1,0 +1,1601 @@
+@model HelpDeskCRM.Models.CustomerManagementViewModel
+
+@{
+    ViewData["Title"] = "Customer Management";
+}
+
+<div class="container-fluid py-4">
+    <div class="crm-dynamic-bg" aria-hidden="true">
+        <div class="crm-glow glow-a"></div>
+        <div class="crm-glow glow-b"></div>
+        <div class="crm-glow glow-c"></div>
+        <div class="crm-particle particle-a"></div>
+        <div class="crm-particle particle-b"></div>
+        <div class="crm-particle particle-c"></div>
+        <div class="crm-particle particle-d"></div>
+        <div class="crm-particle particle-e"></div>
+        <div class="crm-orbit orbit-a"></div>
+        <div class="crm-orbit orbit-b"></div>
+    </div>
+
+    <div class="customer-portal-topbar">
+        <div>
+            <div class="portal-kicker">CUSTOMER OPERATIONS</div>
+            <h1 class="portal-title">Customer Management</h1>
+            <p class="portal-subtitle">Manage customers, profiles and support history from one workspace.</p>
+        </div>
+        <div class="portal-live">
+            <span></span>
+            SYSTEM ONLINE
+        </div>
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- MESSAGES -->
+    <!-- ============================= -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            @TempData["ErrorMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
+    }
+
+    <div class="row g-4">
+
+        <!-- ============================= -->
+        <!-- LEFT MENU -->
+        <!-- ============================= -->
+        <div class="col-md-4 col-lg-3">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header text-white"
+                     style="background-color:#37318b;">
+
+                    <h5 class="mb-1">
+                        👥 Customer Services
+                    </h5>
+
+                    <small>
+                        Select an operation
+                    </small>
+
+                </div>
+
+                <div class="list-group list-group-flush">
+
+                    <a asp-controller="Customers"
+                       asp-action="Index"
+                       asp-route-section="addCustomer"
+                       class="list-group-item list-group-item-action">
+
+                        <strong>➕ Add Customer</strong>
+
+                        <small class="d-block text-muted">
+                            Create new customer
+                        </small>
+
+                    </a>
+
+                    <a asp-controller="Customers"
+                       asp-action="Index"
+                       asp-route-section="customerList"
+                       class="list-group-item list-group-item-action">
+
+                        <strong>👥 Customer List</strong>
+
+                        <small class="d-block text-muted">
+                            View all customers
+                        </small>
+
+                    </a>
+
+                    <a asp-controller="Customers"
+                       asp-action="Index"
+                       asp-route-section="editCustomer"
+                       class="list-group-item list-group-item-action">
+
+                        <strong>✏️ Edit Customer</strong>
+
+                        <small class="d-block text-muted">
+                            Update customer
+                        </small>
+
+                    </a>
+
+                    <a asp-controller="Customers"
+                       asp-action="Index"
+                       asp-route-section="customerDetails"
+                       class="list-group-item list-group-item-action">
+
+                        <strong>📋 Customer Details</strong>
+
+                        <small class="d-block text-muted">
+                            View customer information
+                        </small>
+
+                    </a>
+
+                    <a asp-controller="Customers"
+                       asp-action="Index"
+                       asp-route-section="deleteCustomer"
+                       class="list-group-item list-group-item-action">
+
+                        <strong>🗑️ Delete Customer</strong>
+
+                        <small class="d-block text-muted">
+                            Remove customer
+                        </small>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ============================= -->
+        <!-- RIGHT CONTENT -->
+        <!-- ============================= -->
+        <div class="col-md-8 col-lg-9">
+
+            <!-- ================================================= -->
+            <!-- ADD CUSTOMER -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "addCustomer")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#37318b;">
+                            ➕ Add New Customer
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            Enter customer information.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <form asp-controller="Customers"
+                              asp-action="Create"
+                              method="post"
+                              id="customerForm"
+                              novalidate>
+
+                            <div class="row">
+
+                                <!-- FIRST NAME -->
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewCustomer.FirstName"
+                                           class="form-label fw-semibold">
+                                        First Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input asp-for="NewCustomer.FirstName"
+                                           id="firstName"
+                                           class="form-control"
+                                           placeholder="Enter first name"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <!-- LAST NAME -->
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewCustomer.LastName"
+                                           class="form-label fw-semibold">
+                                        Last Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input asp-for="NewCustomer.LastName"
+                                           id="lastName"
+                                           class="form-control"
+                                           placeholder="Enter last name"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <!-- EMAIL -->
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewCustomer.Email"
+                                           class="form-label fw-semibold">
+                                        Email
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input asp-for="NewCustomer.Email"
+                                           id="customerEmail"
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="example@gmail.com"
+                                           autocomplete="off" />
+
+                                    <small class="text-muted">
+                                        Example: name@gmail.com
+                                    </small>
+
+                                </div>
+
+                                <!-- PHONE -->
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewCustomer.Phone"
+                                           class="form-label fw-semibold">
+                                        Phone
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input asp-for="NewCustomer.Phone"
+                                           id="customerPhone"
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="10 digit phone number"
+                                           maxlength="10"
+                                           inputmode="numeric"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <!-- COMPANY -->
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewCustomer.CompanyName"
+                                           class="form-label fw-semibold">
+                                        Company Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input asp-for="NewCustomer.CompanyName"
+                                           id="companyName"
+                                           class="form-control"
+                                           placeholder="Enter company name"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <!-- CITY -->
+                                <div class="col-md-6 mb-4">
+
+                                    <label asp-for="NewCustomer.City"
+                                           class="form-label fw-semibold">
+                                        City
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <select asp-for="NewCustomer.City"
+                                            id="customerCity"
+                                            class="form-select">
+
+                                        <option value="">
+                                            Select city
+                                        </option>
+
+                                        <option value="Kolkata">Kolkata</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Mumbai">Mumbai</option>
+                                        <option value="Bengaluru">Bengaluru</option>
+                                        <option value="Hyderabad">Hyderabad</option>
+                                        <option value="Chennai">Chennai</option>
+                                        <option value="Pune">Pune</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <!-- SAVE BUTTON -->
+                            <button type="submit"
+                                    id="btnSaveCustomer"
+                                    class="btn btn-success">
+                                💾 Save Customer
+                            </button>
+
+                            <!-- CLEAR BUTTON -->
+                            <button type="reset"
+                                    id="btnClearCustomer"
+                                    class="btn btn-outline-secondary ms-2">
+                                Clear
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- CUSTOMER LIST -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "customerList")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#37318b;">
+                            👥 Customer List
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            View all registered customers.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        @if (Model.Customers == null || Model.Customers.Count == 0)
+                        {
+                            <div class="text-center py-5">
+
+                                <div style="font-size:50px;">
+                                    👥
+                                </div>
+
+                                <h5>
+                                    No customers found
+                                </h5>
+
+                                <p class="text-muted">
+                                    Add a customer to see them here.
+                                </p>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+
+                                <table class="table table-hover align-middle">
+
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Company</th>
+                                            <th>City</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @foreach (var customer in Model.Customers)
+                                        {
+                                            <tr style="cursor:pointer;"
+                                                onclick="window.location.href='@Url.Action("Details", "Customers", new { customerId = customer.CustomerId })';">
+
+                                                <td>
+
+                                                    <span class="badge bg-primary">
+
+                                                        @customer.CustomerId
+
+                                                    </span>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <strong>
+
+                                                        @customer.FirstName
+                                                        @customer.LastName
+
+                                                    </strong>
+
+                                                </td>
+
+                                                <td>
+                                                    @customer.Email
+                                                </td>
+
+                                                <td>
+                                                    @customer.Phone
+                                                </td>
+
+                                                <td>
+                                                    @customer.CompanyName
+                                                </td>
+
+                                                <td>
+                                                    @customer.City
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- EDIT CUSTOMER -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "editCustomer")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#37318b;">
+                            ✏️ Edit Customer
+                        </h3>
+
+                        <p class="text-muted">
+                            Search using Customer ID.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <!-- SEARCH -->
+                        <form asp-controller="Customers"
+                              asp-action="FindForEdit"
+                              method="get">
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="customerId"
+                                       class="form-control"
+                                       placeholder="Enter 3 digit Customer ID"
+                                       min="100"
+                                       max="999"
+                                       required />
+
+                                <button type="submit"
+                                        class="btn btn-primary">
+                                    🔍 Search
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                        @if (Model.SelectedCustomer != null)
+                        {
+                            <hr />
+
+                            <h5 class="mb-4">
+                                Customer ID:
+                                <span class="badge bg-primary">
+                                    @Model.SelectedCustomer.CustomerId
+                                </span>
+                            </h5>
+
+                            <form asp-controller="Customers"
+                                  asp-action="Update"
+                                  method="post">
+
+                                <input type="hidden"
+                                       name="CustomerId"
+                                       value="@Model.SelectedCustomer.CustomerId" />
+
+                                <div class="row">
+
+                                    <!-- FIRST NAME -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">First Name</label>
+                                        <input type="text"
+                                               name="FirstName"
+                                               value="@Model.SelectedCustomer.FirstName"
+                                               class="form-control" />
+                                    </div>
+
+                                    <!-- LAST NAME -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">Last Name</label>
+                                        <input type="text"
+                                               name="LastName"
+                                               value="@Model.SelectedCustomer.LastName"
+                                               class="form-control" />
+                                    </div>
+
+                                    <!-- EMAIL -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">Email</label>
+                                        <input type="text"
+                                               name="Email"
+                                               value="@Model.SelectedCustomer.Email"
+                                               class="form-control"
+                                               placeholder="example@gmail.com" />
+                                    </div>
+
+                                    <!-- PHONE -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">Phone</label>
+                                        <input type="text"
+                                               name="Phone"
+                                               value="@Model.SelectedCustomer.Phone"
+                                               class="form-control"
+                                               maxlength="10"
+                                               inputmode="numeric" />
+                                    </div>
+
+                                    <!-- COMPANY -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">Company Name</label>
+                                        <input type="text"
+                                               name="CompanyName"
+                                               value="@Model.SelectedCustomer.CompanyName"
+                                               class="form-control" />
+                                    </div>
+
+                                    <!-- CITY -->
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-semibold">City</label>
+                                        <select name="City" class="form-select">
+                                            <option value="">Select city</option>
+                                            <option value="Kolkata" selected="@(Model.SelectedCustomer.City == "Kolkata")">Kolkata</option>
+                                            <option value="Delhi" selected="@(Model.SelectedCustomer.City == "Delhi")">Delhi</option>
+                                            <option value="Mumbai" selected="@(Model.SelectedCustomer.City == "Mumbai")">Mumbai</option>
+                                            <option value="Bengaluru" selected="@(Model.SelectedCustomer.City == "Bengaluru")">Bengaluru</option>
+                                            <option value="Hyderabad" selected="@(Model.SelectedCustomer.City == "Hyderabad")">Hyderabad</option>
+                                            <option value="Chennai" selected="@(Model.SelectedCustomer.City == "Chennai")">Chennai</option>
+                                            <option value="Pune" selected="@(Model.SelectedCustomer.City == "Pune")">Pune</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <button type="submit" class="btn btn-success">
+                                    💾 Update Customer
+                                </button>
+
+                            </form>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- CUSTOMER DETAILS -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "customerDetails")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#37318b;">
+                            📋 Customer Details
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            Enter Customer ID to view customer information and previous ticket history.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <!-- CUSTOMER ID SEARCH -->
+                        <form asp-controller="Customers"
+                              asp-action="Details"
+                              method="get">
+
+                            <label class="form-label fw-semibold">
+                                Customer ID
+                            </label>
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="customerId"
+                                       class="form-control"
+                                       placeholder="Enter 3 digit Customer ID"
+                                       min="100"
+                                       max="999"
+                                       required />
+
+                                <button type="submit" class="btn btn-primary">
+                                    🔍 Search Customer
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                        <!-- ERROR -->
+                        @if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                        <!-- CUSTOMER FOUND -->
+                        @if (Model.SelectedCustomer != null)
+                        {
+                            <div class="card border-0 bg-light mb-4">
+
+                                <div class="card-body p-4">
+
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                        <h4 class="mb-0"
+                                            style="color:#37318b;">
+
+                                            👤 Customer Information
+
+                                        </h4>
+
+
+                                        <div class="d-flex align-items-center gap-2">
+
+                                            <span class="badge bg-primary fs-6">
+
+                                                @Model.SelectedCustomer.CustomerId
+
+                                            </span>
+
+
+                                            <!-- EDIT CUSTOMER -->
+
+                                            <a asp-controller="Customers"
+                                               asp-action="FindForEdit"
+                                               asp-route-customerId="@Model.SelectedCustomer.CustomerId"
+                                               class="btn btn-sm btn-primary">
+
+                                                ✏️ Edit
+
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr />
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+                                            <small class="text-muted">Name</small>
+                                            <div class="fw-semibold">
+                                                @Model.SelectedCustomer.FirstName @Model.SelectedCustomer.LastName
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <small class="text-muted">Email</small>
+                                            <div class="fw-semibold">
+                                                @Model.SelectedCustomer.Email
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <small class="text-muted">Phone</small>
+                                            <div class="fw-semibold">
+                                                @Model.SelectedCustomer.Phone
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <small class="text-muted">Company</small>
+                                            <div class="fw-semibold">
+                                                @Model.SelectedCustomer.CompanyName
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-2">
+                                            <small class="text-muted">City</small>
+                                            <div class="fw-semibold">
+                                                @Model.SelectedCustomer.City
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- TICKET HISTORY -->
+                            <div class="card border-0 shadow-sm">
+
+                                <div class="card-header bg-white p-4">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div>
+                                            <h4 class="mb-1" style="color:#37318b;">
+                                                🎫 Ticket History
+                                            </h4>
+
+                                            <p class="text-muted mb-0">
+                                                Previous and current support tickets for this customer.
+                                            </p>
+                                        </div>
+
+                                        <span class="badge bg-primary fs-6">
+                                            @(Model.CustomerTickets?.Count ?? 0) Tickets
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body p-4">
+
+                                    @if (Model.CustomerTickets == null || Model.CustomerTickets.Count == 0)
+                                    {
+                                        <div class="text-center py-5">
+                                            <div style="font-size:50px;">🎫</div>
+                                            <h5 class="mt-3">No tickets found</h5>
+                                            <p class="text-muted mb-0">
+                                                This customer has not raised any support tickets yet.
+                                            </p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="table-responsive">
+
+                                            <table class="table table-hover align-middle">
+
+                                                <thead>
+                                                    <tr>
+                                                        <th>Ticket ID</th>
+                                                        <th>Subject</th>
+                                                        <th>Assigned Employee</th>
+                                                        <th>Priority</th>
+                                                        <th>Status</th>
+                                                        <th>Last Updated</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    @foreach (var ticket in Model.CustomerTickets)
+                                                    {
+                                                        <tr class="ticket-history-row"
+                                                            onclick="window.location.href='@Url.Action("Details", "Tickets", new { ticketId = ticket.TicketId })'">
+
+                                                            <td>
+                                                                <span class="ticket-id">@ticket.TicketId</span>
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="ticket-subject">
+                                                                    <strong>@ticket.Subject</strong>
+                                                                    <small>@ticket.Description</small>
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                @ticket.AssignedEmployee
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="priority-badge">
+                                                                    @ticket.Priority
+                                                                </span>
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="status-badge">
+                                                                    @ticket.Status
+                                                                </span>
+                                                            </td>
+
+                                                            <td>
+                                                                @ticket.LastUpdated
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                    }
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- DELETE CUSTOMER -->
+            <!-- ================================================= -->
+            @if (Model.ActiveSection == "deleteCustomer")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 class="text-danger">
+                            🗑️ Delete Customer
+                        </h3>
+
+                        <p class="text-muted">
+                            Search using Customer ID.
+                        </p>
+
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <form asp-controller="Customers"
+                              asp-action="FindForDelete"
+                              method="get">
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="customerId"
+                                       class="form-control"
+                                       placeholder="Enter Customer ID"
+                                       min="100"
+                                       max="999"
+                                       required />
+
+                                <button type="submit" class="btn btn-danger">
+                                    🔍 Search
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                        @if (Model.SelectedCustomer != null)
+                        {
+                            <div class="alert alert-warning">
+
+                                <h5>⚠️ Customer Found</h5>
+                                <hr />
+                                <p><strong>ID:</strong> @Model.SelectedCustomer.CustomerId</p>
+                                <p><strong>Name:</strong> @Model.SelectedCustomer.FirstName @Model.SelectedCustomer.LastName</p>
+                                <p><strong>Email:</strong> @Model.SelectedCustomer.Email</p>
+                                <p><strong>Phone:</strong> @Model.SelectedCustomer.Phone</p>
+                                <p><strong>Company:</strong> @Model.SelectedCustomer.CompanyName</p>
+                                <p class="mb-0"><strong>City:</strong> @Model.SelectedCustomer.City</p>
+
+                            </div>
+
+                            <form asp-controller="Customers"
+                                  asp-action="Delete"
+                                  method="post">
+
+                                <input type="hidden"
+                                       name="customerId"
+                                       value="@Model.SelectedCustomer.CustomerId" />
+
+                                <p class="text-danger fw-semibold">
+                                    Are you sure you want to delete this customer?
+                                </p>
+
+                                <button type="submit" class="btn btn-danger">
+                                    🗑️ Delete Customer
+                                </button>
+
+                            </form>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOP-LEVEL SECTION OUTSIDE ALL HTML/RAZOR CONDITIONAL BLOCKS -->
+
+<style>
+    /* =========================================================
+       PREMIUM CUSTOMER PORTAL ENHANCEMENT
+       No CSS at-rules are used, so Razor parsing stays safe.
+    ========================================================= */
+
+    .customer-portal-topbar {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 2px 0 24px;
+        padding: 24px 28px;
+        border: 1px solid rgba(255,255,255,.75);
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(255,255,255,.86), rgba(248,247,255,.72));
+        box-shadow: 0 18px 50px rgba(39,31,99,.09);
+        backdrop-filter: blur(18px);
+        overflow: hidden;
+    }
+
+        .customer-portal-topbar:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 7px;
+            height: 100%;
+            background: linear-gradient(180deg,#7c3aed,#2563eb,#06b6d4);
+        }
+
+    .portal-kicker {
+        color: #7c3aed;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+    }
+
+    .portal-title {
+        margin: 0;
+        color: #17172b;
+        font-size: 31px;
+        font-weight: 900;
+        letter-spacing: -.8px;
+    }
+
+    .portal-subtitle {
+        margin: 5px 0 0;
+        color: #77778b;
+        font-size: 13px;
+    }
+
+    .portal-live {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        padding: 10px 15px;
+        border-radius: 30px;
+        color: #15803d;
+        background: rgba(34,197,94,.07);
+        border: 1px solid rgba(34,197,94,.16);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 1px;
+    }
+
+        .portal-live span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 14px rgba(34,197,94,.8);
+        }
+
+    /* floating background */
+    .crm-dynamic-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .crm-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(70px);
+        opacity: .14;
+        transition: transform 1.2s ease;
+    }
+
+    .glow-a {
+        width: 360px;
+        height: 360px;
+        left: -160px;
+        top: 18%;
+        background: #7c3aed;
+    }
+
+    .glow-b {
+        width: 390px;
+        height: 390px;
+        right: -170px;
+        top: 24%;
+        background: #06b6d4;
+    }
+
+    .glow-c {
+        width: 330px;
+        height: 330px;
+        left: 42%;
+        bottom: -190px;
+        background: #ec4899;
+    }
+
+    .crm-particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        opacity: .35;
+        box-shadow: 0 0 18px rgba(124,58,237,.7);
+        transition: transform 1.8s ease;
+    }
+
+    .particle-a {
+        left: 8%;
+        top: 22%;
+    }
+
+    .particle-b {
+        left: 22%;
+        top: 72%;
+    }
+
+    .particle-c {
+        right: 14%;
+        top: 28%;
+    }
+
+    .particle-d {
+        right: 26%;
+        top: 76%;
+    }
+
+    .particle-e {
+        left: 54%;
+        top: 12%;
+    }
+
+    .crm-orbit {
+        position: absolute;
+        border: 1px solid rgba(124,58,237,.07);
+        border-radius: 50%;
+        transition: transform 1.8s ease;
+    }
+
+    .orbit-a {
+        width: 430px;
+        height: 430px;
+        right: -230px;
+        top: 20%;
+    }
+
+    .orbit-b {
+        width: 260px;
+        height: 260px;
+        left: -150px;
+        bottom: 5%;
+    }
+
+    /* make existing portal columns float */
+    .container-fluid > .row {
+        position: relative;
+        z-index: 2;
+    }
+
+        /* left navigation */
+        .container-fluid > .row > .col-md-4 > .card {
+            border-radius: 22px !important;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.85) !important;
+            background: rgba(255,255,255,.88) !important;
+            box-shadow: 0 20px 55px rgba(39,31,99,.10) !important;
+            backdrop-filter: blur(18px);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+            .container-fluid > .row > .col-md-4 > .card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 28px 65px rgba(39,31,99,.15) !important;
+            }
+
+        .container-fluid > .row > .col-md-4 .card-header {
+            padding: 22px 21px !important;
+            border: 0 !important;
+            background: linear-gradient(135deg,#25105f,#5b21b6,#2563eb) !important;
+        }
+
+            .container-fluid > .row > .col-md-4 .card-header h5 {
+                font-size: 17px;
+                font-weight: 900;
+            }
+
+        .container-fluid > .row > .col-md-4 .list-group-item {
+            position: relative;
+            padding: 17px 18px;
+            border-color: #eeeeF5;
+            color: #333347;
+            background: rgba(255,255,255,.72);
+            transition: all .3s ease;
+            overflow: hidden;
+        }
+
+            .container-fluid > .row > .col-md-4 .list-group-item:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 3px;
+                height: 100%;
+                background: linear-gradient(180deg,#7c3aed,#06b6d4);
+                transform: scaleY(0);
+                transform-origin: bottom;
+                transition: transform .3s ease;
+            }
+
+            .container-fluid > .row > .col-md-4 .list-group-item:hover {
+                transform: translateX(7px);
+                background: linear-gradient(90deg,rgba(124,58,237,.07),rgba(6,182,212,.035));
+                color: #4c1d95;
+            }
+
+                .container-fluid > .row > .col-md-4 .list-group-item:hover:before {
+                    transform: scaleY(1);
+                }
+
+            .container-fluid > .row > .col-md-4 .list-group-item strong {
+                font-size: 13px;
+            }
+
+            .container-fluid > .row > .col-md-4 .list-group-item small {
+                margin-top: 4px;
+                font-size: 10px;
+            }
+
+        /* all content cards */
+        .container-fluid > .row > .col-md-8 > .card {
+            border-radius: 24px !important;
+            border: 1px solid rgba(255,255,255,.9) !important;
+            background: rgba(255,255,255,.91) !important;
+            box-shadow: 0 22px 60px rgba(39,31,99,.10) !important;
+            backdrop-filter: blur(18px);
+            overflow: hidden;
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+            .container-fluid > .row > .col-md-8 > .card:hover {
+                box-shadow: 0 30px 72px rgba(39,31,99,.14) !important;
+            }
+
+        .container-fluid > .row > .col-md-8 .card-header {
+            border-bottom: 1px solid rgba(124,58,237,.08) !important;
+        }
+
+            .container-fluid > .row > .col-md-8 .card-header h3,
+            .container-fluid > .row > .col-md-8 .card-header h4 {
+                font-weight: 900;
+            }
+
+    /* inputs */
+    .container-fluid input.form-control,
+    .container-fluid select.form-select {
+        min-height: 46px;
+        border-radius: 11px;
+        border: 1px solid #dedee9;
+        background: #fbfbfe;
+        font-size: 13px;
+        color: #2d2d42;
+        transition: all .3s ease;
+    }
+
+        .container-fluid input.form-control:hover,
+        .container-fluid select.form-select:hover {
+            border-color: #c8c4dd;
+            transform: translateY(-1px);
+        }
+
+        .container-fluid input.form-control:focus,
+        .container-fluid select.form-select:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124,58,237,.07);
+            background: white;
+        }
+
+    /* buttons */
+    .container-fluid .btn {
+        border-radius: 10px;
+        font-weight: 800;
+        transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+
+        .container-fluid .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.03);
+            box-shadow: 0 9px 22px rgba(39,31,99,.13);
+        }
+
+        .container-fluid .btn:active {
+            transform: scale(.98);
+        }
+
+    /* table */
+    .container-fluid .table {
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+
+        .container-fluid .table thead th {
+            padding: 13px 12px;
+            color: #66667a;
+            background: #f7f6fc;
+            border-bottom: 1px solid #e7e5f0;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+
+        .container-fluid .table tbody td {
+            padding: 14px 12px;
+            color: #45455a;
+            border-color: #f0eff5;
+        }
+
+        .ticket-history-row {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ticket-history-row:hover {
+    background: #f4f6ff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(60, 70, 180, 0.08);
+}
+
+.ticket-history-row:active {
+    transform: scale(0.995);
+}
+
+        .container-fluid .table tbody tr {
+            transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+        }
+
+            .container-fluid .table tbody tr:hover {
+                transform: translateX(4px);
+                background: linear-gradient(90deg,rgba(124,58,237,.045),rgba(6,182,212,.025));
+            }
+
+    /* badges */
+    .container-fluid .badge {
+        border-radius: 30px;
+        padding: 7px 10px;
+        font-weight: 800;
+    }
+
+    /* inner details cards */
+    .container-fluid .bg-light {
+        background: linear-gradient(135deg,#faf9ff,#f5fbff) !important;
+        border: 1px solid #e8e5f4 !important;
+    }
+
+    /* messages */
+    .container-fluid > .alert {
+        position: relative;
+        z-index: 4;
+        border: 0;
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(39,31,99,.08);
+    }
+
+    /* floating hover on form sections */
+    .container-fluid form {
+        transition: transform .3s ease;
+    }
+
+        .container-fluid form:hover {
+            transform: translateY(-1px);
+        }
+
+    /* mobile classes are controlled by JS */
+    .customer-portal-mobile .customer-portal-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .customer-portal-mobile .portal-live {
+        align-self: flex-start;
+    }
+
+    .customer-portal-small .portal-title {
+        font-size: 25px;
+    }
+
+    .customer-portal-small .portal-subtitle {
+        font-size: 12px;
+    }
+
+    .customer-portal-small .portal-live {
+        font-size: 8px;
+    }
+
+    .customer-portal-small .requirement-list {
+        grid-template-columns: 1fr;
+    }
+</style>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            // PREMIUM PORTAL INTERACTIONS
+            function updateCustomerPortalLayout() {
+                var page = $(".container-fluid");
+                var width = window.innerWidth;
+
+                page.removeClass("customer-portal-mobile customer-portal-small");
+
+                if (width <= 900) {
+                    page.addClass("customer-portal-mobile");
+                }
+
+                if (width <= 600) {
+                    page.addClass("customer-portal-small");
+                }
+            }
+
+            updateCustomerPortalLayout();
+            $(window).on("resize", updateCustomerPortalLayout);
+
+            // Gentle cursor-responsive floating background.
+            $(document).on("mousemove", function(event) {
+                var x = (event.clientX / window.innerWidth) - 0.5;
+                var y = (event.clientY / window.innerHeight) - 0.5;
+
+                $(".glow-a").css("transform",
+                    "translate(" + (x * 18) + "px," + (y * 18) + "px)");
+
+                $(".glow-b").css("transform",
+                    "translate(" + (x * -15) + "px," + (y * -15) + "px)");
+
+                $(".glow-c").css("transform",
+                    "translate(" + (x * 10) + "px," + (y * -10) + "px)");
+
+                $(".orbit-a").css("transform",
+                    "translate(" + (x * -12) + "px," + (y * 8) + "px)");
+
+                $(".orbit-b").css("transform",
+                    "translate(" + (x * 10) + "px," + (y * -8) + "px)");
+            });
+
+            // Slowly shift particles to create a floating atmosphere.
+            var particleStep = 0;
+
+            setInterval(function() {
+                particleStep++;
+
+                $(".particle-a").css("transform",
+                    "translate(" + Math.sin(particleStep / 12) * 18 + "px," +
+                    Math.cos(particleStep / 15) * 14 + "px)");
+
+                $(".particle-b").css("transform",
+                    "translate(" + Math.cos(particleStep / 14) * 15 + "px," +
+                    Math.sin(particleStep / 11) * 18 + "px)");
+
+                $(".particle-c").css("transform",
+                    "translate(" + Math.sin(particleStep / 10) * 14 + "px," +
+                    Math.cos(particleStep / 13) * 17 + "px)");
+
+                $(".particle-d").css("transform",
+                    "translate(" + Math.cos(particleStep / 16) * 18 + "px," +
+                    Math.sin(particleStep / 12) * 12 + "px)");
+
+                $(".particle-e").css("transform",
+                    "translate(" + Math.sin(particleStep / 13) * 12 + "px," +
+                    Math.cos(particleStep / 17) * 15 + "px)");
+            }, 120);
+
+            // Give clickable customer rows a subtle depth response.
+            $(".table tbody tr").on("mouseenter", function() {
+                $(this).css("box-shadow", "0 8px 22px rgba(39,31,99,.06)");
+            }).on("mouseleave", function() {
+                $(this).css("box-shadow", "none");
+            });
+
+
+            function isValidEmail(email) {
+                var emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]{2,}$/;
+                return emailPattern.test(email);
+            }
+
+            function isValidPhone(phone) {
+                var phonePattern = /^[6-9][0-9]{9}$/;
+                return phonePattern.test(phone);
+            }
+
+            function showValidation(message) {
+                alert(message);
+            }
+
+            function validateCustomerForm() {
+                var firstName = $("#firstName").val().trim();
+                var lastName = $("#lastName").val().trim();
+                var email = $("#customerEmail").val().trim();
+                var phone = $("#customerPhone").val().trim();
+                var company = $("#companyName").val().trim();
+                var city = $("#customerCity").val();
+
+                // FIRST NAME
+                if (firstName === "") {
+                    showValidation("First Name is required.");
+                    $("#firstName").focus();
+                    return false;
+                }
+
+                if (!/^[a-zA-Z ]+$/.test(firstName)) {
+                    showValidation("First Name can contain only letters.");
+                    $("#firstName").focus();
+                    return false;
+                }
+
+                // LAST NAME
+                if (lastName === "") {
+                    showValidation("Last Name is required.");
+                    $("#lastName").focus();
+                    return false;
+                }
+
+                if (!/^[a-zA-Z ]+$/.test(lastName)) {
+                    showValidation("Last Name can contain only letters.");
+                    $("#lastName").focus();
+                    return false;
+                }
+
+                // EMAIL
+                if (email === "") {
+                    showValidation("Email is required.");
+                    $("#customerEmail").focus();
+                    return false;
+                }
+
+                if (!isValidEmail(email)) {
+                    showValidation("Please enter a valid email address.\n\nExample: customer@gmail.com");
+                    $("#customerEmail").focus();
+                    return false;
+                }
+
+                // PHONE
+                if (phone === "") {
+                    showValidation("Phone number is required.");
+                    $("#customerPhone").focus();
+                    return false;
+                }
+
+                if (!isValidPhone(phone)) {
+                    showValidation("Phone number must be exactly 10 digits and start with 6-9.");
+                    $("#customerPhone").focus();
+                    return false;
+                }
+
+                // COMPANY
+                if (company === "") {
+                    showValidation("Company Name is required.");
+                    $("#companyName").focus();
+                    return false;
+                }
+
+                // CITY
+                if (city === "") {
+                    showValidation("City is required.");
+                    $("#customerCity").focus();
+                    return false;
+                }
+
+                return true;
+            }
+
+            // FORM SUBMIT HANDLER
+            $("#customerForm").on("submit", function(event) {
+                if (!validateCustomerForm()) {
+                    event.preventDefault();
+                    return false;
+                }
+                return true;
+            });
+
+            // PHONE NUMERIC-ONLY FILTER
+            $("#customerPhone").on("input", function() {
+                var value = $(this).val().replace(/[^0-9]/g, "");
+                $(this).val(value);
+            });
+
+            // BLUR VALIDATIONS (WITHOUT FOCUS LOOP)
+            $("#customerEmail").on("blur", function() {
+                var email = $(this).val().trim();
+                if (email !== "" && !isValidEmail(email)) {
+                    showValidation("Please enter a valid email address.");
+                }
+            });
+
+            $("#customerPhone").on("blur", function() {
+                var phone = $(this).val().trim();
+                if (phone !== "" && !isValidPhone(phone)) {
+                    showValidation("Phone number must be exactly 10 digits and start with 6-9.");
+                }
+            });
+
+            $("#firstName").on("blur", function() {
+                var value = $(this).val().trim();
+                if (value !== "" && !/^[a-zA-Z ]+$/.test(value)) {
+                    showValidation("First Name can contain only letters.");
+                }
+            });
+
+            $("#lastName").on("blur", function() {
+                var value = $(this).val().trim();
+                if (value !== "" && !/^[a-zA-Z ]+$/.test(value)) {
+                    showValidation("Last Name can contain only letters.");
+                }
+            });
+
+            // CLEAR FORM
+            $("#btnClearCustomer").on("click", function() {
+                $("#firstName").val("");
+                $("#lastName").val("");
+                $("#customerEmail").val("");
+                $("#customerPhone").val("");
+                $("#companyName").val("");
+                $("#customerCity").val("");
+            });
+
+        });
+    </script>
+}

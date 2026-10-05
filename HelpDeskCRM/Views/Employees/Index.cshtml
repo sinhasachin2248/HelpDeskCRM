@@ -1,0 +1,3551 @@
+﻿@model HelpDeskCRM.Models.EmployeeManagementViewModel
+
+@{
+    ViewData["Title"] = "Employee Management";
+}
+
+<div class="container-fluid py-4 employee-management-page">
+
+    <div class="employee-fx" aria-hidden="true">
+        <div class="employee-glow employee-glow-1"></div>
+        <div class="employee-glow employee-glow-2"></div>
+        <div class="employee-glow employee-glow-3"></div>
+        <div class="employee-orb employee-orb-1"></div>
+        <div class="employee-orb employee-orb-2"></div>
+        <div class="employee-dot dot-1"></div>
+        <div class="employee-dot dot-2"></div>
+        <div class="employee-dot dot-3"></div>
+        <div class="employee-dot dot-4"></div>
+        <div class="employee-dot dot-5"></div>
+    </div>
+
+    <div class="employee-hero">
+        <div class="employee-hero-copy">
+            <div class="employee-eyebrow">
+                <span class="employee-status-dot"></span>
+                EMPLOYEE OPERATIONS
+            </div>
+            <h1>Employee Management</h1>
+            <p>One intelligent workspace for employee profiles, operations and support activity.</p>
+        </div>
+
+        <div class="employee-hero-badge">
+            <div class="hero-badge-icon">EM</div>
+            <div>
+                <strong>WORKSPACE</strong>
+                <span>Live management portal</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =====================================================
+         SUCCESS MESSAGE
+         ===================================================== -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            @TempData["SuccessMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
+
+    <!-- =====================================================
+         ERROR MESSAGE
+         ===================================================== -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+
+            @TempData["ErrorMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
+
+    
+    <div class="employee-snapshot">
+        <div class="snapshot-heading">
+            <span class="snapshot-kicker">TEAM SNAPSHOT</span>
+            <span class="snapshot-line"></span>
+            <span class="snapshot-caption">Live from the employee workspace</span>
+        </div>
+
+        <div class="snapshot-grid">
+            <div class="snapshot-card snapshot-purple">
+                <div class="snapshot-icon">01</div>
+                <div class="snapshot-info">
+                    <span>TOTAL EMPLOYEES</span>
+                    <strong class="count-up" data-count="@Model.Employees.Count">0</strong>
+                </div>
+                <div class="snapshot-ring"></div>
+            </div>
+
+            <div class="snapshot-card snapshot-green">
+                <div class="snapshot-icon">02</div>
+                <div class="snapshot-info">
+                    <span>ACTIVE MEMBERS</span>
+                    <strong class="count-up" data-count="@Model.Employees.Count(x => x.Status == "Active")">0</strong>
+                </div>
+                <div class="snapshot-ring"></div>
+            </div>
+
+            <div class="snapshot-card snapshot-blue">
+                <div class="snapshot-icon">03</div>
+                <div class="snapshot-info">
+                    <span>DEPARTMENTS</span>
+                    <strong class="count-up" data-count="@Model.Employees.Select(x => x.Department).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().Count()">0</strong>
+                </div>
+                <div class="snapshot-ring"></div>
+            </div>
+
+            <div class="snapshot-card snapshot-pink">
+                <div class="snapshot-icon">04</div>
+                <div class="snapshot-info">
+                    <span>CITIES</span>
+                    <strong class="count-up" data-count="@Model.Employees.Select(x => x.City).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().Count()">0</strong>
+                </div>
+                <div class="snapshot-ring"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- =====================================================
+             LEFT SIDE EMPLOYEE MENU
+             ===================================================== -->
+
+        <div class="col-md-4 col-lg-3">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header text-white"
+                     style="background-color:#15803d;">
+
+                    <h5 class="mb-1">
+                        👨‍💼 Employee Services
+                    </h5>
+
+                    <small>
+                        Select an operation
+                    </small>
+
+                </div>
+
+
+                <div class="list-group list-group-flush">
+
+                    <!-- =================================================
+                         ADD EMPLOYEE
+                         ================================================= -->
+
+                    <a asp-controller="Employees"
+                       asp-action="Index"
+                       asp-route-section="addEmployee"
+                       class="list-group-item list-group-item-action employee-nav-item" employee-nav-add>
+
+                        <strong>
+                            ➕ Add Employee
+                        </strong>
+
+                        <small class="d-block text-muted">
+                            Create new employee
+                        </small>
+
+                    </a>
+
+
+                    <!-- =================================================
+                         EMPLOYEE LIST
+                         ================================================= -->
+
+                    <a asp-controller="Employees"
+                       asp-action="Index"
+                       asp-route-section="employeeList"
+                       class="list-group-item list-group-item-action employee-nav-item" employee-nav-list>
+
+                        <strong>
+                            👨‍💼 Employee List
+                        </strong>
+
+                        <small class="d-block text-muted">
+                            View all employees
+                        </small>
+
+                    </a>
+
+
+                    <!-- =================================================
+                         EMPLOYEE DETAILS
+                         ================================================= -->
+
+                    <a asp-controller="Employees"
+                       asp-action="Index"
+                       asp-route-section="employeeDetails"
+                       class="list-group-item list-group-item-action employee-nav-item" employee-nav-details>
+
+                        <strong>
+                            📋 Employee Details
+                        </strong>
+
+                        <small class="d-block text-muted">
+                            View employee information
+                        </small>
+
+                    </a>
+
+
+                    <!-- =================================================
+                         EMPLOYEE PORTAL
+                         ================================================= -->
+
+                    <a asp-controller="Employees"
+                       asp-action="Index"
+                       asp-route-section="employeePortal"
+                       class="list-group-item list-group-item-action employee-nav-item" employee-nav-portal>
+
+                        <strong>
+                            🖥️ Employee Portal
+                        </strong>
+
+                        <small class="d-block text-muted">
+                            View assigned tickets
+                        </small>
+
+                    </a>
+
+
+                    <!-- =================================================
+                         EDIT EMPLOYEE
+                         ================================================= -->
+
+                    <a asp-controller="Employees"
+                       asp-action="Index"
+                       asp-route-section="editEmployee"
+                       class="list-group-item list-group-item-action employee-nav-item" employee-nav-edit>
+
+                        <strong>
+                            ✏️ Edit Employee
+                        </strong>
+
+                        <small class="d-block text-muted">
+                            Update employee details
+                        </small>
+
+                    </a>
+
+
+                    <!-- =================================================
+                         FIND EMPLOYEE BY MOBILE
+                         ================================================= -->
+
+                    <a asp-controller="Employees"
+                       asp-action="Index"
+                       asp-route-section="mobileLookup"
+                       class="list-group-item list-group-item-action employee-nav-item" employee-nav-mobile>
+
+                        <strong>
+                            📱 Find Employee by Mobile
+                        </strong>
+
+                        <small class="d-block text-muted">
+                            Consume Manager API
+                        </small>
+
+                    </a>
+
+
+                    <!-- =================================================
+                         DELETE EMPLOYEE
+                         ================================================= -->
+
+                    <a asp-controller="Employees"
+                       asp-action="Index"
+                       asp-route-section="deleteEmployee"
+                       class="list-group-item list-group-item-action employee-nav-item" employee-nav-delete>
+
+                        <strong>
+                            🗑️ Delete Employee
+                        </strong>
+
+                        <small class="d-block text-muted">
+                            Remove employee
+                        </small>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RIGHT SIDE CONTENT
+             ===================================================== -->
+
+        <div class="col-md-8 col-lg-9">
+
+
+            <!-- =====================================================
+                 ADD EMPLOYEE
+                 ===================================================== -->
+            @if (Model.ActiveSection == "addEmployee")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#15803d;">
+                            ➕ Add New Employee
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            Enter employee information.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+                        <form asp-controller="Employees"
+                              asp-action="Create"
+                              method="post"
+                              id="employeeForm"
+                              novalidate>
+
+                            <div asp-validation-summary="All"
+                                 class="text-danger mb-3">
+                            </div>
+
+
+                            <div class="row">
+
+                                <!-- EMPLOYEE ID -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.EmployeeId"
+                                           class="form-label fw-semibold">
+
+                                        Employee ID
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.EmployeeId"
+                                           id="employeeId"
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="Enter 5 digit Employee ID"
+                                           maxlength="5"
+                                           inputmode="numeric"
+                                           autocomplete="off" />
+
+                                    <span asp-validation-for="NewEmployee.EmployeeId"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- FIRST NAME -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.FirstName"
+                                           class="form-label fw-semibold">
+
+                                        First Name
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.FirstName"
+                                           id="employeeFirstName"
+                                           class="form-control"
+                                           placeholder="Enter first name" />
+
+                                    <span asp-validation-for="NewEmployee.FirstName"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- LAST NAME -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.LastName"
+                                           class="form-label fw-semibold">
+
+                                        Last Name
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.LastName"
+                                           id="employeeLastName"
+                                           class="form-control"
+                                           placeholder="Enter last name" />
+
+                                    <span asp-validation-for="NewEmployee.LastName"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- EMAIL -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.Email"
+                                           class="form-label fw-semibold">
+
+                                        Email
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.Email"
+                                           id="employeeEmail"
+                                           type="email"
+                                           class="form-control"
+                                           placeholder="employee@example.com" />
+
+                                    <span asp-validation-for="NewEmployee.Email"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- PHONE -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.Phone"
+                                           class="form-label fw-semibold">
+
+                                        Phone Number
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.Phone"
+                                           id="employeePhone"
+                                           type="tel"
+                                           class="form-control"
+                                           maxlength="10"
+                                           pattern="[6-9][0-9]{9}"
+                                           inputmode="numeric"
+                                           placeholder="Enter 10 digit mobile number" />
+
+                                    <span asp-validation-for="NewEmployee.Phone"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- DEPARTMENT -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.Department"
+                                           class="form-label fw-semibold">
+
+                                        Department
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.Department"
+                                           id="employeeDepartment"
+                                           class="form-control"
+                                           placeholder="Enter department" />
+
+                                    <span asp-validation-for="NewEmployee.Department"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- DESIGNATION -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.Designation"
+                                           class="form-label fw-semibold">
+
+                                        Designation
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.Designation"
+                                           id="employeeDesignation"
+                                           class="form-control"
+                                           placeholder="Enter designation" />
+
+                                    <span asp-validation-for="NewEmployee.Designation"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- CITY -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label asp-for="NewEmployee.City"
+                                           class="form-label fw-semibold">
+
+                                        City
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="NewEmployee.City"
+                                           id="employeeCity"
+                                           class="form-control"
+                                           placeholder="Enter city" />
+
+                                    <span asp-validation-for="NewEmployee.City"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="mt-3">
+
+                                <button type="submit"
+                                        class="btn btn-success">
+
+                                    💾 Save Employee
+
+                                </button>
+
+
+                                <button type="reset"
+                                        id="btnClearEmployee"
+                                        class="btn btn-outline-secondary ms-2">
+
+                                    Clear
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- =====================================================
+                 EMPLOYEE LIST
+                 ===================================================== -->
+            @if (Model.ActiveSection == "employeeList")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#15803d;">
+                            👨‍💼 Employee List
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            View all registered employees.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+                        @if (Model.Employees == null ||
+                             Model.Employees.Count == 0)
+                        {
+                            <div class="text-center py-5">
+
+                                <div style="font-size:50px;">
+                                    👨‍💼
+                                </div>
+
+                                <h5>
+                                    No employees found
+                                </h5>
+
+                                <p class="text-muted">
+                                    Add an employee to see them here.
+                                </p>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+
+                                <table class="table table-hover align-middle">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>
+                                                Employee ID
+                                            </th>
+
+                                            <th>
+                                                Name
+                                            </th>
+
+                                            <th>
+                                                Email
+                                            </th>
+
+                                            <th>
+                                                Phone
+                                            </th>
+
+                                            <th>
+                                                Department
+                                            </th>
+
+                                            <th>
+                                                Designation
+                                            </th>
+
+                                            <th>
+                                                City
+                                            </th>
+
+                                            <th>
+                                                Status
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+                                    <tbody>
+
+                                        @foreach (var employee in Model.Employees)
+                                        {
+                                            <tr style="cursor:pointer;"
+                                                onclick="window.location.href='@Url.Action("Details", "Employees", new { employeeId = employee.EmployeeId })';">
+
+                                                <td>
+
+                                                    <span class="badge bg-success">
+                                                        @employee.EmployeeId
+                                                    </span>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <strong>
+                                                        @employee.FirstName
+                                                        @employee.LastName
+                                                    </strong>
+
+                                                </td>
+
+                                                <td>
+                                                    @employee.Email
+                                                </td>
+
+                                                <td>
+                                                    @employee.Phone
+                                                </td>
+
+                                                <td>
+                                                    @employee.Department
+                                                </td>
+
+                                                <td>
+                                                    @employee.Designation
+                                                </td>
+
+                                                <td>
+                                                    @employee.City
+                                                </td>
+
+                                                <td>
+
+                                                    @if (employee.Status == "Active")
+                                                    {
+                                                        <span class="badge bg-success">
+                                                            Active
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-secondary">
+                                                            @employee.Status
+                                                        </span>
+                                                    }
+
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- =====================================================
+                 EMPLOYEE DETAILS
+                 ===================================================== -->
+            @if (Model.ActiveSection == "employeeDetails")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#15803d;">
+                            📋 Employee Details
+                        </h3>
+
+                        <p class="text-muted">
+                            Enter Employee ID to view employee information.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+                        <form asp-controller="Employees"
+                              asp-action="Details"
+                              method="get">
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="employeeId"
+                                       class="form-control"
+                                       placeholder="Enter 5 digit Employee ID"
+                                       min="10001"
+                                       max="99999"
+                                       required />
+
+                                <button type="submit"
+                                        class="btn btn-success">
+
+                                    🔍 Search
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        @if (Model.SelectedEmployee != null)
+                        {
+                            <div class="card bg-light border-0 p-4">
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <h4 style="color:#15803d;"
+                                        class="mb-0">
+
+                                        👨‍💼 Employee Information
+
+                                    </h4>
+
+
+                                    <form asp-controller="Employees"
+                                          asp-action="OpenPortal"
+                                          method="post"
+                                          class="mb-0">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="employeeId"
+                                               value="@Model.SelectedEmployee.EmployeeId" />
+
+                                        <button type="submit"
+                                                class="btn btn-success">
+
+                                            👨‍💼 Employee Portal
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+
+                                <hr />
+
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                Employee ID:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.EmployeeId
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                Name:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.FirstName
+                                            @Model.SelectedEmployee.LastName
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                Email:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.Email
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                Phone:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.Phone
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                Department:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.Department
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                Designation:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.Designation
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                City:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.City
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <p>
+                                            <strong>
+                                                Status:
+                                            </strong>
+
+                                            @Model.SelectedEmployee.Status
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <hr />
+
+
+                                <h5 style="color:#15803d;">
+                                    🎫 Assigned Tickets
+                                </h5>
+
+
+                                @if (Model.AssignedTasks == null ||
+                                     Model.AssignedTasks.Count == 0)
+                                {
+                                    <div class="text-center py-4">
+
+                                        <div style="font-size:45px;">
+                                            🎉
+                                        </div>
+
+                                        <h6>
+                                            No active tickets assigned
+                                        </h6>
+
+                                        <p class="text-muted">
+                                            This employee currently has no pending work.
+                                        </p>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="table-responsive">
+
+                                        <table class="table table-hover">
+
+                                            <thead>
+
+                                                <tr>
+
+                                                    <th>
+                                                        Ticket ID
+                                                    </th>
+
+                                                    <th>
+                                                        Subject
+                                                    </th>
+
+                                                    <th>
+                                                        Customer
+                                                    </th>
+
+                                                    <th>
+                                                        Priority
+                                                    </th>
+
+                                                    <th>
+                                                        Status
+                                                    </th>
+
+                                                    <th>
+                                                        Action
+                                                    </th>
+
+                                                </tr>
+
+                                            </thead>
+
+
+                                            <tbody>
+
+                                                @foreach (var ticket in Model.AssignedTasks)
+                                                {
+                                                    <tr>
+
+                                                        <td>
+                                                            <span class="badge bg-primary">
+                                                                @ticket.TicketId
+                                                            </span>
+                                                        </td>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                @ticket.Subject
+                                                            </strong>
+
+                                                            <small class="d-block text-muted">
+                                                                @ticket.Description
+                                                            </small>
+
+                                                        </td>
+
+                                                        <td>
+                                                            @ticket.CustomerName
+                                                        </td>
+
+                                                        <td>
+                                                            @ticket.Priority
+                                                        </td>
+
+                                                        <td>
+
+                                                            @if (ticket.Status == "Solved")
+                                                            {
+                                                                <span class="badge bg-success">
+                                                                    Solved
+                                                                </span>
+                                                            }
+                                                            else if (ticket.Status == "Pending")
+                                                            {
+                                                                <span class="badge bg-warning text-dark">
+                                                                    Pending
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge bg-primary">
+                                                                    @ticket.Status
+                                                                </span>
+                                                            }
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            @if (ticket.Status != "Solved")
+                                                            {
+                                                                <form asp-controller="Employees"
+                                                                      asp-action="SolveTicket"
+                                                                      method="post">
+
+                                                                    @Html.AntiForgeryToken()
+
+                                                                    <input type="hidden"
+                                                                           name="employeeId"
+                                                                           value="@Model.SelectedEmployee.EmployeeId" />
+
+                                                                    <input type="hidden"
+                                                                           name="ticketId"
+                                                                           value="@ticket.TicketId" />
+
+                                                                    <button type="submit"
+                                                                            class="btn btn-sm btn-success">
+
+                                                                        Problem Solved
+
+                                                                    </button>
+
+                                                                </form>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="text-success fw-semibold">
+                                                                    ✓ Completed
+                                                                </span>
+                                                            }
+
+                                                        </td>
+
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- =====================================================
+                 EMPLOYEE PORTAL
+                 ===================================================== -->
+            @if (Model.ActiveSection == "employeePortal")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#15803d;">
+                            🖥️ Employee Portal
+                        </h3>
+
+                        <p class="text-muted">
+                            Enter Employee ID to open the employee portal.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+                        <form asp-controller="Employees"
+                              asp-action="Details"
+                              method="get">
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="employeeId"
+                                       class="form-control"
+                                       placeholder="Enter 5 digit Employee ID"
+                                       min="10001"
+                                       max="99999"
+                                       required />
+
+                                <button type="submit"
+                                        class="btn btn-success">
+
+                                    🔍 Search
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        @if (Model.SelectedEmployee != null)
+                        {
+                            <div class="card bg-light border-0 p-4">
+
+                                <h4 style="color:#15803d;">
+                                    👨‍💼 @Model.SelectedEmployee.FirstName
+                                    @Model.SelectedEmployee.LastName
+                                </h4>
+
+                                <hr />
+
+                                <p>
+                                    <strong>
+                                        Employee ID:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.EmployeeId
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Department:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.Department
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Designation:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.Designation
+                                </p>
+
+
+                                <h5 class="mt-4">
+                                    🎫 Assigned Tickets
+                                </h5>
+
+
+                                @if (Model.AssignedTasks == null ||
+                                     Model.AssignedTasks.Count == 0)
+                                {
+                                    <div class="text-center py-5">
+
+                                        <div style="font-size:50px;">
+                                            🎉
+                                        </div>
+
+                                        <h5>
+                                            No active tickets assigned
+                                        </h5>
+
+                                        <p class="text-muted">
+                                            You currently have no pending work.
+                                        </p>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="table-responsive">
+
+                                        <table class="table table-hover">
+
+                                            <thead>
+
+                                                <tr>
+
+                                                    <th>
+                                                        Ticket ID
+                                                    </th>
+
+                                                    <th>
+                                                        Subject
+                                                    </th>
+
+                                                    <th>
+                                                        Customer
+                                                    </th>
+
+                                                    <th>
+                                                        Priority
+                                                    </th>
+
+                                                    <th>
+                                                        Status
+                                                    </th>
+
+                                                    <th>
+                                                        Action
+                                                    </th>
+
+                                                </tr>
+
+                                            </thead>
+
+
+                                            <tbody>
+
+                                                @foreach (var ticket in Model.AssignedTasks)
+                                                {
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <span class="badge bg-primary">
+                                                                @ticket.TicketId
+                                                            </span>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                @ticket.Subject
+                                                            </strong>
+
+                                                            <small class="d-block text-muted">
+                                                                @ticket.Description
+                                                            </small>
+
+                                                        </td>
+
+                                                        <td>
+                                                            @ticket.CustomerName
+                                                        </td>
+
+                                                        <td>
+                                                            @ticket.Priority
+                                                        </td>
+
+                                                        <td>
+
+                                                            @if (ticket.Status == "Solved")
+                                                            {
+                                                                <span class="badge bg-success">
+                                                                    Solved
+                                                                </span>
+                                                            }
+                                                            else if (ticket.Status == "Pending")
+                                                            {
+                                                                <span class="badge bg-warning text-dark">
+                                                                    Pending
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge bg-primary">
+                                                                    @ticket.Status
+                                                                </span>
+                                                            }
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            @if (ticket.Status != "Solved")
+                                                            {
+                                                                <form asp-controller="Employees"
+                                                                      asp-action="SolveTicket"
+                                                                      method="post">
+
+                                                                    @Html.AntiForgeryToken()
+
+                                                                    <input type="hidden"
+                                                                           name="employeeId"
+                                                                           value="@Model.SelectedEmployee.EmployeeId" />
+
+                                                                    <input type="hidden"
+                                                                           name="ticketId"
+                                                                           value="@ticket.TicketId" />
+
+                                                                    <button type="submit"
+                                                                            class="btn btn-sm btn-success">
+
+                                                                        Problem Solved
+
+                                                                    </button>
+
+                                                                </form>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="text-success fw-semibold">
+                                                                    ✓ Completed
+                                                                </span>
+                                                            }
+
+                                                        </td>
+
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- =====================================================
+                 EDIT EMPLOYEE
+                 ===================================================== -->
+            @if (Model.ActiveSection == "editEmployee")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 style="color:#15803d;">
+                            ✏️ Edit Employee
+                        </h3>
+
+                        <p class="text-muted">
+                            Enter Employee ID to find the employee.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+                        <form asp-controller="Employees"
+                              asp-action="FindForEdit"
+                              method="get">
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="employeeId"
+                                       class="form-control"
+                                       placeholder="Enter 5 digit Employee ID"
+                                       min="10001"
+                                       max="99999"
+                                       required />
+
+                                <button type="submit"
+                                        class="btn btn-success">
+
+                                    🔍 Search
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        @if (Model.SelectedEmployee != null)
+                        {
+                            <div class="card bg-light border-0 p-4">
+
+                                <h4 style="color:#15803d;">
+                                    👨‍💼 Edit Employee Details
+                                </h4>
+
+                                <hr />
+
+
+                                <form asp-controller="Employees"
+                                      asp-action="Update"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+
+                                    <div asp-validation-summary="All"
+                                         class="text-danger mb-3">
+                                    </div>
+
+
+                                    <input type="hidden"
+                                           name="EmployeeId"
+                                           value="@Model.SelectedEmployee.EmployeeId" />
+
+                                    <input type="hidden"
+                                           name="FirstName"
+                                           value="@Model.SelectedEmployee.FirstName" />
+
+                                    <input type="hidden"
+                                           name="LastName"
+                                           value="@Model.SelectedEmployee.LastName" />
+
+                                    <input type="hidden"
+                                           name="Status"
+                                           value="@Model.SelectedEmployee.Status" />
+
+
+                                    <!-- EMPLOYEE ID -->
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Employee ID
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control"
+                                               value="@Model.SelectedEmployee.EmployeeId"
+                                               readonly />
+
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <!-- EMAIL -->
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label fw-semibold">
+                                                Email
+                                            </label>
+
+                                            <input name="Email"
+                                                   value="@Model.SelectedEmployee.Email"
+                                                   class="form-control"
+                                                   type="email"
+                                                   required />
+
+                                        </div>
+
+
+                                        <!-- PHONE -->
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label fw-semibold">
+                                                Phone Number
+                                            </label>
+
+                                            <input name="Phone"
+                                                   value="@Model.SelectedEmployee.Phone"
+                                                   class="form-control"
+                                                   type="tel"
+                                                   maxlength="10"
+                                                   pattern="[6-9][0-9]{9}"
+                                                   inputmode="numeric"
+                                                   required />
+
+                                        </div>
+
+
+                                        <!-- CITY -->
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label fw-semibold">
+                                                City
+                                            </label>
+
+                                            <input name="City"
+                                                   value="@Model.SelectedEmployee.City"
+                                                   class="form-control"
+                                                   required />
+
+                                        </div>
+
+
+                                        <!-- DESIGNATION -->
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label fw-semibold">
+                                                Designation
+                                            </label>
+
+                                            <input name="Designation"
+                                                   value="@Model.SelectedEmployee.Designation"
+                                                   class="form-control"
+                                                   required />
+
+                                        </div>
+
+
+                                        <!-- DEPARTMENT -->
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label fw-semibold">
+                                                Department
+                                            </label>
+
+                                            <input name="Department"
+                                                   value="@Model.SelectedEmployee.Department"
+                                                   class="form-control"
+                                                   required />
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="mt-3">
+
+                                        <button type="submit"
+                                                class="btn btn-success">
+
+                                            💾 Update Employee
+
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- =====================================================
+                 FIND EMPLOYEE BY MOBILE
+                 ===================================================== -->
+            @if (Model.ActiveSection == "mobileLookup")
+            {
+                <div class="card shadow-sm border-0 mobile-lookup-card">
+
+                    <div class="card-header bg-white p-4">
+
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+
+                            <div>
+                                <h3 style="color:#15803d;">
+                                    📱 Find Employee by Mobile
+                                </h3>
+
+                                <p class="text-muted mb-0">
+                                    Consume the Manager API using a mobile number.
+                                </p>
+                            </div>
+
+                            <span class="badge rounded-pill bg-success px-3 py-2">
+                                LIVE API LOOKUP
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+                        <div class="alert alert-info mobile-api-info">
+
+                            <strong>
+                                🔗 Manager API Integration
+                            </strong>
+
+                            <div class="mt-1">
+                                Enter a mobile number and click <strong>FETCH</strong>.
+                                The Manager API response will be displayed below.
+                                <strong>FETCH does not save anything to the database.</strong>
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             FETCH FORM
+                             ================================================= -->
+
+                        <form asp-controller="Employees"
+                              asp-action="FetchMobile"
+                              method="post"
+                              id="mobileFetchForm">
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="row align-items-end">
+
+                                <div class="col-md-8 mb-3">
+
+                                    <label class="form-label fw-semibold">
+
+                                        Mobile Number
+
+                                        <span class="text-danger">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <div class="mobile-input-wrap">
+
+                                        <span class="mobile-input-icon">
+                                            📱
+                                        </span>
+
+                                        <input type="tel"
+                                               name="mobileNo"
+                                               id="mobileApiNumber"
+                                               class="form-control mobile-api-input"
+                                               maxlength="10"
+                                               pattern="[6-9][0-9]{9}"
+                                               inputmode="numeric"
+                                               autocomplete="off"
+                                               placeholder="Enter 10 digit mobile number"
+                                               required />
+
+                                    </div>
+
+                                    <small class="text-muted">
+                                        Enter 10 digits starting with 6-9.
+                                    </small>
+
+                                </div>
+
+
+                                <div class="col-md-4 mb-3">
+
+                                    <button type="submit"
+                                            class="btn btn-success w-100 mobile-fetch-button"
+                                            id="fetchMobileButton">
+
+                                        <span class="fetch-icon">🔍</span>
+                                        <span class="fetch-text">FETCH</span>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+
+                        <!-- =================================================
+                             API RESPONSE
+                             ================================================= -->
+
+                        @if (Model.MobileApiResponse != null)
+                        {
+                            <div class="mobile-response-panel mt-4">
+
+                                <div class="alert alert-light border mobile-response-alert">
+
+                                    <div class="d-flex align-items-center gap-2">
+
+                                        <span class="response-status-icon">✓</span>
+
+                                        <div>
+                                            <h5 class="mb-1">
+                                                API Response
+                                            </h5>
+
+                                            <p class="mb-0">
+                                                Exact response received from the Manager API.
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- =================================================
+                                     READ-ONLY API RESPONSE FIELDS
+                                     ================================================= -->
+
+                                <div class="row g-3 mobile-api-response-fields">
+
+                                    <!-- MESSAGE -->
+                                    <div class="col-12">
+
+                                        <label class="form-label fw-semibold">
+                                            Message
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control mobile-api-readonly-field"
+                                               value="@Model.MobileApiResponse.Message"
+                                               readonly />
+
+                                    </div>
+
+
+                                    <!-- ERROR MESSAGES -->
+                                    <div class="col-md-6">
+
+                                        <label class="form-label fw-semibold">
+                                            ErrorMessages
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control mobile-api-readonly-field"
+                                               value="@Model.MobileApiResponse.ErrorMessages"
+                                               readonly />
+
+                                    </div>
+
+
+                                    <!-- EXCEPTION -->
+                                    <div class="col-md-6">
+
+                                        <label class="form-label fw-semibold">
+                                            Exception
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control mobile-api-readonly-field"
+                                               value="@Model.MobileApiResponse.Exception"
+                                               readonly />
+
+                                    </div>
+
+
+                                    <!-- DATA -->
+                                    <div class="col-12">
+
+                                        <label class="form-label fw-semibold">
+                                            Data
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control mobile-api-readonly-field"
+                                               value="@Model.MobileApiResponse.Data"
+                                               readonly />
+
+                                    </div>
+
+
+                                    <!-- PERSON NAME -->
+                                    <div class="col-12">
+
+                                        <label class="form-label fw-semibold">
+                                            Person Name
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control mobile-api-readonly-field"
+                                               value="@Model.MobileApiResponse.PersonName"
+                                               readonly />
+
+                                    </div>
+
+
+                                    <!-- SUCCESS -->
+                                    <div class="col-md-6">
+
+                                        <label class="form-label fw-semibold">
+                                            Success
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control mobile-api-readonly-field"
+                                               value="@Model.MobileApiResponse.Success.ToString().ToLowerInvariant()"
+                                               readonly />
+
+                                    </div>
+
+
+                                    <!-- MOBILE NUMBER USED -->
+                                    <div class="col-md-6">
+
+                                        <label class="form-label fw-semibold">
+                                            Mobile Number
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control mobile-api-readonly-field"
+                                               value="@Model.MobileApiResponse.Employee?.MobileNo"
+                                               readonly />
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- =================================================
+                                     SAVE BUTTON
+                                     The complete fetched response can be saved,
+                                     including responses where Data is null.
+                                     ================================================= -->
+
+                                <form asp-controller="Employees"
+                                      asp-action="SaveMobileResponse"
+                                      method="post"
+                                      id="saveMobileResponseForm"
+                                      style="text-align:right; margin-top:20px;">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <input type="hidden"
+                                           name="mobileNo"
+                                           value="@Model.MobileApiResponse.Employee?.MobileNo" />
+
+                                    <input type="hidden"
+                                           name="employeeName"
+                                           value="@(Model.MobileApiResponse.PersonName == "null"
+                                               ? ""
+                                               : Model.MobileApiResponse.PersonName)" />
+
+                                    <input type="hidden"
+                                           name="responseMessage"
+                                           value="@Model.MobileApiResponse.Message" />
+
+                                    <input type="hidden"
+                                           name="responseStatus"
+                                           value="@Model.MobileApiResponse.ResponseStatus" />
+
+                                    <button type="submit"
+                                            class="btn btn-primary mobile-save-button"
+                                            id="saveMobileResponseButton">
+
+                                        💾 SAVE
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        }
+
+
+                        @if (TempData["SuccessMessage"] != null &&
+                             Model.MobileApiResponse == null)
+                        {
+                            <div class="alert alert-light border mt-3 mb-0">
+                                <strong>💾 Database Status:</strong>
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- =====================================================
+                 DELETE EMPLOYEE
+                 ===================================================== -->
+            @if (Model.ActiveSection == "deleteEmployee")
+            {
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white p-4">
+
+                        <h3 class="text-danger">
+                            🗑️ Delete Employee
+                        </h3>
+
+                        <p class="text-muted">
+                            Enter Employee ID to find the employee.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+                        <form asp-controller="Employees"
+                              asp-action="FindForDelete"
+                              method="get">
+
+                            <div class="input-group mb-4">
+
+                                <input type="number"
+                                       name="employeeId"
+                                       class="form-control"
+                                       placeholder="Enter 5 digit Employee ID"
+                                       min="10001"
+                                       max="99999"
+                                       required />
+
+                                <button type="submit"
+                                        class="btn btn-danger">
+
+                                    🔍 Search
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        @if (Model.SelectedEmployee != null)
+                        {
+                            <div class="alert alert-warning">
+
+                                <h5>
+                                    ⚠️ Employee Found
+                                </h5>
+
+                                <hr />
+
+                                <p>
+                                    <strong>
+                                        ID:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.EmployeeId
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Name:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.FirstName
+                                    @Model.SelectedEmployee.LastName
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Email:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.Email
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Phone:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.Phone
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Department:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.Department
+                                </p>
+
+                                <p class="mb-0">
+                                    <strong>
+                                        Designation:
+                                    </strong>
+
+                                    @Model.SelectedEmployee.Designation
+                                </p>
+
+                            </div>
+
+
+                            <form asp-controller="Employees"
+                                  asp-action="Delete"
+                                  method="post">
+
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden"
+                                       name="employeeId"
+                                       value="@Model.SelectedEmployee.EmployeeId" />
+
+                                <p class="text-danger fw-semibold">
+
+                                    Are you sure you want to delete this employee?
+
+                                </p>
+
+                                <button type="submit"
+                                        class="btn btn-danger">
+
+                                    🗑️ Delete Employee
+
+                                </button>
+
+                            </form>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Model.Message
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MOBILE API LOOKUP UI ENHANCEMENTS
+     ========================================================= -->
+<style>
+    .mobile-lookup-card {
+        animation: mobileCardIn .45s ease both;
+    }
+
+    .mobile-api-info {
+        border: 1px solid rgba(13,110,253,.12);
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(13,110,253,.07), rgba(6,182,212,.06));
+    }
+
+    .mobile-input-wrap {
+        position: relative;
+    }
+
+    .mobile-input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        font-size: 17px;
+        pointer-events: none;
+    }
+
+    .mobile-api-input {
+        padding-left: 45px;
+        min-height: 48px;
+        border-radius: 12px;
+        transition: all .25s ease;
+    }
+
+    .mobile-api-input:focus {
+        border-color: #15803d;
+        box-shadow: 0 0 0 4px rgba(21,128,61,.10);
+        transform: translateY(-1px);
+    }
+
+    .mobile-fetch-button,
+    .mobile-save-button {
+        min-height: 48px;
+        border-radius: 12px;
+        font-weight: 800;
+        letter-spacing: .3px;
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .mobile-fetch-button:hover,
+    .mobile-save-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(0,0,0,.12);
+    }
+
+    .mobile-response-panel {
+        animation: mobilePanelIn .45s ease both;
+    }
+
+    .mobile-response-alert {
+        border-radius: 16px;
+    }
+
+    .response-status-icon {
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255,255,255,.65);
+        font-weight: 900;
+        font-size: 18px;
+    }
+
+    .mobile-response-table-wrap {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 14px 35px rgba(39,31,99,.07);
+    }
+
+    .mobile-response-table th {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .7px;
+        color: #55556d;
+        white-space: nowrap;
+    }
+
+    .mobile-response-table td {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    .mobile-number-chip {
+        display: inline-block;
+        padding: 7px 10px;
+        border-radius: 9px;
+        background: rgba(21,128,61,.08);
+        color: #166534;
+        font-weight: 800;
+    }
+
+    @@keyframes mobileCardIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes mobilePanelIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@Smedia (max-width: 768px) {
+        .mobile-save-button {
+            width: 100%;
+        }
+    }
+</style>
+
+<!-- =========================================================
+     CLIENT-SIDE VALIDATION
+     ========================================================= -->
+
+<style>
+    /* =========================================================
+       DYNAMIC EMPLOYEE MANAGEMENT UI
+       Intentionally avoids CSS media/keyframe at-rules so Razor remains safe.
+    ========================================================= */
+
+    .employee-management-page {
+        position: relative;
+        min-height: calc(100vh - 110px);
+        isolation: isolate;
+        overflow: hidden;
+        border-radius: 30px;
+        background: radial-gradient(circle at 7% 10%, rgba(124,58,237,.10), transparent 27%), radial-gradient(circle at 94% 18%, rgba(6,182,212,.10), transparent 25%), radial-gradient(circle at 55% 100%, rgba(236,72,153,.07), transparent 28%);
+    }
+
+    .employee-fx {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .employee-glow,
+    .employee-orb,
+    .employee-dot {
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .employee-glow {
+        border-radius: 50%;
+        filter: blur(65px);
+        opacity: .13;
+        transition: transform 1.4s ease;
+    }
+
+    .employee-glow-1 {
+        width: 380px;
+        height: 380px;
+        left: -190px;
+        top: 20%;
+        background: #7c3aed;
+    }
+
+    .employee-glow-2 {
+        width: 420px;
+        height: 420px;
+        right: -210px;
+        top: 32%;
+        background: #06b6d4;
+    }
+
+    .employee-glow-3 {
+        width: 340px;
+        height: 340px;
+        left: 40%;
+        bottom: -220px;
+        background: #ec4899;
+    }
+
+    .employee-orb {
+        border: 1px solid rgba(124,58,237,.08);
+        border-radius: 50%;
+        transition: transform 1.8s ease;
+    }
+
+    .employee-orb-1 {
+        width: 460px;
+        height: 460px;
+        right: -250px;
+        top: 15%;
+    }
+
+    .employee-orb-2 {
+        width: 280px;
+        height: 280px;
+        left: -160px;
+        bottom: 4%;
+    }
+
+    .employee-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        opacity: .35;
+        box-shadow: 0 0 20px rgba(124,58,237,.75);
+        transition: transform 1.5s ease;
+    }
+
+    .dot-1 {
+        left: 9%;
+        top: 19%;
+    }
+
+    .dot-2 {
+        left: 24%;
+        top: 73%;
+    }
+
+    .dot-3 {
+        right: 13%;
+        top: 26%;
+    }
+
+    .dot-4 {
+        right: 28%;
+        top: 78%;
+    }
+
+    .dot-5 {
+        left: 57%;
+        top: 12%;
+    }
+
+    .employee-hero {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+        margin: 0 0 24px;
+        padding: 27px 30px;
+        border: 1px solid rgba(255,255,255,.88);
+        border-radius: 26px;
+        background: linear-gradient(135deg,rgba(255,255,255,.92),rgba(247,246,255,.78));
+        box-shadow: 0 22px 65px rgba(39,31,99,.10);
+        backdrop-filter: blur(20px);
+        overflow: hidden;
+    }
+
+        .employee-hero:after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            right: -100px;
+            top: -130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,rgba(124,58,237,.16),rgba(6,182,212,.08));
+        }
+
+    .employee-hero-copy {
+        position: relative;
+        z-index: 1;
+    }
+
+    .employee-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #7c3aed;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 2px;
+    }
+
+    .employee-status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 14px rgba(34,197,94,.8);
+    }
+
+    .employee-hero h1 {
+        margin: 5px 0 4px;
+        color: #17172b;
+        font-size: 31px;
+        line-height: 1.1;
+        font-weight: 950;
+        letter-spacing: -.9px;
+    }
+
+    .employee-hero p {
+        margin: 0;
+        color: #77778b;
+        font-size: 13px;
+    }
+
+    .employee-hero-badge {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 15px 11px 11px;
+        border: 1px solid rgba(124,58,237,.12);
+        border-radius: 18px;
+        background: rgba(255,255,255,.72);
+        box-shadow: 0 12px 30px rgba(39,31,99,.07);
+        transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+        .employee-hero-badge:hover {
+            transform: translateY(-4px) rotate(1deg);
+            box-shadow: 0 18px 35px rgba(39,31,99,.12);
+        }
+
+    .hero-badge-icon {
+        display: grid;
+        place-items: center;
+        width: 43px;
+        height: 43px;
+        border-radius: 13px;
+        color: white;
+        font-size: 12px;
+        font-weight: 950;
+        background: linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4);
+        box-shadow: 0 8px 22px rgba(79,70,229,.25);
+    }
+
+    .employee-hero-badge strong,
+    .employee-hero-badge span {
+        display: block;
+    }
+
+    .employee-hero-badge strong {
+        color: #343448;
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    .employee-hero-badge span {
+        margin-top: 3px;
+        color: #8a899a;
+        font-size: 10px;
+    }
+
+    /* Keep all actual Razor content above the decorative layer. */
+    .employee-management-page > .row,
+    .employee-management-page > .alert {
+        position: relative;
+        z-index: 2;
+    }
+
+        /* Left service panel */
+        .employee-management-page > .row > .col-md-4 > .card,
+        .employee-management-page > .row > .col-md-4 > div.card {
+            border: 1px solid rgba(255,255,255,.88) !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            background: rgba(255,255,255,.90) !important;
+            box-shadow: 0 22px 60px rgba(39,31,99,.10) !important;
+            backdrop-filter: blur(18px);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+            .employee-management-page > .row > .col-md-4 > .card:hover {
+                transform: translateY(-7px);
+                box-shadow: 0 30px 75px rgba(39,31,99,.15) !important;
+            }
+
+        .employee-management-page > .row > .col-md-4 .card-header {
+            position: relative;
+            padding: 21px !important;
+            border: 0 !important;
+            background: linear-gradient(135deg,#075e35,#15803d,#06a66a) !important;
+            overflow: hidden;
+        }
+
+            .employee-management-page > .row > .col-md-4 .card-header:after {
+                content: "";
+                position: absolute;
+                width: 150px;
+                height: 150px;
+                right: -65px;
+                top: -80px;
+                border: 1px solid rgba(255,255,255,.18);
+                border-radius: 50%;
+            }
+
+            .employee-management-page > .row > .col-md-4 .card-header h5 {
+                position: relative;
+                z-index: 1;
+                margin: 0;
+                font-size: 17px;
+                font-weight: 900;
+            }
+
+            .employee-management-page > .row > .col-md-4 .card-header small {
+                position: relative;
+                z-index: 1;
+                opacity: .78;
+            }
+
+        .employee-management-page > .row > .col-md-4 .list-group-item {
+            position: relative;
+            padding: 17px 18px;
+            border-color: #efeff5;
+            background: rgba(255,255,255,.74);
+            color: #36364a;
+            overflow: hidden;
+            transition: transform .28s ease, background .28s ease, color .28s ease, padding-left .28s ease;
+        }
+
+            .employee-management-page > .row > .col-md-4 .list-group-item:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background: linear-gradient(180deg,#16a34a,#06b6d4,#7c3aed);
+                transform: scaleY(0);
+                transform-origin: bottom;
+                transition: transform .28s ease;
+            }
+
+            .employee-management-page > .row > .col-md-4 .list-group-item:hover {
+                transform: translateX(7px);
+                padding-left: 23px;
+                color: #166534;
+                background: linear-gradient(90deg,rgba(34,197,94,.08),rgba(6,182,212,.03));
+            }
+
+                .employee-management-page > .row > .col-md-4 .list-group-item:hover:before {
+                    transform: scaleY(1);
+                }
+
+            .employee-management-page > .row > .col-md-4 .list-group-item strong {
+                font-size: 13px;
+            }
+
+            .employee-management-page > .row > .col-md-4 .list-group-item small {
+                margin-top: 4px;
+                font-size: 10px;
+            }
+
+        /* Right content cards */
+        .employee-management-page > .row > .col-md-8 > .card,
+        .employee-management-page > .row > .col-md-8 > div.card {
+            border: 1px solid rgba(255,255,255,.92) !important;
+            border-radius: 25px !important;
+            overflow: hidden;
+            background: rgba(255,255,255,.92) !important;
+            box-shadow: 0 24px 68px rgba(39,31,99,.10) !important;
+            backdrop-filter: blur(18px);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+            .employee-management-page > .row > .col-md-8 > .card:hover {
+                box-shadow: 0 32px 78px rgba(39,31,99,.14) !important;
+            }
+
+        .employee-management-page > .row > .col-md-8 .card-header {
+            border-bottom: 1px solid rgba(124,58,237,.08) !important;
+        }
+
+    /* Form controls */
+    .employee-management-page input.form-control,
+    .employee-management-page select.form-select {
+        min-height: 47px;
+        border: 1px solid #dedee9;
+        border-radius: 12px;
+        background: #fbfbfe;
+        color: #29293c;
+        font-size: 13px;
+        transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+        .employee-management-page input.form-control:hover,
+        .employee-management-page select.form-select:hover {
+            transform: translateY(-1px);
+            border-color: #c9c5dc;
+        }
+
+        .employee-management-page input.form-control:focus,
+        .employee-management-page select.form-select:focus {
+            transform: translateY(-2px);
+            border-color: #7c3aed;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(124,58,237,.08), 0 10px 24px rgba(39,31,99,.06);
+        }
+
+    .employee-management-page label.form-label {
+        color: #3b3b50;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    /* Buttons */
+    .employee-management-page .btn {
+        border-radius: 11px;
+        font-weight: 800;
+        transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+
+        .employee-management-page .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.03);
+            box-shadow: 0 11px 26px rgba(39,31,99,.15);
+        }
+
+        .employee-management-page .btn:active {
+            transform: scale(.97);
+        }
+
+    /* Tables */
+    .employee-management-page .table {
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+
+        .employee-management-page .table thead th {
+            padding: 14px 12px;
+            border-bottom: 1px solid #e5e3ee;
+            background: linear-gradient(90deg,#f8f7fc,#f3faff);
+            color: #66667a;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+        }
+
+        .employee-management-page .table tbody td {
+            padding: 14px 12px;
+            border-color: #f0eff5;
+            color: #46465a;
+        }
+
+        .employee-management-page .table tbody tr {
+            transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+        }
+
+            .employee-management-page .table tbody tr:hover {
+                transform: translateX(5px);
+                background: linear-gradient(90deg,rgba(34,197,94,.045),rgba(124,58,237,.035));
+                box-shadow: 0 8px 24px rgba(39,31,99,.05);
+            }
+
+    /* Status badges and inner info panels */
+    .employee-management-page .badge {
+        padding: 7px 10px;
+        border-radius: 30px;
+        font-weight: 800;
+    }
+
+    .employee-management-page .bg-light {
+        border: 1px solid #e9e7f2 !important;
+        background: linear-gradient(135deg,#faf9ff,#f5fbff) !important;
+        border-radius: 15px !important;
+    }
+
+    /* Alerts */
+    .employee-management-page > .alert {
+        border: 0;
+        border-radius: 15px;
+        box-shadow: 0 12px 30px rgba(39,31,99,.08);
+    }
+
+    /* JS responsive classes */
+    .employee-management-page.employee-mobile .employee-hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .employee-management-page.employee-mobile .employee-hero-badge {
+        align-self: flex-start;
+    }
+
+    .employee-management-page.employee-small .employee-hero {
+        padding: 22px 19px;
+    }
+
+        .employee-management-page.employee-small .employee-hero h1 {
+            font-size: 25px;
+        }
+
+        .employee-management-page.employee-small .employee-hero p {
+            font-size: 11px;
+        }
+
+    .employee-management-page.employee-small .employee-hero-badge {
+        width: 100%;
+    }
+
+        .employee-management-page.employee-small .employee-hero-badge span {
+            font-size: 9px;
+        }
+</style>
+
+
+<style>
+    /* =========================================================
+       NEXT-LEVEL DYNAMIC EMPLOYEE WORKSPACE
+    ========================================================= */
+
+    .employee-management-page {
+        background: radial-gradient(circle at 4% 4%, rgba(124,58,237,.16), transparent 25%), radial-gradient(circle at 97% 17%, rgba(6,182,212,.15), transparent 25%), radial-gradient(circle at 50% 105%, rgba(236,72,153,.12), transparent 27%), linear-gradient(135deg,#f8f7ff 0%,#f5faff 48%,#fbf8ff 100%);
+    }
+
+    .employee-snapshot {
+        position: relative;
+        z-index: 3;
+        margin: 0 0 24px;
+    }
+
+    .snapshot-heading {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin: 0 5px 11px;
+    }
+
+    .snapshot-kicker {
+        color: #5b21b6;
+        font-size: 9px;
+        font-weight: 950;
+        letter-spacing: 1.8px;
+    }
+
+    .snapshot-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg,rgba(124,58,237,.20),transparent);
+    }
+
+    .snapshot-caption {
+        color: #9998aa;
+        font-size: 10px;
+    }
+
+    .snapshot-grid {
+        display: grid;
+        grid-template-columns: repeat(4,minmax(0,1fr));
+        gap: 13px;
+    }
+
+    .snapshot-card {
+        position: relative;
+        min-height: 102px;
+        padding: 18px;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        border: 1px solid rgba(255,255,255,.90);
+        border-radius: 19px;
+        background: rgba(255,255,255,.78);
+        box-shadow: 0 15px 38px rgba(39,31,99,.08);
+        backdrop-filter: blur(16px);
+        overflow: hidden;
+        transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+        .snapshot-card:hover {
+            transform: translateY(-7px) rotate(-.5deg);
+            box-shadow: 0 23px 48px rgba(39,31,99,.14);
+        }
+
+    .snapshot-icon {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        width: 43px;
+        height: 43px;
+        flex-shrink: 0;
+        border-radius: 14px;
+        color: white;
+        font-size: 9px;
+        font-weight: 950;
+        letter-spacing: 1px;
+    }
+
+    .snapshot-info {
+        position: relative;
+        z-index: 2;
+    }
+
+        .snapshot-info span,
+        .snapshot-info strong {
+            display: block;
+        }
+
+        .snapshot-info span {
+            color: #858496;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .snapshot-info strong {
+            margin-top: 4px;
+            color: #202036;
+            font-size: 25px;
+            line-height: 1;
+            font-weight: 950;
+        }
+
+    .snapshot-ring {
+        position: absolute;
+        width: 105px;
+        height: 105px;
+        right: -50px;
+        top: -43px;
+        border: 1px solid rgba(124,58,237,.10);
+        border-radius: 50%;
+        transition: transform .8s ease;
+    }
+
+    .snapshot-card:hover .snapshot-ring {
+        transform: scale(1.35) rotate(25deg);
+    }
+
+    .snapshot-purple .snapshot-icon {
+        background: linear-gradient(135deg,#7c3aed,#a855f7);
+        box-shadow: 0 9px 24px rgba(124,58,237,.28);
+    }
+
+    .snapshot-green .snapshot-icon {
+        background: linear-gradient(135deg,#059669,#22c55e);
+        box-shadow: 0 9px 24px rgba(34,197,94,.24);
+    }
+
+    .snapshot-blue .snapshot-icon {
+        background: linear-gradient(135deg,#2563eb,#06b6d4);
+        box-shadow: 0 9px 24px rgba(37,99,235,.24);
+    }
+
+    .snapshot-pink .snapshot-icon {
+        background: linear-gradient(135deg,#db2777,#f43f5e);
+        box-shadow: 0 9px 24px rgba(219,39,119,.24);
+    }
+
+    /* Menu becomes a colorful stack of floating controls. */
+    .employee-management-page .employee-nav-item {
+        display: block;
+        min-height: 70px;
+        border-left: 0 !important;
+    }
+
+        .employee-management-page .employee-nav-item strong {
+            display: block;
+            transition: transform .25s ease;
+        }
+
+        .employee-management-page .employee-nav-item small {
+            transition: transform .25s ease, opacity .25s ease;
+        }
+
+        .employee-management-page .employee-nav-item:after {
+            content: "›";
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translate(8px,-50%);
+            opacity: 0;
+            color: currentColor;
+            font-size: 22px;
+            font-weight: 500;
+            transition: transform .3s ease, opacity .3s ease;
+        }
+
+        .employee-management-page .employee-nav-item:hover:after,
+        .employee-management-page .employee-nav-item.nav-active:after {
+            transform: translate(0,-50%);
+            opacity: .8;
+        }
+
+        .employee-management-page .employee-nav-item:hover strong,
+        .employee-management-page .employee-nav-item.nav-active strong {
+            transform: translateX(2px);
+        }
+
+        .employee-management-page .employee-nav-item.nav-active {
+            background: linear-gradient(90deg,rgba(124,58,237,.10),rgba(6,182,212,.035)) !important;
+            color: #4c1d95 !important;
+            box-shadow: inset 4px 0 0 #7c3aed;
+        }
+
+    /* Different visual accents for different operations. */
+    .employee-management-page .employee-nav-add:before {
+        background: linear-gradient(180deg,#22c55e,#06b6d4);
+    }
+
+    .employee-management-page .employee-nav-list:before {
+        background: linear-gradient(180deg,#2563eb,#7c3aed);
+    }
+
+    .employee-management-page .employee-nav-details:before {
+        background: linear-gradient(180deg,#06b6d4,#2563eb);
+    }
+
+    .employee-management-page .employee-nav-portal:before {
+        background: linear-gradient(180deg,#7c3aed,#ec4899);
+    }
+
+    .employee-management-page .employee-nav-edit:before {
+        background: linear-gradient(180deg,#f59e0b,#ef4444);
+    }
+
+    .employee-management-page .employee-nav-mobile:before {
+        background: linear-gradient(180deg,#06b6d4,#14b8a6);
+    }
+
+    .employee-management-page .employee-nav-delete:before {
+        background: linear-gradient(180deg,#ef4444,#ec4899);
+    }
+
+    /* Main cards get stronger depth and an animated-looking gradient edge. */
+    .employee-management-page > .row > .col-md-8 > .card {
+        position: relative;
+    }
+
+        .employee-management-page > .row > .col-md-8 > .card:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: 25px;
+            background: linear-gradient(120deg,rgba(124,58,237,.20),rgba(6,182,212,.14),rgba(236,72,153,.16),rgba(124,58,237,.20));
+            pointer-events: none;
+            opacity: .65;
+        }
+
+    /* Employee list gets more personality. */
+    .employee-management-page .table tbody tr {
+        position: relative;
+    }
+
+    .employee-management-page .table tbody td:first-child {
+        position: relative;
+    }
+
+        .employee-management-page .table tbody td:first-child:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 15px;
+            width: 3px;
+            height: 24px;
+            border-radius: 4px;
+            background: linear-gradient(180deg,#7c3aed,#06b6d4);
+            opacity: .55;
+        }
+
+    .employee-management-page .table tbody tr:hover td:first-child:before {
+        opacity: 1;
+        box-shadow: 0 0 12px rgba(124,58,237,.6);
+    }
+
+    .employee-management-page .table tbody td:nth-child(2) strong {
+        font-size: 13px;
+    }
+
+        .employee-management-page .table tbody td:nth-child(2) strong:before {
+            content: "•";
+            display: inline-block;
+            margin-right: 7px;
+            color: #22c55e;
+            font-size: 17px;
+            vertical-align: -1px;
+            text-shadow: 0 0 10px rgba(34,197,94,.7);
+        }
+
+    /* Status gets a live-dot treatment without changing the status text. */
+    .employee-management-page .table tbody td:last-child .badge.bg-success {
+        box-shadow: 0 5px 15px rgba(34,197,94,.18);
+    }
+
+    /* Buttons feel more tactile. */
+    .employee-management-page button,
+    .employee-management-page .btn {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .employee-management-page button:after,
+        .employee-management-page .btn:after {
+            content: "";
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            left: -110px;
+            top: -35px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.18);
+            transition: left .45s ease;
+        }
+
+        .employee-management-page button:hover:after,
+        .employee-management-page .btn:hover:after {
+            left: calc(100% + 20px);
+        }
+
+    /* Responsive classes controlled by JS. */
+    .employee-management-page.employee-dashboard-mobile .snapshot-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .employee-management-page.employee-dashboard-small .snapshot-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-management-page.employee-dashboard-small .snapshot-card {
+        min-height: 88px;
+    }
+
+    .employee-management-page.employee-dashboard-small .snapshot-info strong {
+        font-size: 22px;
+    }
+</style>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        .mobile-api-readonly-field {
+            background: rgba(255,255,255,0.78);
+            border: 1px solid rgba(70, 90, 130, 0.18);
+            color: #30384a;
+            font-weight: 500;
+            box-shadow: none;
+        }
+
+        .mobile-api-readonly-field:focus {
+            box-shadow: none;
+            border-color: rgba(70, 90, 130, 0.18);
+        }
+
+        .mobile-api-data-field {
+            font-family: Consolas, "Courier New", monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+
+    <script>
+
+        $(document).ready(function() {
+
+            // =====================================================
+            // NEXT-LEVEL EMPLOYEE PORTAL INTERACTIONS
+            // =====================================================
+
+            function updateEmployeeDashboardLayout() {
+                var page = $(".employee-management-page");
+                var width = window.innerWidth;
+
+                page.removeClass(
+                    "employee-dashboard-mobile employee-dashboard-small"
+                );
+
+                if (width <= 900) {
+                    page.addClass("employee-dashboard-mobile");
+                }
+
+                if (width <= 600) {
+                    page.addClass("employee-dashboard-small");
+                }
+            }
+
+            updateEmployeeDashboardLayout();
+            $(window).on("resize", updateEmployeeDashboardLayout);
+
+            // Animated statistics.
+            $(".count-up").each(function() {
+                var element = $(this);
+                var target = parseInt(element.attr("data-count"), 10) || 0;
+                var duration = 850;
+                var start = 0;
+                var startTime = null;
+
+                function animateCounter(timestamp) {
+                    if (!startTime) {
+                        startTime = timestamp;
+                    }
+
+                    var progress = Math.min(
+                        (timestamp - startTime) / duration,
+                        1
+                    );
+
+                    var eased = 1 - Math.pow(1 - progress, 3);
+                    var value = Math.floor(start + ((target - start) * eased));
+
+                    element.text(value);
+
+                    if (progress < 1) {
+                        window.requestAnimationFrame(animateCounter);
+                    }
+                }
+
+                window.requestAnimationFrame(animateCounter);
+            });
+
+            // Cursor-responsive ambient movement.
+            $(document).on("mousemove", function(event) {
+                var x = (event.clientX / window.innerWidth) - 0.5;
+                var y = (event.clientY / window.innerHeight) - 0.5;
+
+                $(".employee-glow-1").css(
+                    "transform",
+                    "translate(" + (x * 25) + "px," + (y * 20) + "px)"
+                );
+
+                $(".employee-glow-2").css(
+                    "transform",
+                    "translate(" + (x * -20) + "px," + (y * -17) + "px)"
+                );
+
+                $(".employee-glow-3").css(
+                    "transform",
+                    "translate(" + (x * 13) + "px," + (y * -11) + "px)"
+                );
+
+                $(".employee-orb-1").css(
+                    "transform",
+                    "translate(" + (x * -15) + "px," + (y * 10) + "px)"
+                );
+
+                $(".employee-orb-2").css(
+                    "transform",
+                    "translate(" + (x * 12) + "px," + (y * -9) + "px)"
+                );
+            });
+
+            // Continuous floating particles.
+            var employeeMotion = 0;
+
+            setInterval(function() {
+                employeeMotion++;
+
+                $(".dot-1").css("transform",
+                    "translate(" + Math.sin(employeeMotion / 10) * 20 + "px," +
+                    Math.cos(employeeMotion / 14) * 15 + "px)");
+
+                $(".dot-2").css("transform",
+                    "translate(" + Math.cos(employeeMotion / 12) * 17 + "px," +
+                    Math.sin(employeeMotion / 9) * 20 + "px)");
+
+                $(".dot-3").css("transform",
+                    "translate(" + Math.sin(employeeMotion / 8) * 15 + "px," +
+                    Math.cos(employeeMotion / 11) * 19 + "px)");
+
+                $(".dot-4").css("transform",
+                    "translate(" + Math.cos(employeeMotion / 15) * 20 + "px," +
+                    Math.sin(employeeMotion / 11) * 14 + "px)");
+
+                $(".dot-5").css("transform",
+                    "translate(" + Math.sin(employeeMotion / 13) * 14 + "px," +
+                    Math.cos(employeeMotion / 16) * 17 + "px)");
+            }, 110);
+
+            // Small 3D tilt for service/content cards.
+            $(".employee-management-page > .row > .col-md-4 > .card, " +
+                ".employee-management-page > .row > .col-md-8 > .card, " +
+                ".snapshot-card").on("mousemove", function(event) {
+                    var card = $(this);
+                    var rect = this.getBoundingClientRect();
+
+                    var px = (event.clientX - rect.left) / rect.width;
+                    var py = (event.clientY - rect.top) / rect.height;
+
+                    var rotateY = (px - 0.5) * 3.5;
+                    var rotateX = (0.5 - py) * 3.5;
+
+                    card.css(
+                        "transform",
+                        "perspective(900px) rotateX(" + rotateX +
+                        "deg) rotateY(" + rotateY + "deg) translateY(-5px)"
+                    );
+                }).on("mouseleave", function() {
+                    $(this).css("transform", "");
+                });
+
+
+            // PREMIUM FLOATING INTERACTIONS
+            function updateEmployeeLayout() {
+                var page = $(".employee-management-page");
+                var width = window.innerWidth;
+
+                page.removeClass("employee-mobile employee-small");
+
+                if (width <= 900) {
+                    page.addClass("employee-mobile");
+                }
+
+                if (width <= 600) {
+                    page.addClass("employee-small");
+                }
+            }
+
+            updateEmployeeLayout();
+            $(window).on("resize", updateEmployeeLayout);
+
+            // Cursor-reactive floating background.
+            $(document).on("mousemove", function(event) {
+                var x = (event.clientX / window.innerWidth) - 0.5;
+                var y = (event.clientY / window.innerHeight) - 0.5;
+
+                $(".employee-glow-1").css(
+                    "transform",
+                    "translate(" + (x * 22) + "px," + (y * 18) + "px)"
+                );
+
+                $(".employee-glow-2").css(
+                    "transform",
+                    "translate(" + (x * -18) + "px," + (y * -15) + "px)"
+                );
+
+                $(".employee-glow-3").css(
+                    "transform",
+                    "translate(" + (x * 12) + "px," + (y * -10) + "px)"
+                );
+
+                $(".employee-orb-1").css(
+                    "transform",
+                    "translate(" + (x * -13) + "px," + (y * 9) + "px)"
+                );
+
+                $(".employee-orb-2").css(
+                    "transform",
+                    "translate(" + (x * 10) + "px," + (y * -8) + "px)"
+                );
+            });
+
+            var employeeFloatStep = 0;
+
+            setInterval(function() {
+                employeeFloatStep++;
+
+                $(".dot-1").css("transform",
+                    "translate(" + Math.sin(employeeFloatStep / 11) * 18 + "px," +
+                    Math.cos(employeeFloatStep / 15) * 13 + "px)");
+
+                $(".dot-2").css("transform",
+                    "translate(" + Math.cos(employeeFloatStep / 13) * 15 + "px," +
+                    Math.sin(employeeFloatStep / 10) * 18 + "px)");
+
+                $(".dot-3").css("transform",
+                    "translate(" + Math.sin(employeeFloatStep / 9) * 14 + "px," +
+                    Math.cos(employeeFloatStep / 12) * 17 + "px)");
+
+                $(".dot-4").css("transform",
+                    "translate(" + Math.cos(employeeFloatStep / 16) * 18 + "px," +
+                    Math.sin(employeeFloatStep / 12) * 12 + "px)");
+
+                $(".dot-5").css("transform",
+                    "translate(" + Math.sin(employeeFloatStep / 14) * 12 + "px," +
+                    Math.cos(employeeFloatStep / 17) * 15 + "px)");
+            }, 120);
+
+
+            function isValidEmail(email) {
+
+                var emailPattern =
+                    /^[^\s@@]+@@[^\s@@]+\.[^\s@@]{2,}$/;
+
+                return emailPattern.test(email);
+            }
+
+
+            function isValidPhone(phone) {
+
+                return /^[6-9][0-9]{9}$/.test(phone);
+            }
+
+
+            function isValidEmployeeId(id) {
+
+                return /^[0-9]{5}$/.test(id);
+            }
+
+
+            function showValidation(message) {
+
+                alert(message);
+            }
+
+
+            function validateEmployeeForm() {
+
+                var employeeId =
+                    $("#employeeId").val().trim();
+
+                var firstName =
+                    $("#employeeFirstName").val().trim();
+
+                var lastName =
+                    $("#employeeLastName").val().trim();
+
+                var email =
+                    $("#employeeEmail").val().trim();
+
+                var phone =
+                    $("#employeePhone").val().trim();
+
+                var department =
+                    $("#employeeDepartment").val();
+
+                var designation =
+                    $("#employeeDesignation").val();
+
+                var city =
+                    $("#employeeCity").val();
+
+
+                if (employeeId === "") {
+
+                    showValidation(
+                        "Employee ID is required."
+                    );
+
+                    $("#employeeId").focus();
+
+                    return false;
+                }
+
+
+                if (!isValidEmployeeId(employeeId)) {
+
+                    showValidation(
+                        "Employee ID must be exactly 5 digits."
+                    );
+
+                    $("#employeeId").focus();
+
+                    return false;
+                }
+
+
+                if (firstName === "") {
+
+                    showValidation(
+                        "First Name is required."
+                    );
+
+                    $("#employeeFirstName").focus();
+
+                    return false;
+                }
+
+
+                if (!/^[a-zA-Z ]+$/.test(firstName)) {
+
+                    showValidation(
+                        "First Name can contain only letters."
+                    );
+
+                    $("#employeeFirstName").focus();
+
+                    return false;
+                }
+
+
+                if (lastName === "") {
+
+                    showValidation(
+                        "Last Name is required."
+                    );
+
+                    $("#employeeLastName").focus();
+
+                    return false;
+                }
+
+
+                if (!/^[a-zA-Z ]+$/.test(lastName)) {
+
+                    showValidation(
+                        "Last Name can contain only letters."
+                    );
+
+                    $("#employeeLastName").focus();
+
+                    return false;
+                }
+
+
+                if (email === "") {
+
+                    showValidation(
+                        "Email is required."
+                    );
+
+                    $("#employeeEmail").focus();
+
+                    return false;
+                }
+
+
+                if (!isValidEmail(email)) {
+
+                    showValidation(
+                        "Please enter a valid email address."
+                    );
+
+                    $("#employeeEmail").focus();
+
+                    return false;
+                }
+
+
+                if (phone === "") {
+
+                    showValidation(
+                        "Phone number is required."
+                    );
+
+                    $("#employeePhone").focus();
+
+                    return false;
+                }
+
+
+                if (!isValidPhone(phone)) {
+
+                    showValidation(
+                        "Phone number must be exactly 10 digits and start with 6-9."
+                    );
+
+                    $("#employeePhone").focus();
+
+                    return false;
+                }
+
+
+                if (department === "" ||
+                    department === null) {
+
+                    showValidation(
+                        "Department is required."
+                    );
+
+                    $("#employeeDepartment").focus();
+
+                    return false;
+                }
+
+
+                if (designation === "" ||
+                    designation === null) {
+
+                    showValidation(
+                        "Designation is required."
+                    );
+
+                    $("#employeeDesignation").focus();
+
+                    return false;
+                }
+
+
+                if (city === "" ||
+                    city === null) {
+
+                    showValidation(
+                        "City is required."
+                    );
+
+                    $("#employeeCity").focus();
+
+                    return false;
+                }
+
+
+                return true;
+            }
+
+
+            $("#employeeForm").on(
+                "submit",
+                function(event) {
+
+                    if (!validateEmployeeForm()) {
+
+                        event.preventDefault();
+
+                        return false;
+                    }
+
+                }
+            );
+
+
+            $("#mobileForm").on(
+                "submit",
+                function(event) {
+
+                    var mobile =
+                        $("#mobileApiNumber").val().trim();
+
+                    if (!isValidPhone(mobile)) {
+
+                        event.preventDefault();
+
+                        showValidation(
+                            "Mobile number must be exactly 10 digits and start with 6-9."
+                        );
+
+                        $("#mobileApiNumber").focus();
+
+                        return false;
+                    }
+
+                }
+            );
+
+
+            $("#btnClearEmployee").on(
+                "click",
+                function() {
+
+                    $("#employeeForm")[0].reset();
+
+                }
+            );
+
+
+
+            // =====================================================
+            // MOBILE API FETCH VALIDATION / LOADING
+            // =====================================================
+
+            $("#mobileFetchForm").on("submit", function (event) {
+
+                var mobile =
+                    $("#mobileApiNumber").val().trim();
+
+                if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+
+                    event.preventDefault();
+
+                    showValidation(
+                        "Mobile number must be exactly 10 digits and start with 6-9."
+                    );
+
+                    $("#mobileApiNumber").focus();
+
+                    return false;
+                }
+
+                $("#fetchMobileButton")
+                    .prop("disabled", true)
+                    .html("⏳ FETCHING...");
+            });
+
+
+            $("#saveMobileResponseForm").on("submit", function () {
+
+                $("#saveMobileResponseButton")
+                    .prop("disabled", true)
+                    .html("⏳ SAVING...");
+            });
+        });
+
+    </script>
+}
