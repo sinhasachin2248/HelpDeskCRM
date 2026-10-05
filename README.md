@@ -64,3 +64,11 @@ HelpDeskCRM-GitHub/
 │
 ├── .gitignore
 └── README.md
+
+## Project Documentation
+
+A detailed project report covering the CRM application, Web API,
+database architecture, API consumption, workflows, testing,
+and implementation details is available below.
+
+[View Project Report](Documentation/HelpDesk-CRM-Project-Report-Public.pdf)
